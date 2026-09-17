@@ -1,0 +1,33 @@
+{
+  "name": "@stevekanger/wp-dev-tools",
+  "version": "0.1.0",
+  "description": "Development tools for wordpress",
+  "keywords": [
+    "wordpress",
+    "developement",
+    "tools"
+  ],
+  "license": "GPL-2.0-or-later",
+  "author": "stevekanger",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "node --watch --import tsx src/index.ts",
+    "build": "tsup"
+  },
+  "files": [
+    "dist",
+    "templates"
+  ],
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "mustache": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/mustache": "^4.2.6",
+    "@types/node": "^22.20.3",
+    "tsup": "^8.5.1",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}

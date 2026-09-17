@@ -1,0 +1,55 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Plugin Name: {{title}}
+ * Plugin Uri:
+ * Author: {{author}}
+ * Author URI:
+ * Description: {{description}}
+ * Version: {{version}}
+ * Requires at least: {{wordpressVersion}}
+ * Tested up to: {{wordpressVersion}}
+ * Requires PHP: {{phpVersion}}
+ * License: GPL-2.0+
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * Update URI:
+ * Text Domain: {{slug}}
+ * Requires Plugins:
+ */
+
+namespace {{phpNamespace}};
+
+use {{phpNamespace}}\Config\AppConfig;
+use {{phpNamespace}}\Controllers\AssetController;
+use {{phpNamespace}}\Controllers\BlockController;
+use {{phpNamespace}}\Core\Container;
+
+defined('ABSPATH') || exit;
+
+// Require autoloader
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Initialize the app config information.
+AppConfig::init(
+    get_file_data(__FILE__, ['Version' => 'Version'])['Version'] ?: '{{version}}',
+    __DIR__,
+    __FILE__,
+    '{{title}}',
+    '{{prefix}}',
+    '{{slug}}',
+);
+
+// Create container and bind controllers and services
+$container = new Container();
+
+$container->bind(AssetController::class, function(Container $container) {
+    return new AssetController($container);
+});
+$container->bind(BlockController::class, function(Container $container) {
+    return new BlockController($container);
+});
+
+// Initialize the App
+$app = (new App($container))->init();

@@ -1,0 +1,57 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{phpNamespace}}\Controllers;
+
+use {{phpNamespace}}\Config\AppConfig;
+use {{phpNamespace}}\Core\Controller;
+
+defined('ABSPATH') || exit;
+
+/**
+ * Block Controller.
+ *
+ * This controller sets up your wordpress blocks and block related functions
+ *
+ * @since {{version}}
+ */
+final class BlockController extends Controller {
+    // Add any block slugs you want to register here
+    private const REGISTERED_BLOCKS = [];
+
+    /**
+     * Register block hooks.
+     *
+     * @since {{version}}
+     */
+    public function register(): void {
+        add_action('init', [$this, 'register_all_blocks']);
+    }
+
+    /**
+     * Register single block.
+     *
+     * @param string $slug The blocks slug
+     *
+     * @since {{version}}
+     */
+    public function register_block(string $slug): void {
+        $blocks_dir = AppConfig::root_dir('/build/blocks/');
+        $block_path = $blocks_dir . $slug;
+        register_block_type($block_path);
+    }
+
+    /**
+     * Register all blocks.
+     *
+     * Registers all blocks from the block-config['register']
+     *
+     * @since {{version}}
+     */
+    public function register_all_blocks(): void {
+        foreach (self::REGISTERED_BLOCKS as $slug) {
+            $this->register_block($slug);
+        }
+    }
+}

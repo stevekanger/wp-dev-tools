@@ -1,0 +1,34 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{phpNamespace}};
+
+use {{phpNamespace}}\Config\AppConfig;
+use {{phpNamespace}}\Controllers\AssetController;
+use {{phpNamespace}}\Core\Container;
+
+defined('ABSPATH') || exit;
+
+// Require autoloader
+require_once __DIR__ . '/vendor/autoload.php';
+
+// Initialize the app config information.
+AppConfig::init(
+    get_file_data(__DIR__ . '/style.css', ['Version' => 'Version'])['Version'] ?: '0.1.0',
+    __DIR__,
+    __FILE__,
+    '{{title}}',
+    '{{prefix}}',
+    '{{slug}}',
+);
+
+// Create container and bind controllers and services
+$container = new Container();
+
+$container->bind(AssetController::class, function(Container $container) {
+    return new AssetController($container);
+});
+
+// Initialize the App
+$app = (new App($container))->init();

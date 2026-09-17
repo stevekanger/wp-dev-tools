@@ -1,0 +1,26 @@
+#!/usr/bin/env node
+async function y(){}async function P(){}async function x(){}var A={options:{title:{type:"string"},author:{type:"string"},authorHandle:{type:"string"},description:{type:"string"},slug:{type:"string"},prefix:{type:"string"},phpNamespace:{type:"string"},version:{type:"string"},wordpressVersion:{type:"string"},phpVersion:{type:"string"},installTests:{type:"boolean"}},allowPositionals:!0};import C from"fs";function j(t){return C.readdirSync(t,{recursive:!0}).filter(r=>!C.statSync(`${t}/${r}`).isDirectory()).map(r=>`${r}`)}import Y from"path";function l(...t){return Y.join(__dirname,"..","..",...t)}import u from"fs";import z from"mustache";import{parseArgs as K}from"util";import h from"path";import G from"readline";async function n(t,r="",o=!1){for(t=`
+${t}`,t+=`
+(default: ${r||'""'})`,t+=`${o?" required":""}: `;;){let s=G.createInterface({input:process.stdin,output:process.stdout}),e=await new Promise(a=>s.question(t,a));s.close();let i=e.trim()||r.trim();if(!(o&&!i))return i}}async function D(){let t=await n(`What to create? (enter the number)
+1: Theme
+2: Plugin`,"",!0);switch(t){case"1":return"theme";case"2":return"plugin";default:throw new Error(`Invalid selection ${t}`)}}async function k(){return(await n("Project title (eg. Super Cool Project).","",!0)).split(" ").map(r=>r.charAt(0).toUpperCase()+r.slice(1)).join(" ")}async function E(){return(await n("Author Full Name (eg. John Doe).","",!0)).split(" ").map(r=>r.charAt(0).toUpperCase()+r.slice(1)).join(" ")}async function S(t){let r=t.toLowerCase().replaceAll(" ","");return await n("Author handle (eg. johndoe).",r)}async function I(){return await n("Description.")}async function F(t){let r=t.toLowerCase().replaceAll(" ","-");return await n("Slug.",r)}async function L(t){let r=t.toLowerCase().replaceAll(" ","_");return await n("Prefix.",r)}async function R(t){let r=t.split(" ").map(s=>s.charAt(0).toUpperCase()+s.slice(1)).join("");return await n("Php namespace.",r)}async function W(t){return await n("Target wordpress version.",t)}async function _(t){return await n("Minimum php version.",t)}async function H(){let t=await n("Install Tests (y/n).","n");return t.toLowerCase()==="y"||t.toLowerCase()==="yes"}async function N({type:t,title:r,author:o,authorHandle:s,description:e,slug:i,prefix:a,phpNamespace:p,wordpressVersion:c,phpVersion:m,installPath:d,installTests:f}){let w=await n(`
+Your Data
+-----------------------
+Type: ${t}
+Title: ${r}
+Author: ${o}
+Author Handle: ${s}
+Description: ${e}
+Slug: ${i}
+Prefix: ${a}
+Php namespace: ${p}
+Wordpress version: ${c}
+Php version: ${m}
+Install Path: ${d}
+Install Tests: ${f?"Yes":"No"}
+
+Is this correct? (y/n).`,"",!0);if(w.toLowerCase()!=="y")throw new Error("Data denied aborting.");return w}import J from"fs";function $(t){return J.readdirSync(t).length===0}async function O(){try{let t=await fetch("https://api.wordpress.org/core/version-check/1.7/");if(t.status!==200)throw new Error("Failed fetching wordpress version data. Please try again shortly.");let r=await t.json(),o=r.offers[0].version,s=r.offers[0].php_version,e=await fetch(`https://api.wordpress.org/core/serve-happy/1.0/?php_version=${s}`);if(e.status!==200)throw new Error("Failed fetching wordpress php version data. Please try again shortly.");let{recommended_version:i}=await e.json();return{wordpressVersion:o,phpVersion:i}}catch(t){throw t}}function Q(t,r,o,s){let e=h.parse(h.join(t,r));return e.base.includes("[slug]")&&(e.base=e.base.replace("[slug]",s.slug),e.name=e.name.replace("[slug]",s.slug)),o?`${e.dir}/${e.name}`:`${e.dir}/${e.base}`}async function T(t,r,o){j(t).forEach(e=>{let i=e.endsWith(".mustache"),a=h.join(t,e),p=Q(r,e,i,o);if(i){let c=u.readFileSync(a,"utf8"),m=z.render(c,o);m&&(u.mkdirSync(h.dirname(p),{recursive:!0}),u.writeFileSync(p,m,"utf8"))}else u.cpSync(a,p)})}async function V(){let t=K(A),r=await O(),o=t.positionals[1];if(!o)throw new Error("Install path required.");if(u.existsSync(o)&&!$(o))throw new Error(`Installation directory must be empty '${o}'`);let s=await D(),e=await k(),i=await E(),a=await S(i),p=await I(),c=await F(e),m=await L(e),d=await R(e),f=await W(r.wordpressVersion),w=await _(r.phpVersion),b=await H(),[M,U]=f.split("."),g={type:s,typeProper:s==="plugin"?"Plugin":"Theme",isPlugin:s==="plugin",isTheme:s==="theme",title:e,author:i,authorHandle:a,description:p,slug:c,prefix:m,phpNamespace:d,wordpressVersion:f,wordpressVersionMajorMinor:`${M}.${U}`,phpVersion:w,installPath:o,installTests:b,wpContentLocation:s==="plugin"?"plugins":"themes"};await N(g),T(l("templates","createProject","base"),o,g),T(l("templates","createProject",s),o,g),b&&T(l("templates","createProject","tests"),o,g);let B=s==="plugin"?`${c}.php`:"style.css";console.log(`
+  Finished!
+  Go to readme.txt and ${B} to fill in any more relevant information.
+  `)}async function v(){}async function X(){try{let t=process.argv[2];switch(t){case"createProject":await V();break;case"createBlock":await x();break;case"archive":await y();break;case"copy":await P();break;case"dockerExtract":await v();break;default:throw new Error(`Unsupported command '${t}'`)}}catch(t){console.log(t)}}X();
+//# sourceMappingURL=index.js.map

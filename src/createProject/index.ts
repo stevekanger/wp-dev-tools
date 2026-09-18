@@ -1,11 +1,12 @@
-import { createProjectArgsConfig } from '@/args';
+import { createProjectArgsConfig, showCmdHelp } from '@/args';
 import dirEmpty from '@/utils/dirEmpty';
 import getDirectoryFiles from '@/utils/getDirectoryFiles';
 import getRootDir from '@/utils/getRootDir';
+import UserError from '@/utils/UserError';
 import fs from 'fs';
 import mustache from 'mustache';
-import { parseArgs } from 'node:util';
 import path from 'path';
+import { parseArgs } from 'util';
 import {
   promptAuthor,
   promptAuthorHandle,
@@ -36,7 +37,7 @@ async function getWordpressData(): Promise<{
     );
 
     if (wpVersionRes.status !== 200) {
-      throw new Error(
+      throw new UserError(
         'Failed fetching wordpress version data. Please try again shortly.',
       );
     }
@@ -50,7 +51,7 @@ async function getWordpressData(): Promise<{
     );
 
     if (phpVersionRes.status !== 200) {
-      throw new Error(
+      throw new UserError(
         'Failed fetching wordpress php version data. Please try again shortly.',
       );
     }
@@ -134,23 +135,31 @@ async function renderFiles(
  */
 export default async function createProject() {
   const args = parseArgs(createProjectArgsConfig);
+
+  if (args.values.help) {
+    showCmdHelp(createProjectArgsConfig);
+    return;
+  }
+
   const wpData = await getWordpressData();
 
   const installPath = args.positionals[1];
 
   if (!installPath) {
-    throw new Error(`Install path required.`);
+    throw new UserError(`Install path required.`);
   }
 
   if (fs.existsSync(installPath) && !dirEmpty(installPath)) {
-    throw new Error(`Installation directory must be empty '${installPath}'`);
+    throw new UserError(
+      `Installation directory must be empty '${installPath}'`,
+    );
   }
 
   const type = await promptProjectType();
   const title = await promptTitle();
   const author = await promptAuthor();
   const authorHandle = await promptAuthorHandle(author);
-  const description = await promptDescription();
+  const description = await promptDescription(title);
   const slug = await promptSlug(title);
   const prefix = await promptPrefix(title);
   const version = await promptVersion();
@@ -209,10 +218,10 @@ export default async function createProject() {
     );
   }
 
-  const entryFileName = type === 'plugin' ? `${slug}.php` : 'style.css';
+  const mainFileName = type === 'plugin' ? `${slug}.php` : 'style.css';
 
   console.log(`
   Finished!
-  Go to readme.txt and ${entryFileName} to fill in any more relevant information.
+  Go to readme.txt and ${mainFileName} to fill in any more relevant information.
   `);
 }

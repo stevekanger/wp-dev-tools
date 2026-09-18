@@ -20,10 +20,12 @@
     "templates"
   ],
   "dependencies": {
+    "archiver": "^8.0.0",
     "dotenv": "^17.4.2",
     "mustache": "^4.2.0"
   },
   "devDependencies": {
+    "@types/archiver": "^8.0.0",
     "@types/mustache": "^4.2.6",
     "@types/node": "^22.20.3",
     "tsup": "^8.5.1",

@@ -12,7 +12,7 @@ yarn-error.log*
 # Coverage directory used by tools like istanbul
 coverage
 
-# Leave out all build folders
+# Leave out all build and local folders
 /build/
 /local/
 

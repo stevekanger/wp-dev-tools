@@ -1,5 +1,7 @@
-import commandLinePrompt from '@/utils/commandLinePropt';
+import commandLinePrompt from '@/utils/commandLinePrompt';
 import { ProjectTemplateVars, ProjectType } from './types';
+import { INITIAL_VERSION } from '@/constants';
+import { UserError } from '@/utils/UserError';
 
 /**
  * Prompts the user for the boilerplate type
@@ -17,14 +19,12 @@ export async function promptProjectType(): Promise<ProjectType> {
     case '2':
       return 'plugin';
     default:
-      throw new Error(`Invalid selection ${answer}`);
+      throw new UserError(`Invalid selection ${answer}`);
   }
 }
 
 /**
  * Prompts the user for the title
- *
- * @param boilerplateType The type of boilerplate
  */
 export async function promptTitle(): Promise<string> {
   const answer = await commandLinePrompt(
@@ -71,9 +71,14 @@ export async function promptAuthorHandle(author: string): Promise<string> {
 
 /**
  * Prompts the user for the description
+ *
+ * @param title The user specified title
  */
-export async function promptDescription(): Promise<string> {
-  const answer = await commandLinePrompt(`Description.`);
+export async function promptDescription(title: string): Promise<string> {
+  const fromTitle =
+    title.charAt(0).toUpperCase() + title.slice(1).toLowerCase() + '.';
+
+  const answer = await commandLinePrompt('Description.', fromTitle);
 
   return answer;
 }
@@ -106,7 +111,7 @@ export async function promptPrefix(title: string): Promise<string> {
  * Prompts user for the initial project version
  */
 export async function promptVersion(): Promise<string> {
-  const answer = await commandLinePrompt('Initial Version.', '1.0.0');
+  const answer = await commandLinePrompt('Initial Version.', INITIAL_VERSION);
 
   return answer;
 }
@@ -166,9 +171,12 @@ export async function promptInstallTests(): Promise<boolean> {
  * @param author The user specified author
  * @param slug The user specified slug
  * @param prefix The user specified prefix
+ * @param version The user specified version
  * @param phpNamespace The user specified phpNamespace
  * @param wordrpessVersion The user specified wordpress version
+ * @param phpVersion The user specified php version
  * @param installPath The user specified installation path
+ * @param installTests Whether to install tests or not
  */
 export async function promptConfirm({
   type,
@@ -178,6 +186,7 @@ export async function promptConfirm({
   description,
   slug,
   prefix,
+  version,
   phpNamespace,
   wordpressVersion,
   phpVersion,
@@ -195,6 +204,7 @@ Author Handle: ${authorHandle}
 Description: ${description}
 Slug: ${slug}
 Prefix: ${prefix}
+Version: ${version}
 Php namespace: ${phpNamespace}
 Wordpress version: ${wordpressVersion}
 Php version: ${phpVersion}
@@ -207,7 +217,7 @@ Is this correct? (y/n).`,
   );
 
   if (answer.toLowerCase() !== 'y') {
-    throw new Error('Data denied aborting.');
+    throw new UserError('Data not confirmed.');
   }
 
   return answer;

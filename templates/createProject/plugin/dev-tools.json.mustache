@@ -1,15 +1,7 @@
 {
-  "entry": "{{slug}}.php",
-  "blocks": {
-    "createBlock": {
-      "namespace": "{{slug}}",
-      "json": {
-        "textdomain": "{{slug}}"
-      }
-    }
-  },
-  "archive": {
-    "includedDist": [
+  "main": "{{slug}}.php",
+  "files": {
+    "dist": [
       "{{slug}}.php",
       "assets",
       "build",
@@ -18,10 +10,9 @@
       "license.txt",
       "readme.txt"
     ],
-    "includedDev": [
+    "dev": [
       "{{slug}}.php",
       "assets",
-      "dev-tools",
       "inc",
       "src",
       "tests",

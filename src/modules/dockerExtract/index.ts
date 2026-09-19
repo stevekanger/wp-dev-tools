@@ -1,8 +1,8 @@
 import { dockerExtractArgsConfig, showCmdHelp } from '@/args';
 import { argOrPrompt } from '@/utils/argOrPrompt';
 import ensureDir from '@/utils/ensureDir';
-import { promptDir, promptString } from '@/utils/prompts';
 import normalizePath from '@/utils/normalizePath';
+import { promptDir, promptString } from '@/utils/prompts';
 import { isString } from '@/utils/typeChecks';
 import { execSync } from 'child_process';
 import { parseArgs } from 'util';

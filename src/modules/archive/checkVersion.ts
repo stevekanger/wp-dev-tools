@@ -1,7 +1,7 @@
-import fs from 'fs';
-import path from 'path';
 import getFileContents from '@/utils/getFileContents';
 import UserError from '@/utils/UserError';
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Matches the version from the docblock header.

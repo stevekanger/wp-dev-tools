@@ -1,10 +1,10 @@
-import archive from './archive';
+import archive from '@/modules/archive';
+import copy from '@/modules/copy';
+import createBlock from '@/modules/createBlock';
+import createProject from '@/modules/createProject';
+import dockerExtract from '@/modules/dockerExtract';
+import UserError from '@/utils/UserError';
 import { argConfigs, showCmdsHelp } from './args';
-import copy from './copy';
-import createBlock from './createBlock';
-import createProject from './createProject';
-import dockerExtract from './dockerExtract';
-import UserError from './utils/UserError';
 
 /**
  * Main function parses the first positional arg to find which command to run

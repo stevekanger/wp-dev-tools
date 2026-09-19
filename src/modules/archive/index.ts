@@ -3,6 +3,7 @@ import { DevToolsJson } from '@/types';
 import { argOrPrompt } from '@/utils/argOrPrompt';
 import ensureDir from '@/utils/ensureDir';
 import getJsonFileContents from '@/utils/getJsonFileContents';
+import normalizePath from '@/utils/normalizePath';
 import { promptBoolean, promptDir, promptValues } from '@/utils/prompts';
 import { isOneOf, isString } from '@/utils/typeChecks';
 import UserError from '@/utils/UserError';
@@ -12,7 +13,6 @@ import path from 'path';
 import { parseArgs } from 'util';
 import checkVersion from './checkVersion';
 import { ArchiveType } from './types';
-import normalizePath from '@/utils/normalizePath';
 
 /**
  * Creates the archiver

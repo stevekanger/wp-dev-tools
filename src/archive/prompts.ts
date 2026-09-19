@@ -40,3 +40,21 @@ export async function promptType(): Promise<ArchiveType> {
       throw new UserError(`Invalid selection ${answer}`);
   }
 }
+
+/**
+ * Prompts the user for the source directory.
+ */
+export async function promptSrc(): Promise<string> {
+  const answer = await commandLinePrompt('Source directory.', '', true);
+
+  return answer;
+}
+
+/**
+ * Prompts the user for the source directory.
+ */
+export async function promptDest(): Promise<string> {
+  const answer = await commandLinePrompt('Destination directory.', '', true);
+
+  return answer;
+}

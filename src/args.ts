@@ -3,6 +3,60 @@ import { ArgConfig } from './types';
 export const createProjectArgsConfig = {
   cmd: 'createProject',
   options: {
+    dest: {
+      type: 'string',
+      description: 'The directory you want to install the project to.',
+    },
+    type: {
+      type: 'string',
+      description: 'The type of project to create. Allowed: "theme", "plugin".',
+    },
+    title: {
+      type: 'string',
+      description:
+        'The proper title of your project. Example "My Awesome Project".',
+    },
+    author: {
+      type: 'string',
+      description: 'The authors full name. Example "John Doe".',
+    },
+    authorHandle: {
+      type: 'string',
+      description:
+        'The authors handle. No spaces, kebab or snake case. Example "johndoe"',
+    },
+    description: {
+      type: 'string',
+      description: 'A short description of your project.',
+    },
+    slug: {
+      type: 'string',
+      description: 'The kebab case name. Example "my-awesome-project"',
+    },
+    prefix: {
+      type: 'string',
+      description: 'The snake case name. Example "my_awesome_project"',
+    },
+    version: {
+      type: 'string',
+      description: 'The initial version of your project.',
+    },
+    phpNamespace: {
+      type: 'string',
+      description: 'The namespace used for php files.',
+    },
+    wordpressVersion: {
+      type: 'string',
+      description: 'The minimum required Wordpress Version',
+    },
+    phpVersion: {
+      type: 'string',
+      description: 'The minimum required Php Version',
+    },
+    installTests: {
+      type: 'boolean',
+      description: 'Whether or not to install tests',
+    },
     help: {
       type: 'boolean',
       description: 'Shows the help message.',
@@ -18,12 +72,10 @@ export const archiveArgsConfig = {
     src: {
       type: 'string',
       description: 'The directory path to the input files.',
-      short: 's',
     },
     dest: {
       type: 'string',
       description: 'The directory path where the archive will be placed.',
-      short: 'd',
     },
     help: {
       type: 'boolean',
@@ -40,12 +92,78 @@ export const copyArgsConfig = {
     src: {
       type: 'string',
       description: 'The directory path to the input files.',
-      short: 's',
     },
     dest: {
       type: 'string',
       description: 'The directory path where the files will be placed.',
-      short: 'd',
+    },
+    help: {
+      type: 'boolean',
+      description: 'Shows the help message.',
+      short: 'h',
+    },
+  },
+  allowPositionals: true,
+} as const;
+
+export const dockerExtractArgsConfig = {
+  cmd: 'docker-extract',
+  options: {
+    container: {
+      type: 'string',
+      description: 'The name of the docker container.',
+    },
+    src: {
+      type: 'string',
+      description:
+        'The source files relative to wp-content in the docker container. Example "themes/my-awesome-theme"',
+    },
+    dest: {
+      type: 'string',
+      description: 'The directory path where the files will be placed.',
+    },
+    help: {
+      type: 'boolean',
+      description: 'Shows the help message.',
+      short: 'h',
+    },
+  },
+  allowPositionals: true,
+} as const;
+
+export const createBlockArgsConfig = {
+  cmd: 'createBlock',
+  options: {
+    dest: {
+      type: 'string',
+      description: 'The directory to place the block files.',
+    },
+    type: {
+      type: 'string',
+      description: 'The type of block. Allowed "static", "dynamic".',
+    },
+    title: {
+      type: 'string',
+      description: 'Proper title of your block. Example "My Awesome Block".',
+    },
+    slug: {
+      type: 'string',
+      description:
+        'Used for block name and block folder. Kebab case. Example "my-awesome-block".',
+    },
+    namespace: {
+      type: 'string',
+      description:
+        'The block namespace. Usually kebab case. Example "my-awesome-project".',
+    },
+    textdomain: {
+      type: 'string',
+      description:
+        'The block namespace. Usually kebab case and can match namespace. Example "my-awesome-project".',
+    },
+    description: {
+      type: 'string',
+      description: 'A brief description of your block.',
     },
     help: {
       type: 'boolean',
@@ -60,6 +178,8 @@ export const argConfigs: ArgConfig[] = [
   createProjectArgsConfig,
   archiveArgsConfig,
   copyArgsConfig,
+  dockerExtractArgsConfig,
+  createBlockArgsConfig,
 ];
 
 /**
@@ -71,11 +191,13 @@ export function showCmdHelp(config: ArgConfig) {
   console.log(`\n[${config.cmd}]`);
   Object.keys(config.options).forEach((key) => {
     const item = config.options[key];
-    const msg = `--${key} -${item.short}
+    const short = item.short ? `-${item.short}` : '';
+
+    const description = `--${key} ${short}
   type: ${item.type}
   description: ${item.description}`;
 
-    console.log(msg);
+    console.log(description);
   });
 }
 

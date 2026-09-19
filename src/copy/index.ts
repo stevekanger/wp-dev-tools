@@ -6,7 +6,7 @@ import UserError from '@/utils/UserError';
 import fs from 'fs';
 import path from 'path';
 import { parseArgs } from 'util';
-import { promptType } from './prompts';
+import { promptDest, promptSrc, promptType } from './prompts';
 
 /**
  * Copy the project files to specified directory
@@ -20,12 +20,13 @@ export default async function copy() {
     return;
   }
 
-  if (!args.values.src || !args.values.dest) {
-    throw new UserError('Input and output directory required.');
-  }
+  const src = args.values.src
+    ? path.resolve(args.values.src)
+    : await promptSrc();
 
-  const src = path.resolve(args.values.src);
-  const dest = path.resolve(args.values.dest);
+  const dest = args.values.dest
+    ? path.resolve(args.values.dest)
+    : await promptDest();
 
   const devToolsJson = getJsonFileContents<DevToolsJson>(
     path.join(src, 'dev-tools.json'),

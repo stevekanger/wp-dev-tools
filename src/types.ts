@@ -9,7 +9,7 @@ export interface DevToolsJson {
 export interface ArgOption {
   type: 'string' | 'boolean';
   description: string;
-  short: string;
+  short?: string;
 }
 
 export interface ArgConfig {

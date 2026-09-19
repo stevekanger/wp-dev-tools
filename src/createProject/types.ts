@@ -3,6 +3,7 @@ export type ProjectTypeProper = 'Plugin' | 'Theme';
 export type WpContentLocation = 'plugins' | 'themes';
 
 export interface ProjectTemplateVars {
+  dest: string;
   type: ProjectType;
   typeProper: ProjectTypeProper;
   isPlugin: boolean;
@@ -18,7 +19,6 @@ export interface ProjectTemplateVars {
   wordpressVersion: string;
   wordpressVersionMajorMinor: string;
   phpVersion: string;
-  installPath: string;
   installTests: boolean;
   wpContentLocation: WpContentLocation;
 }

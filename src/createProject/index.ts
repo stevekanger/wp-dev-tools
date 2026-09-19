@@ -12,6 +12,7 @@ import {
   promptAuthorHandle,
   promptConfirm,
   promptDescription,
+  promptDest,
   promptInstallTests,
   promptPhpNamespace,
   promptPhpVersion,
@@ -22,7 +23,7 @@ import {
   promptVersion,
   promptWordpressVersion,
 } from './prompts';
-import { ProjectTemplateVars } from './types';
+import { ProjectTemplateVars, ProjectType } from './types';
 
 /**
  * Gets the latest wordpress version from api
@@ -99,22 +100,22 @@ function getDestPath(
 /**
  * Render template files from directory
  *
- * @param srcDir The path of the template files
- * @param destDir The path to render to
+ * @param src The path of the template files
+ * @param dest The path to render to
  * @param vars The mustache template variables
  */
 async function renderFiles(
-  srcDir: string,
-  destDir: string,
+  src: string,
+  dest: string,
   vars: ProjectTemplateVars,
 ) {
-  const files = getDirectoryFiles(srcDir);
+  const files = getDirectoryFiles(src);
 
   files.forEach((fileName) => {
     const isRenderableMustache = fileName.endsWith('.mustache');
 
-    const srcPath = path.join(srcDir, fileName);
-    const destPath = getDestPath(destDir, fileName, isRenderableMustache, vars);
+    const srcPath = path.join(src, fileName);
+    const destPath = getDestPath(dest, fileName, isRenderableMustache, vars);
 
     if (isRenderableMustache) {
       const fileContents = fs.readFileSync(srcPath, 'utf8');
@@ -131,6 +132,15 @@ async function renderFiles(
 }
 
 /**
+ * Check is the passed in type is valid project type
+ *
+ * @param type The type to check against.
+ */
+function isProjectType(type: unknown): type is ProjectType {
+  return type === 'theme' || type === 'plugin';
+}
+
+/**
  * Creates a wordpress project
  */
 export default async function createProject() {
@@ -143,36 +153,49 @@ export default async function createProject() {
 
   const wpData = await getWordpressData();
 
-  const installPath = args.positionals[1];
+  const dest = args.values.dest
+    ? path.resolve(args.values.dest)
+    : await promptDest();
 
-  if (!installPath) {
-    throw new UserError(`Install path required.`);
+  if (fs.existsSync(dest) && !dirEmpty(dest)) {
+    throw new UserError(`Installation directory must be empty '${dest}'`);
   }
 
-  if (fs.existsSync(installPath) && !dirEmpty(installPath)) {
-    throw new UserError(
-      `Installation directory must be empty '${installPath}'`,
-    );
-  }
-
-  const type = await promptProjectType();
-  const title = await promptTitle();
-  const author = await promptAuthor();
-  const authorHandle = await promptAuthorHandle(author);
-  const description = await promptDescription(title);
-  const slug = await promptSlug(title);
-  const prefix = await promptPrefix(title);
-  const version = await promptVersion();
-  const phpNamespace = await promptPhpNamespace(title);
-  const wordpressVersion = await promptWordpressVersion(
-    wpData.wordpressVersion,
-  );
-  const phpVersion = await promptPhpVersion(wpData.phpVersion);
-  const installTests = await promptInstallTests();
+  const type = isProjectType(args.values.type)
+    ? args.values.type
+    : await promptProjectType();
+  const title = args.values.title ? args.values.title : await promptTitle();
+  const author = args.values.author ? args.values.author : await promptAuthor();
+  const authorHandle = args.values.authorHandle
+    ? args.values.authorHandle
+    : await promptAuthorHandle(author);
+  const description = args.values.description
+    ? args.values.description
+    : await promptDescription(title);
+  const slug = args.values.slug ? args.values.slug : await promptSlug(title);
+  const prefix = args.values.prefix
+    ? args.values.prefix
+    : await promptPrefix(title);
+  const version = args.values.version
+    ? args.values.version
+    : await promptVersion();
+  const phpNamespace = args.values.phpNamespace
+    ? args.values.phpNamespace
+    : await promptPhpNamespace(title);
+  const wordpressVersion = args.values.wordpressVersion
+    ? args.values.wordpressVersion
+    : await promptWordpressVersion(wpData.wordpressVersion);
+  const phpVersion = args.values.phpVersion
+    ? args.values.phpVersion
+    : await promptPhpVersion(wpData.phpVersion);
+  const installTests = args.values.installTests
+    ? args.values.installTests
+    : await promptInstallTests();
 
   const [major, minor] = wordpressVersion.split('.');
 
   const templateVars: ProjectTemplateVars = {
+    dest,
     type,
     typeProper: type === 'plugin' ? 'Plugin' : 'Theme',
     isPlugin: type === 'plugin',
@@ -188,7 +211,6 @@ export default async function createProject() {
     wordpressVersion,
     wordpressVersionMajorMinor: `${major}.${minor}`,
     phpVersion,
-    installPath,
     installTests,
     wpContentLocation: type === 'plugin' ? 'plugins' : 'themes',
   };
@@ -198,14 +220,14 @@ export default async function createProject() {
   // Render base files
   renderFiles(
     getRootDir('templates', 'createProject', 'base'),
-    installPath,
+    dest,
     templateVars,
   );
 
   // Render template specific files
   renderFiles(
     getRootDir('templates', 'createProject', type),
-    installPath,
+    dest,
     templateVars,
   );
 
@@ -213,7 +235,7 @@ export default async function createProject() {
   if (installTests) {
     renderFiles(
       getRootDir('templates', 'createProject', 'tests'),
-      installPath,
+      dest,
       templateVars,
     );
   }

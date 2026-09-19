@@ -8,7 +8,7 @@ import { ZipArchive } from 'archiver';
 import fs from 'fs';
 import path from 'path';
 import { parseArgs } from 'util';
-import { promptType, promptVersion } from './prompts';
+import { promptDest, promptSrc, promptType, promptVersion } from './prompts';
 import checkVersion from './checkVersion';
 
 /**
@@ -74,10 +74,13 @@ export default async function archive() {
     return;
   }
 
-  const src = path.resolve(args.values.src || '');
+  const src = args.values.src
+    ? path.resolve(args.values.src)
+    : await promptSrc();
+
   const dest = args.values.dest
     ? path.resolve(args.values.dest)
-    : getCwd('dist');
+    : await promptDest();
 
   if (!dest) {
     throw new UserError('No output directory defined.');

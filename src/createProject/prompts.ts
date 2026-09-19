@@ -1,14 +1,30 @@
-import commandLinePrompt from '@/utils/commandLinePrompt';
-import { ProjectTemplateVars, ProjectType } from './types';
 import { INITIAL_VERSION } from '@/constants';
-import { UserError } from '@/utils/UserError';
+import UserError from '@/utils/UserError';
+import commandLinePrompt from '@/utils/commandLinePrompt';
+import {
+  camelCase,
+  kebabCase,
+  lowercaseRemoveSpaces,
+  snakeCase,
+  uppercaseFirstOnly,
+} from '@/utils/strings';
+import { ProjectTemplateVars, ProjectType } from './types';
 
 /**
+ * Prompts the user for the source directory.
+ */
+export async function promptDest(): Promise<string> {
+  const answer = await commandLinePrompt('Destination directory.', '', true);
+
+  return answer;
+}
+
+/*
  * Prompts the user for the boilerplate type
  */
 export async function promptProjectType(): Promise<ProjectType> {
   const answer = await commandLinePrompt(
-    'What to create? (enter the number)\n1: Theme\n2: Plugin',
+    'Project type? (enter the number)\n1: Theme\n2: Plugin',
     '',
     true,
   );
@@ -28,15 +44,12 @@ export async function promptProjectType(): Promise<ProjectType> {
  */
 export async function promptTitle(): Promise<string> {
   const answer = await commandLinePrompt(
-    `Project title (eg. Super Cool Project).`,
+    `Project title. Example "My Awesome Project".`,
     '',
     true,
   );
 
-  return answer
-    .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+  return answer;
 }
 
 /**
@@ -44,25 +57,22 @@ export async function promptTitle(): Promise<string> {
  */
 export async function promptAuthor(): Promise<string> {
   const answer = await commandLinePrompt(
-    `Author Full Name (eg. John Doe).`,
+    `Author Full Name. Example "John Doe".`,
     '',
     true,
   );
 
-  return answer
-    .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+  return answer;
 }
 
 /**
  * Prompts the user for the author handle
  */
 export async function promptAuthorHandle(author: string): Promise<string> {
-  const fromAuthor = author.toLowerCase().replaceAll(' ', '');
+  const fromAuthor = lowercaseRemoveSpaces(author);
 
   const answer = await commandLinePrompt(
-    'Author handle (eg. johndoe).',
+    'Author handle. Example "johndoe".',
     fromAuthor,
   );
 
@@ -75,8 +85,7 @@ export async function promptAuthorHandle(author: string): Promise<string> {
  * @param title The user specified title
  */
 export async function promptDescription(title: string): Promise<string> {
-  const fromTitle =
-    title.charAt(0).toUpperCase() + title.slice(1).toLowerCase() + '.';
+  const fromTitle = uppercaseFirstOnly(title) + '.';
 
   const answer = await commandLinePrompt('Description.', fromTitle);
 
@@ -89,8 +98,12 @@ export async function promptDescription(title: string): Promise<string> {
  * @param title The user specified title
  */
 export async function promptSlug(title: string): Promise<string> {
-  const fromTitle = title.toLowerCase().replaceAll(' ', '-');
-  const answer = await commandLinePrompt('Slug.', fromTitle);
+  const fromTitle = kebabCase(title);
+
+  const answer = await commandLinePrompt(
+    'Slug. Kebab case. Example "my-awesome-project".',
+    fromTitle,
+  );
 
   return answer;
 }
@@ -101,8 +114,12 @@ export async function promptSlug(title: string): Promise<string> {
  * @param title The user specified title
  */
 export async function promptPrefix(title: string): Promise<string> {
-  const fromTitle = title.toLowerCase().replaceAll(' ', '_');
-  const answer = await commandLinePrompt('Prefix.', fromTitle);
+  const fromTitle = snakeCase(title);
+
+  const answer = await commandLinePrompt(
+    'Prefix. Snake case. Example "my_awesome_project".',
+    fromTitle,
+  );
 
   return answer;
 }
@@ -122,12 +139,12 @@ export async function promptVersion(): Promise<string> {
  * @param title The user specified title
  */
 export async function promptPhpNamespace(title: string): Promise<string> {
-  const fromTitle = title
-    .split(' ')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join('');
+  const fromTitle = camelCase(title);
 
-  const answer = await commandLinePrompt('Php namespace.', fromTitle);
+  const answer = await commandLinePrompt(
+    'Php namespace. Example "MyAwesomeProject".',
+    fromTitle,
+  );
 
   return answer;
 }
@@ -166,6 +183,7 @@ export async function promptInstallTests(): Promise<boolean> {
 /**
  * Prompts the user to confirm their choices
  *
+ * @param dest The user specified installation destination
  * @param type The type of project to create
  * @param title The user specified title
  * @param author The user specified author
@@ -175,10 +193,10 @@ export async function promptInstallTests(): Promise<boolean> {
  * @param phpNamespace The user specified phpNamespace
  * @param wordrpessVersion The user specified wordpress version
  * @param phpVersion The user specified php version
- * @param installPath The user specified installation path
  * @param installTests Whether to install tests or not
  */
 export async function promptConfirm({
+  dest,
   type,
   title,
   author,
@@ -190,13 +208,13 @@ export async function promptConfirm({
   phpNamespace,
   wordpressVersion,
   phpVersion,
-  installPath,
   installTests,
 }: ProjectTemplateVars): Promise<string> {
   const answer = await commandLinePrompt(
     `
 Your Data
 -----------------------
+Install Location: ${dest}
 Type: ${type}
 Title: ${title}
 Author: ${author}
@@ -208,7 +226,6 @@ Version: ${version}
 Php namespace: ${phpNamespace}
 Wordpress version: ${wordpressVersion}
 Php version: ${phpVersion}
-Install Path: ${installPath}
 Install Tests: ${installTests ? 'Yes' : 'No'}
 
 Is this correct? (y/n).`,

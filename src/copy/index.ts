@@ -30,7 +30,7 @@ export default async function copy() {
     isString,
   );
   const dest = await argOrPrompt(
-    normalizePath(args.values.dest || ''),
+    normalizePath(args.values.dest),
     promptDir('Destination location.'),
     isString,
   );

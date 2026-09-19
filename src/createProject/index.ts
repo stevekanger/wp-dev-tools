@@ -146,7 +146,7 @@ export default async function createProject() {
   const wpData = await getWordpressData();
 
   const dest = await argOrPrompt(
-    normalizePath(args.values.dest || ''),
+    normalizePath(args.values.dest),
     promptDir('Destination location.'),
     isString,
   );

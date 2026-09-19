@@ -60,7 +60,7 @@ export default async function createBlock() {
     isString,
   );
   const dest = await argOrPrompt(
-    normalizePath(args.values.dest || ''),
+    normalizePath(args.values.dest),
     promptDir('Destination location.', `./src/blocks/${slug}`),
     isString,
   );

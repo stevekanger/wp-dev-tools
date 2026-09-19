@@ -28,7 +28,7 @@ export default async function dockerExtract() {
     isString,
   );
   const dest = await argOrPrompt(
-    normalizePath(args.values.dest || ''),
+    normalizePath(args.values.dest),
     promptDir('Local pc destination location.'),
     isString,
   );

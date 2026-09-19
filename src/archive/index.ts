@@ -78,12 +78,12 @@ export default async function archive() {
   }
 
   const src = await argOrPrompt(
-    normalizePath(args.values.src || ''),
+    normalizePath(args.values.src),
     promptDir('Source location.'),
     isString,
   );
   const dest = await argOrPrompt(
-    normalizePath(args.values.dest || ''),
+    normalizePath(args.values.dest),
     promptDir('Destination location.'),
     isString,
   );

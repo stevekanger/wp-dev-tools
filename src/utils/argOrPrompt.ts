@@ -5,7 +5,7 @@ import { ArgValidator } from '@/types';
  *
  * @param arg The arg to check
  * @param prompt The prompt to run if a user
- * @param validator Validates the prompt is the correct type
+ * @param validator Validates the arg is the correct type
  */
 export async function argOrPrompt<T>(
   arg: unknown,

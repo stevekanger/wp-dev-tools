@@ -3,6 +3,7 @@ import ensureDir from '@/utils/ensureDistDir';
 import { execSync } from 'child_process';
 import { parseArgs } from 'util';
 import { promptContainer, promptDest, promptSrc } from './prompts';
+import path from 'path';
 
 export default async function dockerExtract() {
   const args = parseArgs(dockerExtractArgsConfig);
@@ -16,7 +17,9 @@ export default async function dockerExtract() {
     ? args.values.container
     : await promptContainer();
   const src = args.values.src ? args.values.src : await promptSrc();
-  const dest = args.values.dest ? args.values.dest : await promptDest();
+  const dest = args.values.dest
+    ? path.resolve(args.values.dest)
+    : path.resolve(await promptDest());
 
   ensureDir(dest);
 

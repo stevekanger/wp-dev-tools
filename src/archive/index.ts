@@ -1,15 +1,14 @@
 import { archiveArgsConfig, showCmdHelp } from '@/args';
 import { DevToolsJson } from '@/types';
 import ensureDir from '@/utils/ensureDistDir';
-import getCwd from '@/utils/getCwd';
 import getJsonFileContents from '@/utils/getJsonFileContents';
 import UserError from '@/utils/UserError';
 import { ZipArchive } from 'archiver';
 import fs from 'fs';
 import path from 'path';
 import { parseArgs } from 'util';
-import { promptDest, promptSrc, promptType, promptVersion } from './prompts';
 import checkVersion from './checkVersion';
+import { promptDest, promptSrc, promptType, promptVersion } from './prompts';
 
 /**
  * Creates the archiver
@@ -76,15 +75,11 @@ export default async function archive() {
 
   const src = args.values.src
     ? path.resolve(args.values.src)
-    : await promptSrc();
+    : path.resolve(await promptSrc());
 
   const dest = args.values.dest
     ? path.resolve(args.values.dest)
-    : await promptDest();
-
-  if (!dest) {
-    throw new UserError('No output directory defined.');
-  }
+    : path.resolve(await promptDest());
 
   ensureDir(dest);
 

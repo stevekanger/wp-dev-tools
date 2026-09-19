@@ -22,11 +22,11 @@ export default async function copy() {
 
   const src = args.values.src
     ? path.resolve(args.values.src)
-    : await promptSrc();
+    : path.resolve(await promptSrc());
 
   const dest = args.values.dest
     ? path.resolve(args.values.dest)
-    : await promptDest();
+    : path.resolve(await promptDest());
 
   const devToolsJson = getJsonFileContents<DevToolsJson>(
     path.join(src, 'dev-tools.json'),

@@ -155,7 +155,7 @@ export default async function createProject() {
 
   const dest = args.values.dest
     ? path.resolve(args.values.dest)
-    : await promptDest();
+    : path.resolve(await promptDest());
 
   if (fs.existsSync(dest) && !dirEmpty(dest)) {
     throw new UserError(`Installation directory must be empty '${dest}'`);

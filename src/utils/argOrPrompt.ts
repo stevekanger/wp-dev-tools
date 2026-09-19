@@ -11,10 +11,8 @@ export async function argOrPrompt<T>(
   prompt: () => Promise<T>,
   validator: ArgValidator<T>,
 ): Promise<T> {
-  if (arg) {
-    if (validator(arg)) {
-      return arg;
-    }
+  if (arg && validator(arg)) {
+    return arg;
   }
 
   return await prompt();

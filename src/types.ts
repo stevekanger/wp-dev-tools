@@ -17,3 +17,5 @@ export interface ArgConfig {
   options: Record<string, ArgOption>;
   allowPositionals: boolean;
 }
+
+export type ArgValidator<T> = (arg: unknown) => arg is T;

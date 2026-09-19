@@ -4,6 +4,8 @@ import { execSync } from 'child_process';
 import { parseArgs } from 'util';
 import { promptContainer, promptDest, promptSrc } from './prompts';
 import path from 'path';
+import { argOrPrompt } from '@/utils/argOrPrompt';
+import { isString } from '@/utils/typeChecks';
 
 export default async function dockerExtract() {
   const args = parseArgs(dockerExtractArgsConfig);
@@ -13,13 +15,17 @@ export default async function dockerExtract() {
     return;
   }
 
-  const container = args.values.container
-    ? args.values.container
-    : await promptContainer();
-  const src = args.values.src ? args.values.src : await promptSrc();
-  const dest = args.values.dest
-    ? path.resolve(args.values.dest)
-    : path.resolve(await promptDest());
+  const container = await argOrPrompt(
+    args.values.container,
+    promptContainer,
+    isString,
+  );
+  const src = path.resolve(
+    await argOrPrompt(args.values.src, promptSrc, isString),
+  );
+  const dest = path.resolve(
+    await argOrPrompt(args.values.dest, promptDest, isString),
+  );
 
   ensureDir(dest);
 

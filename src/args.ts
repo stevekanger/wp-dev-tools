@@ -69,6 +69,10 @@ export const createProjectArgsConfig = {
 export const archiveArgsConfig = {
   cmd: 'archive',
   options: {
+    type: {
+      type: 'string',
+      description: 'Which files to be included. Allowed: "dist", "dev"',
+    },
     src: {
       type: 'string',
       description: 'The directory path to the input files.',
@@ -89,6 +93,10 @@ export const archiveArgsConfig = {
 export const copyArgsConfig = {
   cmd: 'copy',
   options: {
+    type: {
+      type: 'string',
+      description: 'Which files to be included. Allowed: "dist", "dev"',
+    },
     src: {
       type: 'string',
       description: 'The directory path to the input files.',

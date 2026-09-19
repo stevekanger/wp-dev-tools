@@ -1,6 +1,16 @@
 import { createBlockArgsConfig, showCmdHelp } from '@/args';
-import path from 'path';
+import { argOrPrompt } from '@/utils/argOrPrompt';
+import dirEmpty from '@/utils/dirEmpty';
+import getRootDir from '@/utils/getRootDir';
+import {
+  isMustache,
+  removeMustacheExtension,
+  renderMustache,
+} from '@/utils/mustache';
+import { isString } from '@/utils/typeChecks';
+import UserError from '@/utils/UserError';
 import fs from 'fs';
+import path from 'path';
 import { parseArgs } from 'util';
 import {
   promptDescription,
@@ -11,22 +21,7 @@ import {
   promptTitle,
   promptType,
 } from './prompts';
-import { BlockTemplateVars, BlockType } from './types';
-import getRootDir from '@/utils/getRootDir';
-import {
-  isMustache,
-  removeMustacheExtension,
-  renderMustache,
-} from '@/utils/mustache';
-import dirEmpty from '@/utils/dirEmpty';
-import UserError from '@/utils/UserError';
-
-/**
- * Checks if user input is valid block type
- */
-function isBlockType(type: unknown): type is BlockType {
-  return type === 'static' || type === 'dynamic';
-}
+import { BlockTemplateVars } from './types';
 
 /**
  * Creates wordpress block files
@@ -39,29 +34,32 @@ export default async function createBlock() {
     return;
   }
 
-  const type = isBlockType(args.values.type)
-    ? args.values.type
-    : await promptType();
+  const type = await argOrPrompt(
+    args.values.type,
+    promptType,
+    (arg) => arg === 'static' || arg === 'dynamic',
+  );
 
-  const title = args.values.title ? args.values.title : await promptTitle();
-
-  const slug = args.values.slug ? args.values.slug : await promptSlug(title);
-
-  const namespace = args.values.namespace
-    ? args.values.namespace
-    : await promptNamespace();
-
-  const textdomain = args.values.textdomain
-    ? args.values.textdomain
-    : await promptTextDomain();
-
-  const description = args.values.description
-    ? args.values.description
-    : await promptDescription(title);
-
-  const dest = args.values.dest
-    ? path.resolve(args.values.dest)
-    : path.resolve(await promptDest(slug));
+  const title = await argOrPrompt(args.values.title, promptTitle, isString);
+  const slug = await argOrPrompt(args.values.slug, promptSlug(title), isString);
+  const namespace = await argOrPrompt(
+    args.values.namespace,
+    promptNamespace,
+    isString,
+  );
+  const textdomain = await argOrPrompt(
+    args.values.textdomain,
+    promptTextDomain,
+    isString,
+  );
+  const description = await argOrPrompt(
+    args.values.description,
+    promptDescription(title),
+    isString,
+  );
+  const dest = path.resolve(
+    await argOrPrompt(args.values.dest, promptDest(slug), isString),
+  );
 
   if (fs.existsSync(dest) && !dirEmpty(dest)) {
     throw new UserError(`Installation directory must be empty '${dest}'`);

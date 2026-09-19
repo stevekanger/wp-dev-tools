@@ -9,6 +9,9 @@ import path from 'path';
 import { parseArgs } from 'util';
 import checkVersion from './checkVersion';
 import { promptDest, promptSrc, promptType, promptVersion } from './prompts';
+import { argOrPrompt } from '@/utils/argOrPrompt';
+import { isString } from '@/utils/typeChecks';
+import { ArchiveType } from './types';
 
 /**
  * Creates the archiver
@@ -73,13 +76,17 @@ export default async function archive() {
     return;
   }
 
-  const src = args.values.src
-    ? path.resolve(args.values.src)
-    : path.resolve(await promptSrc());
-
-  const dest = args.values.dest
-    ? path.resolve(args.values.dest)
-    : path.resolve(await promptDest());
+  const src = path.resolve(
+    await argOrPrompt(args.values.src, promptSrc, isString),
+  );
+  const dest = path.resolve(
+    await argOrPrompt(args.values.dest, promptDest, isString),
+  );
+  const type: ArchiveType = await argOrPrompt(
+    args.values.type,
+    promptType,
+    (arg) => arg === 'dev' || arg === 'dist',
+  );
 
   ensureDir(dest);
 
@@ -106,7 +113,6 @@ export default async function archive() {
   const version = packageJson.version;
   checkVersion(path.join(src, devToolsJson.main), version);
 
-  const type = await promptType();
   await promptVersion(version);
 
   const packageName = packageJson.name;

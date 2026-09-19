@@ -7,6 +7,9 @@ import fs from 'fs';
 import path from 'path';
 import { parseArgs } from 'util';
 import { promptDest, promptSrc, promptType } from './prompts';
+import { argOrPrompt } from '@/utils/argOrPrompt';
+import { CopyType } from './types';
+import { isString } from '@/utils/typeChecks';
 
 /**
  * Copy the project files to specified directory
@@ -20,13 +23,15 @@ export default async function copy() {
     return;
   }
 
-  const src = args.values.src
-    ? path.resolve(args.values.src)
-    : path.resolve(await promptSrc());
-
-  const dest = args.values.dest
-    ? path.resolve(args.values.dest)
-    : path.resolve(await promptDest());
+  const src = await argOrPrompt(args.values.src, promptSrc, isString);
+  const dest = path.resolve(
+    await argOrPrompt(args.values.dest, promptDest, isString),
+  );
+  const type: CopyType = await argOrPrompt(
+    args.values.type,
+    promptType,
+    (arg) => arg === 'dev' || arg === 'dist',
+  );
 
   const devToolsJson = getJsonFileContents<DevToolsJson>(
     path.join(src, 'dev-tools.json'),
@@ -40,12 +45,11 @@ export default async function copy() {
     files: { dev: includedDev, dist: includedDist },
   } = devToolsJson;
 
-  ensureDir(dest);
-
-  const type = await promptType();
   const includedItems = type === 'dist' ? includedDist : includedDev;
 
-  fs.readdirSync(src, { recursive: true }).forEach((item) => {
+  ensureDir(dest);
+
+  fs.readdirSync(src).forEach((item) => {
     item = item.toString();
 
     if (!includedItems.includes(item)) {

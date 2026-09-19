@@ -1,5 +1,4 @@
 import commandLinePrompt from '@/utils/commandLinePrompt';
-import path from 'path';
 import { BlockType } from './types';
 import UserError from '@/utils/UserError';
 import { kebabCase, uppercaseFirstOnly } from '@/utils/strings';
@@ -30,12 +29,15 @@ export async function promptType(): Promise<BlockType> {
  *
  * @param slug The block slug
  */
-export async function promptDest(slug: string): Promise<string> {
-  const fromSlug = `./src/blocks/${slug}`;
+export function promptDest(slug: string): () => Promise<string> {
+  return async () => {
+    const answer = await commandLinePrompt(
+      'Destination directory.',
+      `./src/blocks/${slug}`,
+    );
 
-  const answer = await commandLinePrompt('Destination directory.', fromSlug);
-
-  return answer;
+    return answer;
+  };
 }
 
 /**
@@ -52,15 +54,17 @@ export async function promptTitle(): Promise<string> {
  *
  * @param title The user specified title
  */
-export async function promptSlug(title: string): Promise<string> {
-  const fromTitle = kebabCase(title);
+export function promptSlug(title: string): () => Promise<string> {
+  return async () => {
+    const fromTitle = kebabCase(title);
 
-  const answer = await commandLinePrompt(
-    'Slug. Example "my-awesome-block".',
-    fromTitle,
-  );
+    const answer = await commandLinePrompt(
+      'Slug. Example "my-awesome-block".',
+      fromTitle,
+    );
 
-  return answer;
+    return answer;
+  };
 }
 
 /**
@@ -98,10 +102,12 @@ export async function promptTextDomain(): Promise<string> {
  *
  * @param title The user defined title
  */
-export async function promptDescription(title: string): Promise<string> {
-  const fromTitle = uppercaseFirstOnly(title) + '.';
+export function promptDescription(title: string): () => Promise<string> {
+  return async () => {
+    const fromTitle = uppercaseFirstOnly(title) + '.';
 
-  const answer = await commandLinePrompt('Description.', fromTitle);
+    const answer = await commandLinePrompt('Description.', fromTitle);
 
-  return answer;
+    return answer;
+  };
 }

@@ -17,13 +17,15 @@ import {
   promptPhpNamespace,
   promptPhpVersion,
   promptPrefix,
-  promptProjectType,
+  promptType,
   promptSlug,
   promptTitle,
   promptVersion,
   promptWordpressVersion,
 } from './prompts';
-import { ProjectTemplateVars, ProjectType } from './types';
+import { ProjectTemplateVars } from './types';
+import { isString, isBoolean } from '@/utils/typeChecks';
+import { argOrPrompt } from '@/utils/argOrPrompt';
 
 /**
  * Gets the latest wordpress version from api
@@ -132,15 +134,6 @@ async function renderFiles(
 }
 
 /**
- * Check is the passed in type is valid project type
- *
- * @param type The type to check against.
- */
-function isProjectType(type: unknown): type is ProjectType {
-  return type === 'theme' || type === 'plugin';
-}
-
-/**
  * Creates a wordpress project
  */
 export default async function createProject() {
@@ -161,36 +154,54 @@ export default async function createProject() {
     throw new UserError(`Installation directory must be empty '${dest}'`);
   }
 
-  const type = isProjectType(args.values.type)
-    ? args.values.type
-    : await promptProjectType();
-  const title = args.values.title ? args.values.title : await promptTitle();
-  const author = args.values.author ? args.values.author : await promptAuthor();
-  const authorHandle = args.values.authorHandle
-    ? args.values.authorHandle
-    : await promptAuthorHandle(author);
-  const description = args.values.description
-    ? args.values.description
-    : await promptDescription(title);
-  const slug = args.values.slug ? args.values.slug : await promptSlug(title);
-  const prefix = args.values.prefix
-    ? args.values.prefix
-    : await promptPrefix(title);
-  const version = args.values.version
-    ? args.values.version
-    : await promptVersion();
-  const phpNamespace = args.values.phpNamespace
-    ? args.values.phpNamespace
-    : await promptPhpNamespace(title);
-  const wordpressVersion = args.values.wordpressVersion
-    ? args.values.wordpressVersion
-    : await promptWordpressVersion(wpData.wordpressVersion);
-  const phpVersion = args.values.phpVersion
-    ? args.values.phpVersion
-    : await promptPhpVersion(wpData.phpVersion);
-  const installTests = args.values.installTests
-    ? args.values.installTests
-    : await promptInstallTests();
+  const type = await argOrPrompt(
+    args.values.type,
+    promptType,
+    (arg) => arg === 'theme' || arg === 'plugin',
+  );
+  const title = await argOrPrompt(args.values.title, promptTitle, isString);
+  const author = await argOrPrompt(args.values.author, promptAuthor, isString);
+  const authorHandle = await argOrPrompt(
+    args.values.authorHandle,
+    promptAuthorHandle(author),
+    isString,
+  );
+  const description = await argOrPrompt(
+    args.values.description,
+    promptDescription(title),
+    isString,
+  );
+  const slug = await argOrPrompt(args.values.slug, promptSlug(title), isString);
+  const prefix = await argOrPrompt(
+    args.values.prefix,
+    promptPrefix(title),
+    isString,
+  );
+  const version = await argOrPrompt(
+    args.values.version,
+    promptVersion,
+    isString,
+  );
+  const phpNamespace = await argOrPrompt(
+    args.values.phpNamespace,
+    promptPhpNamespace(title),
+    isString,
+  );
+  const wordpressVersion = await argOrPrompt(
+    args.values.wordpressVersion,
+    promptWordpressVersion(wpData.wordpressVersion),
+    isString,
+  );
+  const phpVersion = await argOrPrompt(
+    args.values.phpVersion,
+    promptPhpVersion(wpData.phpVersion),
+    isString,
+  );
+  const installTests = await argOrPrompt(
+    args.values.installTests,
+    promptInstallTests,
+    isBoolean,
+  );
 
   const [major, minor] = wordpressVersion.split('.');
 

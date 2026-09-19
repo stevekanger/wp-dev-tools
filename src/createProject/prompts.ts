@@ -22,7 +22,7 @@ export async function promptDest(): Promise<string> {
 /*
  * Prompts the user for the boilerplate type
  */
-export async function promptProjectType(): Promise<ProjectType> {
+export async function promptType(): Promise<ProjectType> {
   const answer = await commandLinePrompt(
     'Project type? (enter the number)\n1: Theme\n2: Plugin',
     '',
@@ -68,15 +68,17 @@ export async function promptAuthor(): Promise<string> {
 /**
  * Prompts the user for the author handle
  */
-export async function promptAuthorHandle(author: string): Promise<string> {
-  const fromAuthor = lowercaseRemoveSpaces(author);
+export function promptAuthorHandle(author: string): () => Promise<string> {
+  return async () => {
+    const fromAuthor = lowercaseRemoveSpaces(author);
 
-  const answer = await commandLinePrompt(
-    'Author handle. Example "johndoe".',
-    fromAuthor,
-  );
+    const answer = await commandLinePrompt(
+      'Author handle. Example "johndoe".',
+      fromAuthor,
+    );
 
-  return answer;
+    return answer;
+  };
 }
 
 /**
@@ -84,12 +86,14 @@ export async function promptAuthorHandle(author: string): Promise<string> {
  *
  * @param title The user specified title
  */
-export async function promptDescription(title: string): Promise<string> {
-  const fromTitle = uppercaseFirstOnly(title) + '.';
+export function promptDescription(title: string): () => Promise<string> {
+  return async () => {
+    const fromTitle = uppercaseFirstOnly(title) + '.';
 
-  const answer = await commandLinePrompt('Description.', fromTitle);
+    const answer = await commandLinePrompt('Description.', fromTitle);
 
-  return answer;
+    return answer;
+  };
 }
 
 /**
@@ -97,15 +101,17 @@ export async function promptDescription(title: string): Promise<string> {
  *
  * @param title The user specified title
  */
-export async function promptSlug(title: string): Promise<string> {
-  const fromTitle = kebabCase(title);
+export function promptSlug(title: string): () => Promise<string> {
+  return async () => {
+    const fromTitle = kebabCase(title);
 
-  const answer = await commandLinePrompt(
-    'Slug. Kebab case. Example "my-awesome-project".',
-    fromTitle,
-  );
+    const answer = await commandLinePrompt(
+      'Slug. Kebab case. Example "my-awesome-project".',
+      fromTitle,
+    );
 
-  return answer;
+    return answer;
+  };
 }
 
 /**
@@ -113,15 +119,17 @@ export async function promptSlug(title: string): Promise<string> {
  *
  * @param title The user specified title
  */
-export async function promptPrefix(title: string): Promise<string> {
-  const fromTitle = snakeCase(title);
+export function promptPrefix(title: string): () => Promise<string> {
+  return async () => {
+    const fromTitle = snakeCase(title);
 
-  const answer = await commandLinePrompt(
-    'Prefix. Snake case. Example "my_awesome_project".',
-    fromTitle,
-  );
+    const answer = await commandLinePrompt(
+      'Prefix. Snake case. Example "my_awesome_project".',
+      fromTitle,
+    );
 
-  return answer;
+    return answer;
+  };
 }
 
 /**
@@ -138,15 +146,17 @@ export async function promptVersion(): Promise<string> {
  *
  * @param title The user specified title
  */
-export async function promptPhpNamespace(title: string): Promise<string> {
-  const fromTitle = camelCase(title);
+export function promptPhpNamespace(title: string): () => Promise<string> {
+  return async () => {
+    const fromTitle = camelCase(title);
 
-  const answer = await commandLinePrompt(
-    'Php namespace. Example "MyAwesomeProject".',
-    fromTitle,
-  );
+    const answer = await commandLinePrompt(
+      'Php namespace. Example "MyAwesomeProject".',
+      fromTitle,
+    );
 
-  return answer;
+    return answer;
+  };
 }
 
 /**
@@ -154,10 +164,12 @@ export async function promptPhpNamespace(title: string): Promise<string> {
  *
  * @param latest The latest wordpress version
  */
-export async function promptWordpressVersion(latest: string): Promise<string> {
-  const answer = await commandLinePrompt('Target wordpress version.', latest);
+export function promptWordpressVersion(latest: string): () => Promise<string> {
+  return async () => {
+    const answer = await commandLinePrompt('Target wordpress version.', latest);
 
-  return answer;
+    return answer;
+  };
 }
 
 /**
@@ -165,10 +177,15 @@ export async function promptWordpressVersion(latest: string): Promise<string> {
  *
  * @param recommended The wordpress recommended minimum php version
  */
-export async function promptPhpVersion(minPhpVersion: string): Promise<string> {
-  const answer = await commandLinePrompt('Minimum php version.', minPhpVersion);
+export function promptPhpVersion(minPhpVersion: string): () => Promise<string> {
+  return async () => {
+    const answer = await commandLinePrompt(
+      'Minimum php version.',
+      minPhpVersion,
+    );
 
-  return answer;
+    return answer;
+  };
 }
 
 /**

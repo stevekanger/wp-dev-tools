@@ -13,6 +13,7 @@ yarn-error.log*
 coverage
 
 # Leave out all build and local folders
+/dist/
 /build/
 /local/
 

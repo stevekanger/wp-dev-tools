@@ -1,7 +1,7 @@
 import { copyArgsConfig, showCmdHelp } from '@/args';
 import { DevToolsJson } from '@/types';
 import { argOrPrompt } from '@/utils/argOrPrompt';
-import ensureDir from '@/utils/ensureDistDir';
+import ensureDir from '@/utils/ensureDir';
 import getJsonFileContents from '@/utils/getJsonFileContents';
 import normalizePath from '@/utils/normalizePath';
 import { promptDir, promptValues } from '@/utils/prompts';

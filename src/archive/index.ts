@@ -1,7 +1,7 @@
 import { archiveArgsConfig, showCmdHelp } from '@/args';
 import { DevToolsJson } from '@/types';
 import { argOrPrompt } from '@/utils/argOrPrompt';
-import ensureDir from '@/utils/ensureDistDir';
+import ensureDir from '@/utils/ensureDir';
 import getJsonFileContents from '@/utils/getJsonFileContents';
 import { promptBoolean, promptDir, promptValues } from '@/utils/prompts';
 import { isOneOf, isString } from '@/utils/typeChecks';

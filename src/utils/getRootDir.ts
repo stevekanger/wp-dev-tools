@@ -1,4 +1,5 @@
 import path from 'path';
+import config from '@/config';
 
 /**
  * Gets the root directory and if path is provided then it will be appended.
@@ -7,5 +8,5 @@ import path from 'path';
  * @return The full path to the root dir and any extra if passed in
  */
 export default function getRootDir(...paths: string[]): string {
-  return path.join(__dirname, '..', '..', ...paths);
+  return path.join(config.rootDir, ...paths);
 }

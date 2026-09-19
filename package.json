@@ -10,14 +10,14 @@
   "license": "GPL-2.0-or-later",
   "author": "stevekanger",
   "type": "commonjs",
-  "main": "dist/index.mjs",
+  "main": "dist/index.js",
   "scripts": {
     "prepublishOnly": "npm run build",
     "dev": "node --watch --import tsx src/index.ts",
     "build": "tsup"
   },
   "bin": {
-    "wp-dev-tools": "dist/index.mjs"
+    "wp-dev-tools": "dist/index.js"
   },
   "files": [
     "dist",

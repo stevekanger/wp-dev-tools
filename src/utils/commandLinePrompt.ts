@@ -6,16 +6,14 @@ import readline from 'readline';
  * @param question The question you want to ask
  * @param defaultAnswer The fallback if the user doesn't supply an answer
  * @param required Whether the response is required to contain a value
- *
- * @since 0.1.0
  */
 export default async function commandLinePrompt(
   question: string,
-  defaultAnswer: string = '',
+  fallback: string = '',
   required: boolean = false,
 ): Promise<string> {
   question = `\n${question}`;
-  question += `\n(default: ${defaultAnswer || '""'})`;
+  question += `\n(default: ${fallback || '""'})`;
   question += `${required ? ' required' : ''}: `;
 
   while (true) {
@@ -30,7 +28,7 @@ export default async function commandLinePrompt(
 
     rl.close();
 
-    const formattedResponse = response.trim() || defaultAnswer.trim();
+    const formattedResponse = response.trim() || fallback.trim();
 
     if (required && !formattedResponse) {
       continue;

@@ -1,31 +1,30 @@
 import { createProjectArgsConfig, showCmdHelp } from '@/args';
+import { argOrPrompt } from '@/utils/argOrPrompt';
 import dirEmpty from '@/utils/dirEmpty';
 import getDirectoryFiles from '@/utils/getDirectoryFiles';
 import getRootDir from '@/utils/getRootDir';
+import normalizePath from '@/utils/normalizePath';
+import {
+  promptBoolean,
+  promptConfirm,
+  promptDir,
+  promptString,
+  promptValues,
+} from '@/utils/prompts';
+import {
+  camelCase,
+  kebabCase,
+  lowercaseRemoveSpaces,
+  snakeCase,
+  uppercaseFirstOnly,
+} from '@/utils/strings';
+import { isBoolean, isOneOf, isString } from '@/utils/typeChecks';
 import UserError from '@/utils/UserError';
 import fs from 'fs';
 import mustache from 'mustache';
 import path from 'path';
 import { parseArgs } from 'util';
-import {
-  promptAuthor,
-  promptAuthorHandle,
-  promptConfirm,
-  promptDescription,
-  promptDest,
-  promptInstallTests,
-  promptPhpNamespace,
-  promptPhpVersion,
-  promptPrefix,
-  promptType,
-  promptSlug,
-  promptTitle,
-  promptVersion,
-  promptWordpressVersion,
-} from './prompts';
-import { ProjectTemplateVars } from './types';
-import { isString, isBoolean } from '@/utils/typeChecks';
-import { argOrPrompt } from '@/utils/argOrPrompt';
+import { ProjectTemplateVars, ProjectType } from './types';
 
 /**
  * Gets the latest wordpress version from api
@@ -146,64 +145,107 @@ export default async function createProject() {
 
   const wpData = await getWordpressData();
 
-  const dest = args.values.dest
-    ? path.resolve(args.values.dest)
-    : path.resolve(await promptDest());
+  const dest = await argOrPrompt(
+    normalizePath(args.values.dest || ''),
+    promptDir('Destination location.'),
+    isString,
+  );
 
   if (fs.existsSync(dest) && !dirEmpty(dest)) {
     throw new UserError(`Installation directory must be empty '${dest}'`);
   }
 
-  const type = await argOrPrompt(
+  const type: ProjectType = await argOrPrompt(
     args.values.type,
-    promptType,
-    (arg) => arg === 'theme' || arg === 'plugin',
+    promptValues('Project type.', ['theme', 'plugin'] as const),
+    isOneOf('theme', 'plugin'),
   );
-  const title = await argOrPrompt(args.values.title, promptTitle, isString);
-  const author = await argOrPrompt(args.values.author, promptAuthor, isString);
+  const title = await argOrPrompt(
+    args.values.title,
+    promptString('Title. Example "My Awesome Thing".'),
+    isString,
+  );
+  const author = await argOrPrompt(
+    args.values.author,
+    promptString('Author full name. Example "John Doe".'),
+    isString,
+  );
   const authorHandle = await argOrPrompt(
     args.values.authorHandle,
-    promptAuthorHandle(author),
+    promptString(
+      'Author handle. Example "johndoe".',
+      lowercaseRemoveSpaces(author),
+    ),
     isString,
   );
   const description = await argOrPrompt(
     args.values.description,
-    promptDescription(title),
+    promptString('Description.', uppercaseFirstOnly(title) + '.'),
     isString,
   );
-  const slug = await argOrPrompt(args.values.slug, promptSlug(title), isString);
+  const slug = await argOrPrompt(
+    args.values.slug,
+    promptString(
+      'Slug. Kebab case. Example "my-awesome-thing".',
+      kebabCase(title),
+    ),
+    isString,
+  );
   const prefix = await argOrPrompt(
     args.values.prefix,
-    promptPrefix(title),
+    promptString(
+      'Prefix. Snake case. Example "my_awesome_thing".',
+      snakeCase(title),
+    ),
     isString,
   );
   const version = await argOrPrompt(
     args.values.version,
-    promptVersion,
+    promptString('Version.', '1.0.0'),
     isString,
   );
   const phpNamespace = await argOrPrompt(
     args.values.phpNamespace,
-    promptPhpNamespace(title),
+    promptString('Php Namespace.', camelCase(title)),
     isString,
   );
   const wordpressVersion = await argOrPrompt(
     args.values.wordpressVersion,
-    promptWordpressVersion(wpData.wordpressVersion),
+    promptString('Wordpress version.', wpData.wordpressVersion),
     isString,
   );
   const phpVersion = await argOrPrompt(
     args.values.phpVersion,
-    promptPhpVersion(wpData.phpVersion),
+    promptString('Php version.', wpData.phpVersion),
     isString,
   );
   const installTests = await argOrPrompt(
     args.values.installTests,
-    promptInstallTests,
+    promptBoolean('Install tests.', 'n'),
     isBoolean,
   );
 
   const [major, minor] = wordpressVersion.split('.');
+
+  const confirmed = await promptConfirm({
+    ['Destination']: dest,
+    ['Project Type']: type,
+    ['Title']: title,
+    ['Author']: author,
+    ['Author Handle']: authorHandle,
+    ['Description']: description,
+    ['Slug']: slug,
+    ['Prefix']: prefix,
+    ['version']: version,
+    ['Php Namespace']: phpNamespace,
+    ['Wordpress Version']: wordpressVersion,
+    ['Php Version']: phpVersion,
+    ['Install Tests']: installTests ? 'Yes' : 'No',
+  });
+
+  if (!confirmed) {
+    throw new UserError('Data not confirmed.');
+  }
 
   const templateVars: ProjectTemplateVars = {
     dest,
@@ -225,8 +267,6 @@ export default async function createProject() {
     installTests,
     wpContentLocation: type === 'plugin' ? 'plugins' : 'themes',
   };
-
-  await promptConfirm(templateVars);
 
   // Render base files
   renderFiles(

@@ -1,11 +1,11 @@
 import { dockerExtractArgsConfig, showCmdHelp } from '@/args';
+import { argOrPrompt } from '@/utils/argOrPrompt';
 import ensureDir from '@/utils/ensureDistDir';
+import { promptDir, promptString } from '@/utils/prompts';
+import normalizePath from '@/utils/normalizePath';
+import { isString } from '@/utils/typeChecks';
 import { execSync } from 'child_process';
 import { parseArgs } from 'util';
-import { promptContainer, promptDest, promptSrc } from './prompts';
-import path from 'path';
-import { argOrPrompt } from '@/utils/argOrPrompt';
-import { isString } from '@/utils/typeChecks';
 
 export default async function dockerExtract() {
   const args = parseArgs(dockerExtractArgsConfig);
@@ -17,14 +17,20 @@ export default async function dockerExtract() {
 
   const container = await argOrPrompt(
     args.values.container,
-    promptContainer,
+    promptString('Docker container name.'),
     isString,
   );
-  const src = path.resolve(
-    await argOrPrompt(args.values.src, promptSrc, isString),
+  const src = await argOrPrompt(
+    args.values.src,
+    promptString(
+      'Container wp-content location. Example "themes/my-awesome-thing".',
+    ),
+    isString,
   );
-  const dest = path.resolve(
-    await argOrPrompt(args.values.dest, promptDest, isString),
+  const dest = await argOrPrompt(
+    normalizePath(args.values.dest || ''),
+    promptDir('Local pc destination location.'),
+    isString,
   );
 
   ensureDir(dest);

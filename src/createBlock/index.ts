@@ -1,27 +1,22 @@
 import { createBlockArgsConfig, showCmdHelp } from '@/args';
 import { argOrPrompt } from '@/utils/argOrPrompt';
 import dirEmpty from '@/utils/dirEmpty';
+import getEnv from '@/utils/getEnv';
 import getRootDir from '@/utils/getRootDir';
 import {
   isMustache,
   removeMustacheExtension,
   renderMustache,
 } from '@/utils/mustache';
-import { isString } from '@/utils/typeChecks';
+import normalizePath from '@/utils/normalizePath';
+import { promptDir, promptString, promptValues } from '@/utils/prompts';
+import { kebabCase, uppercaseFirstOnly } from '@/utils/strings';
+import { isOneOf, isString } from '@/utils/typeChecks';
 import UserError from '@/utils/UserError';
 import fs from 'fs';
 import path from 'path';
 import { parseArgs } from 'util';
-import {
-  promptDescription,
-  promptDest,
-  promptNamespace,
-  promptSlug,
-  promptTextDomain,
-  promptTitle,
-  promptType,
-} from './prompts';
-import { BlockTemplateVars } from './types';
+import { BlockTemplateVars, BlockType } from './types';
 
 /**
  * Creates wordpress block files
@@ -34,31 +29,40 @@ export default async function createBlock() {
     return;
   }
 
-  const type = await argOrPrompt(
+  const type: BlockType = await argOrPrompt(
     args.values.type,
-    promptType,
-    (arg) => arg === 'static' || arg === 'dynamic',
+    promptValues('Block type.', ['static', 'dynamic'] as const),
+    isOneOf('static', 'dynamic'),
   );
-
-  const title = await argOrPrompt(args.values.title, promptTitle, isString);
-  const slug = await argOrPrompt(args.values.slug, promptSlug(title), isString);
+  const title = await argOrPrompt(
+    args.values.title,
+    promptString('Title. Example "My Awesome Thing".'),
+    isString,
+  );
+  const slug = await argOrPrompt(
+    args.values.slug,
+    promptString('Slug. Example "my-awesome-thing".', kebabCase(title)),
+    isString,
+  );
   const namespace = await argOrPrompt(
     args.values.namespace,
-    promptNamespace,
+    promptString('Namespace.', getEnv('SLUG', '')),
     isString,
   );
   const textdomain = await argOrPrompt(
     args.values.textdomain,
-    promptTextDomain,
+    promptString('Textdomain.', getEnv('SLUG', '')),
     isString,
   );
   const description = await argOrPrompt(
     args.values.description,
-    promptDescription(title),
+    promptString('Description.', uppercaseFirstOnly(title) + '.'),
     isString,
   );
-  const dest = path.resolve(
-    await argOrPrompt(args.values.dest, promptDest(slug), isString),
+  const dest = await argOrPrompt(
+    normalizePath(args.values.dest || ''),
+    promptDir('Destination location.', `./src/blocks/${slug}`),
+    isString,
   );
 
   if (fs.existsSync(dest) && !dirEmpty(dest)) {

@@ -33,3 +33,14 @@ export function isBoolean(value: unknown): value is boolean {
 export function isFunction(value: unknown): value is Function {
   return typeof value === 'function';
 }
+
+/**
+ * Checks if a value is one of the specified values
+ *
+ * @param ...values Any values you want to check
+ */
+export function isOneOf<T>(...values: T[]) {
+  return (value: unknown): value is T => {
+    return values.includes(value as T);
+  };
+}

@@ -1,17 +1,18 @@
 import { archiveArgsConfig, showCmdHelp } from '@/args';
 import { DevToolsJson } from '@/types';
+import { argOrPrompt } from '@/utils/argOrPrompt';
 import ensureDir from '@/utils/ensureDistDir';
 import getJsonFileContents from '@/utils/getJsonFileContents';
+import { promptBoolean, promptDir, promptValues } from '@/utils/prompts';
+import { isOneOf, isString } from '@/utils/typeChecks';
 import UserError from '@/utils/UserError';
 import { ZipArchive } from 'archiver';
 import fs from 'fs';
 import path from 'path';
 import { parseArgs } from 'util';
 import checkVersion from './checkVersion';
-import { promptDest, promptSrc, promptType, promptVersion } from './prompts';
-import { argOrPrompt } from '@/utils/argOrPrompt';
-import { isString } from '@/utils/typeChecks';
 import { ArchiveType } from './types';
+import normalizePath from '@/utils/normalizePath';
 
 /**
  * Creates the archiver
@@ -76,16 +77,20 @@ export default async function archive() {
     return;
   }
 
-  const src = path.resolve(
-    await argOrPrompt(args.values.src, promptSrc, isString),
+  const src = await argOrPrompt(
+    normalizePath(args.values.src || ''),
+    promptDir('Source location.'),
+    isString,
   );
-  const dest = path.resolve(
-    await argOrPrompt(args.values.dest, promptDest, isString),
+  const dest = await argOrPrompt(
+    normalizePath(args.values.dest || ''),
+    promptDir('Destination location.'),
+    isString,
   );
   const type: ArchiveType = await argOrPrompt(
     args.values.type,
-    promptType,
-    (arg) => arg === 'dev' || arg === 'dist',
+    promptValues('Archive type.', ['dist', 'dev'] as const),
+    isOneOf('dist', 'dev'),
   );
 
   ensureDir(dest);
@@ -113,7 +118,13 @@ export default async function archive() {
   const version = packageJson.version;
   checkVersion(path.join(src, devToolsJson.main), version);
 
-  await promptVersion(version);
+  const versionConfirmed = await promptBoolean(
+    `Is the current stated verison "${version} correct?"`,
+  )();
+
+  if (!versionConfirmed) {
+    throw new UserError('Verison not confirmed.');
+  }
 
   const packageName = packageJson.name;
   const archiveName =

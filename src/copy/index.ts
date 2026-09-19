@@ -1,15 +1,16 @@
 import { copyArgsConfig, showCmdHelp } from '@/args';
 import { DevToolsJson } from '@/types';
+import { argOrPrompt } from '@/utils/argOrPrompt';
 import ensureDir from '@/utils/ensureDistDir';
 import getJsonFileContents from '@/utils/getJsonFileContents';
+import normalizePath from '@/utils/normalizePath';
+import { promptDir, promptValues } from '@/utils/prompts';
+import { isOneOf, isString } from '@/utils/typeChecks';
 import UserError from '@/utils/UserError';
 import fs from 'fs';
 import path from 'path';
 import { parseArgs } from 'util';
-import { promptDest, promptSrc, promptType } from './prompts';
-import { argOrPrompt } from '@/utils/argOrPrompt';
 import { CopyType } from './types';
-import { isString } from '@/utils/typeChecks';
 
 /**
  * Copy the project files to specified directory
@@ -23,14 +24,20 @@ export default async function copy() {
     return;
   }
 
-  const src = await argOrPrompt(args.values.src, promptSrc, isString);
-  const dest = path.resolve(
-    await argOrPrompt(args.values.dest, promptDest, isString),
+  const src = await argOrPrompt(
+    args.values.src,
+    promptDir('Source location.'),
+    isString,
+  );
+  const dest = await argOrPrompt(
+    normalizePath(args.values.dest || ''),
+    promptDir('Destination location.'),
+    isString,
   );
   const type: CopyType = await argOrPrompt(
     args.values.type,
-    promptType,
-    (arg) => arg === 'dev' || arg === 'dist',
+    promptValues('Copy type.', ['dist', 'dev'] as const),
+    isOneOf('dist', 'dev'),
   );
 
   const devToolsJson = getJsonFileContents<DevToolsJson>(

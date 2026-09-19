@@ -115,7 +115,7 @@ export const copyArgsConfig = {
 } as const;
 
 export const dockerExtractArgsConfig = {
-  cmd: 'docker-extract',
+  cmd: 'dockerExtract',
   options: {
     container: {
       type: 'string',
@@ -218,6 +218,8 @@ export function showCmdsHelp(configs: ArgConfig[]) {
   console.log(
     'Run command first followed by any options.\nStructure: [command] ...options',
   );
+
+  console.log('\n[--help] [-h]\nShows the help message.');
 
   configs.forEach((config) => {
     showCmdHelp(config);

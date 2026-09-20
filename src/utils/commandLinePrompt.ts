@@ -12,9 +12,8 @@ export default async function commandLinePrompt(
   fallback: string = '',
   required: boolean = false,
 ): Promise<string> {
-  question = `\n${question}`;
-  question += `\n(default: ${fallback || '""'})`;
-  question += `${required ? ' required' : ''}: `;
+  question = `\n${question}\n`;
+  question += `answer${required ? ' (required)' : ''}: `;
 
   while (true) {
     const rl = readline.createInterface({
@@ -22,13 +21,17 @@ export default async function commandLinePrompt(
       output: process.stdout,
     });
 
-    const response: string = await new Promise<string>((resolve) =>
-      rl.question(question, resolve),
-    );
+    const response: string = await new Promise<string>((resolve) => {
+      rl.question(question, resolve);
+
+      if (fallback) {
+        rl.write(fallback);
+      }
+    });
 
     rl.close();
 
-    const formattedResponse = response.trim() || fallback.trim();
+    const formattedResponse = response.trim();
 
     if (required && !formattedResponse) {
       continue;

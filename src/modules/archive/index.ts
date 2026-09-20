@@ -100,7 +100,7 @@ export default async function archive() {
   );
 
   if (!devToolsJson) {
-    throw new UserError('Could not find dev-tools.json in cwd.');
+    throw new UserError('Error getting dev-tools.json in cwd.');
   }
 
   const packageJson = getJsonFileContents<{ version: string; name: string }>(
@@ -108,7 +108,7 @@ export default async function archive() {
   );
 
   if (!packageJson) {
-    throw new UserError('Could not find package.json in cwd.');
+    throw new UserError('Error getting package.json in cwd.');
   }
 
   const {

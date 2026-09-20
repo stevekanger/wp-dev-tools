@@ -1,10 +1,12 @@
 {
   "name": "@stevekanger/wp-dev-tools",
   "version": "0.1.0",
-  "description": "Development tools for wordpress",
+  "description": "Development tools for wordpress.",
   "keywords": [
     "wordpress",
     "developement",
+    "wp",
+    "dev",
     "tools"
   ],
   "license": "GPL-2.0-or-later",

@@ -9,23 +9,19 @@
 {{/installTests}}
     "dev": "wp-scripts start",
     "build": "wp-scripts build",
-    "archive:dist": "composer install --no-dev && wp-scripts build && tsx ./dev-tools/archive && composer install",
-    "archive:dev": "tsx ./dev-tools/archive dev",
+    "archive:dist": "composer install --no-dev && wp-scripts build && wp-dev-tools archive --type dist && composer install",
+    "archive:dev": "wp-dev-tools archive --type dev",
     "docker:shell": "docker exec -it {{slug}}-wordpress /bin/bash",
-    "docker:extract": "tsx ./dev-tools/docker/extract.ts {{slug}}-wordpress"
+    "docker:extract": "wp-dev-tools dockerExtract --container {{slug}}-wordpress",
+    "copy": "wp-dev-tools copy"
   },
   "devDependencies": {
 {{#installTests}}
     "vitest": "^4.1.11",
-{{/installTests}}   
-    "@types/archiver": "^8.0.0",
-    "@types/mustache": "^4.2.6",
-    "@types/node": "^26.2.0",
+{{/installTests}}
     "@wordpress/scripts": "^34.1.0",
-    "archiver": "^8.0.0",
     "browser-sync-webpack-plugin": "^2.4.0",
     "dotenv": "^17.4.2",
-    "tsx": "^4.23.12",
     "typescript": "^6.0.3"
   }
 }

@@ -2,7 +2,13 @@ import { createProjectArgsConfig, showCmdHelp } from '@/args';
 import { argOrPrompt } from '@/utils/argOrPrompt';
 import dirEmpty from '@/utils/dirEmpty';
 import getDirectoryFiles from '@/utils/getDirectoryFiles';
+import getJsonFileContents from '@/utils/getJsonFileContents';
 import getRootDir from '@/utils/getRootDir';
+import {
+  isMustache,
+  removeMustacheExtension,
+  renderMustache,
+} from '@/utils/mustache';
 import normalizePath from '@/utils/normalizePath';
 import {
   promptBoolean,
@@ -11,6 +17,7 @@ import {
   promptString,
   promptValues,
 } from '@/utils/prompts';
+import replaceFilenamePlaceholders from '@/utils/replaceFilenamePlaceholder';
 import {
   camelCase,
   kebabCase,
@@ -21,10 +28,9 @@ import {
 import { isBoolean, isOneOf, isString } from '@/utils/typeChecks';
 import UserError from '@/utils/UserError';
 import fs from 'fs';
-import mustache from 'mustache';
 import path from 'path';
 import { parseArgs } from 'util';
-import { ProjectTemplateVars, ProjectType } from './types';
+import { ProjectTemplateVars, ProjectType, WpContentLocation } from './types';
 
 /**
  * Gets the latest wordpress version from api
@@ -54,7 +60,7 @@ async function getWordpressData(): Promise<{
 
     if (phpVersionRes.status !== 200) {
       throw new UserError(
-        'Failed fetching wordpress php version data. Please try again shortly.',
+        'Failed fetching wordpress version and php data which can happen occasionally. Please try again shortly.',
       );
     }
 
@@ -70,35 +76,6 @@ async function getWordpressData(): Promise<{
 }
 
 /**
- * Gets the destination file path
- *
- * @param {string} destDir The destination directory
- * @param {string} fileName The name of the file relative to destDir
- * @param {boolean} isRenderableMustache Wether to render the mustache file or not
- * @param {TemplateVars} vars The template variables
- */
-function getDestPath(
-  destDir: string,
-  fileName: string,
-  isRenderableMustache: boolean,
-  vars: ProjectTemplateVars,
-): string {
-  const parsed = path.parse(path.join(destDir, fileName));
-
-  // parse out any filename placeholders
-  if (parsed.base.includes('[slug]')) {
-    parsed.base = parsed.base.replace('[slug]', vars.slug);
-    parsed.name = parsed.name.replace('[slug]', vars.slug);
-  }
-
-  if (isRenderableMustache) {
-    return `${parsed.dir}/${parsed.name}`;
-  }
-
-  return `${parsed.dir}/${parsed.base}`;
-}
-
-/**
  * Render template files from directory
  *
  * @param src The path of the template files
@@ -110,26 +87,39 @@ async function renderFiles(
   dest: string,
   vars: ProjectTemplateVars,
 ) {
-  const files = getDirectoryFiles(src);
-
-  files.forEach((fileName) => {
-    const isRenderableMustache = fileName.endsWith('.mustache');
-
+  getDirectoryFiles(src).forEach((fileName) => {
     const srcPath = path.join(src, fileName);
-    const destPath = getDestPath(dest, fileName, isRenderableMustache, vars);
+    let destPath = path.join(
+      dest,
+      removeMustacheExtension(
+        replaceFilenamePlaceholders(fileName, {
+          slug: vars.slug,
+        }),
+      ),
+    );
 
-    if (isRenderableMustache) {
-      const fileContents = fs.readFileSync(srcPath, 'utf8');
-      const rendered = mustache.render(fileContents, vars);
-
-      if (rendered) {
-        fs.mkdirSync(path.dirname(destPath), { recursive: true });
-        fs.writeFileSync(destPath, rendered, 'utf8');
-      }
+    if (isMustache(fileName)) {
+      renderMustache(srcPath, destPath, vars);
     } else {
       fs.cpSync(srcPath, destPath);
     }
   });
+}
+
+/**
+ * Gets the wp-content location based on the project type
+ *
+ * @param type The project type
+ */
+function getWpContentLocation(type: ProjectType): WpContentLocation {
+  switch (type) {
+    case 'theme':
+      return 'themes';
+    case 'plugin':
+      return 'plugins';
+    default:
+      throw new Error('Invalid project type getting wp content location.');
+  }
 }
 
 /**
@@ -154,6 +144,16 @@ export default async function createProject() {
   if (fs.existsSync(dest) && !dirEmpty(dest)) {
     throw new UserError(`Installation directory must be empty '${dest}'`);
   }
+
+  const packageJson = getJsonFileContents<{ version: string }>(
+    getRootDir('package.json'),
+  );
+
+  if (!packageJson) {
+    throw new Error('Could not find in tools root dir package.json.');
+  }
+
+  const { version: devToolsVersion } = packageJson;
 
   const type: ProjectType = await argOrPrompt(
     args.values.type,
@@ -250,7 +250,6 @@ export default async function createProject() {
   const templateVars: ProjectTemplateVars = {
     dest,
     type,
-    typeProper: type === 'plugin' ? 'Plugin' : 'Theme',
     isPlugin: type === 'plugin',
     isTheme: type === 'theme',
     title,
@@ -265,24 +264,15 @@ export default async function createProject() {
     wordpressVersionMajorMinor: `${major}.${minor}`,
     phpVersion,
     installTests,
-    wpContentLocation: type === 'plugin' ? 'plugins' : 'themes',
+    wpContentLocation: getWpContentLocation(type),
+    devToolsVersion,
   };
 
-  // Render base files
-  renderFiles(
+  [
     getRootDir('templates', 'createProject', 'base'),
-    dest,
-    templateVars,
-  );
-
-  // Render template specific files
-  renderFiles(
     getRootDir('templates', 'createProject', type),
-    dest,
-    templateVars,
-  );
+  ].forEach((src) => renderFiles(src, dest, templateVars));
 
-  // Render tests if needed
   if (installTests) {
     renderFiles(
       getRootDir('templates', 'createProject', 'tests'),
@@ -295,6 +285,6 @@ export default async function createProject() {
 
   console.log(`
   Finished!
-  Go to readme.txt and ${mainFileName} to fill in any more relevant information.
+  Go to readme.txt and ${mainFileName} to fill in any relevant information.
   `);
 }

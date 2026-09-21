@@ -1,5 +1,8 @@
 import { ArgConfig } from './types';
 
+/**
+ * Arg config for createProject module
+ */
 export const createProjectArgsConfig = {
   cmd: 'createProject',
   options: {
@@ -66,6 +69,9 @@ export const createProjectArgsConfig = {
   allowPositionals: true,
 } as const;
 
+/**
+ * Arg config for the archive module
+ */
 export const archiveArgsConfig = {
   cmd: 'archive',
   options: {
@@ -90,6 +96,9 @@ export const archiveArgsConfig = {
   allowPositionals: true,
 } as const;
 
+/**
+ * Arg config for the copy module
+ */
 export const copyArgsConfig = {
   cmd: 'copy',
   options: {
@@ -114,6 +123,9 @@ export const copyArgsConfig = {
   allowPositionals: true,
 } as const;
 
+/**
+ * Arg config for the dockerExtract module
+ */
 export const dockerExtractArgsConfig = {
   cmd: 'dockerExtract',
   options: {
@@ -139,6 +151,9 @@ export const dockerExtractArgsConfig = {
   allowPositionals: true,
 } as const;
 
+/**
+ * Arg config for the createBlock module
+ */
 export const createBlockArgsConfig = {
   cmd: 'createBlock',
   options: {
@@ -182,6 +197,9 @@ export const createBlockArgsConfig = {
   allowPositionals: true,
 } as const;
 
+/**
+ * Arg configs for all modules
+ */
 export const argConfigs: ArgConfig[] = [
   createProjectArgsConfig,
   archiveArgsConfig,
@@ -218,7 +236,6 @@ export function showCmdsHelp(configs: ArgConfig[]) {
   console.log(
     'Run command first followed by any options.\nStructure: [command] ...options',
   );
-
   console.log('\n[--help] [-h]\nShows the help message.');
 
   configs.forEach((config) => {

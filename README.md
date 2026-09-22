@@ -43,7 +43,7 @@ wp-dev-tools [command] [...options]
 
 ### createProject
 
-Creates either a theme or plugin project.
+Creates either a theme or plugin project. This command should be run with npx to scaffold a project. It will automatically set up your project's package.json to include `@stevekanger/wp-dev-tools` as a dev dependency.
 
 | Option             | Type    | Allowed           | Description                                                                                                 |
 | ------------------ | ------- | ----------------- | ----------------------------------------------------------------------------------------------------------- |

@@ -269,16 +269,12 @@ export default async function createProject() {
   };
 
   [
-    getRootDir('templates', 'createProject', 'base'),
-    getRootDir('templates', 'createProject', type),
+    getRootDir('templates', 'project-base'),
+    getRootDir('templates', `project-${type}`),
   ].forEach((src) => renderFiles(src, dest, templateVars));
 
   if (installTests) {
-    renderFiles(
-      getRootDir('templates', 'createProject', 'tests'),
-      dest,
-      templateVars,
-    );
+    renderFiles(getRootDir('templates', 'project-tests'), dest, templateVars);
   }
 
   const mainFileName = type === 'plugin' ? `${slug}.php` : 'style.css';

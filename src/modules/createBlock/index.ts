@@ -81,7 +81,7 @@ export default async function createBlock() {
     isDynamicVariant: type === 'dynamic',
   };
 
-  const src = getRootDir('templates', 'createBlock');
+  const src = getRootDir('templates', 'block');
 
   fs.readdirSync(src).forEach((item) => {
     const srcItemPath = path.join(src, item);

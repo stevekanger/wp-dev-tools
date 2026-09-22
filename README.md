@@ -23,7 +23,11 @@ and use in package.json
 ```json
 {
   "scripts": {
+    "create:project": "wp-dev-tools createProject"
+    "create:block": "wp-dev-tools createBlock"
     "archive": "wp-dev-tools archive"
+    "copy": "wp-dev-tools copy"
+    "docker:extract": "wp-dev-tools dockerExtract"
   }
 }
 ```

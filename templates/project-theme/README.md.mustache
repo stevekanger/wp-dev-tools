@@ -1,27 +1,14 @@
 # {{title}}
-{{#description}}
 
-{{.}}
-{{/description}}
+{{description}}
 
 Modern WordPress theme featuring Composer autoloading, Docker support, and Webpack build pipeline.
 
-## Folder structure
+## Structure
 
-All php files reside in `inc`. All `psr-4` classes will be autoloaded via `composer` from the `inc/app` folder.
+All php files reside in `inc`. All `psr-4` classes will be autoloaded via `composer` from the `inc/app` folder. Controllers and Services are registered to the Container in the main php file. Controllers are responsible for registering hooks to wordpress.
 
 All raw js, css, and blocks reside in `src`. These are files that need to be built during the build process.
-
-## Installation
-
-```bash
-npm install
-
-composer install
-
-composer dump-autoload
-
-```
 
 ## Usage
 
@@ -33,14 +20,14 @@ Docker env variables for php and wordpress versions will be set in `.env`. The w
 
 ### Dev Scripts
 
-Build run.
+To build.
 
 ```bash
 npm run build
 
 ```
 
-Development run.
+To develop.
 
 ```bash
 docker compose up -d
@@ -49,10 +36,10 @@ npm run dev
 
 ```
 
-To archive for distribution run.
+To archive for distribution.
 
 ```bash
-npm run archive:plugin
+npm run archive:dist
 
 ```
 

@@ -8,6 +8,7 @@ export interface BlockTemplateVars {
   textdomain: string;
   title: string;
   description: string;
+  version: string;
   isStaticVariant: boolean;
   isDynamicVariant: boolean;
 }

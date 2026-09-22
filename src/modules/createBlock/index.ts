@@ -1,4 +1,5 @@
 import { createBlockArgsConfig, showCmdHelp } from '@/args';
+import { INITIAL_VERSION } from '@/constants';
 import { argOrPrompt } from '@/utils/argOrPrompt';
 import dirEmpty from '@/utils/dirEmpty';
 import getEnv from '@/utils/getEnv';
@@ -9,7 +10,12 @@ import {
   renderMustache,
 } from '@/utils/mustache';
 import normalizePath from '@/utils/normalizePath';
-import { promptDir, promptString, promptValues } from '@/utils/prompts';
+import {
+  promptConfirm,
+  promptDir,
+  promptString,
+  promptValues,
+} from '@/utils/prompts';
 import { kebabCase, uppercaseFirstOnly } from '@/utils/strings';
 import { isOneOf, isString } from '@/utils/typeChecks';
 import UserError from '@/utils/UserError';
@@ -59,6 +65,11 @@ export default async function createBlock() {
     promptString('Description.', uppercaseFirstOnly(title) + '.'),
     isString,
   );
+  const version = await argOrPrompt(
+    args.values.description,
+    promptString('Version.', INITIAL_VERSION),
+    isString,
+  );
   const dest = await argOrPrompt(
     normalizePath(args.values.dest),
     promptDir('Destination location.', `./src/blocks/${slug}`),
@@ -69,6 +80,21 @@ export default async function createBlock() {
     throw new UserError(`Installation directory must be empty '${dest}'`);
   }
 
+  const confirmed = await promptConfirm({
+    ['Type']: type,
+    ['Title']: title,
+    ['Slug']: slug,
+    ['Namespace']: namespace,
+    ['Textdomain']: textdomain,
+    ['Description']: description,
+    ['version']: version,
+    ['Destination']: dest,
+  });
+
+  if (!confirmed) {
+    throw new UserError('Data not confirmed.');
+  }
+
   const templateVars: BlockTemplateVars = {
     dest,
     type,
@@ -77,6 +103,7 @@ export default async function createBlock() {
     namespace,
     textdomain,
     description,
+    version,
     isStaticVariant: type === 'static',
     isDynamicVariant: type === 'dynamic',
   };

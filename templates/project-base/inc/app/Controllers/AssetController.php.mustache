@@ -24,8 +24,11 @@ final class AssetController extends Controller {
      * @since {{version}}
      */
     public function register(): void {
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_client_assets']);
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
+        // Uncomment if you need to enqueue client scripts
+        // add_action('wp_enqueue_scripts', [$this, 'enqueue_client_assets']);
+
+        // Uncomment if you need to enqueue admin scripts
+        // add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
     }
 
     /**

@@ -26,6 +26,8 @@ AppConfig::init(
 // Create container and bind controllers and services
 $container = new Container();
 
+// Enqueue's scripts and handles static assets.
+// Uncomment the scripts you want to enqueue in AssetController::register
 $container->bind(AssetController::class, function(Container $container) {
     return new AssetController($container);
 });

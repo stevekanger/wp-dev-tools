@@ -70,6 +70,56 @@ export const createProjectArgsConfig = {
 } as const;
 
 /**
+ * Arg config for the createBlock module
+ */
+export const createBlockArgsConfig = {
+  cmd: 'createBlock',
+  options: {
+    dest: {
+      type: 'string',
+      description: 'The directory to place the block files.',
+    },
+    type: {
+      type: 'string',
+      description: 'The type of block. Allowed "static", "dynamic".',
+    },
+    title: {
+      type: 'string',
+      description: 'Proper title of your block. Example "My Awesome Block".',
+    },
+    slug: {
+      type: 'string',
+      description:
+        'Used for block name and block folder. Kebab case. Example "my-awesome-block".',
+    },
+    namespace: {
+      type: 'string',
+      description:
+        'The block namespace. Usually kebab case. Example "my-awesome-project".',
+    },
+    textdomain: {
+      type: 'string',
+      description:
+        'The block namespace. Usually kebab case and can match namespace. Example "my-awesome-project".',
+    },
+    description: {
+      type: 'string',
+      description: 'A brief description of your block.',
+    },
+    version: {
+      type: 'string',
+      description: 'Initial version of your block.',
+    },
+    help: {
+      type: 'boolean',
+      description: 'Shows the help message.',
+      short: 'h',
+    },
+  },
+  allowPositionals: true,
+} as const;
+
+/**
  * Arg config for the archive module
  */
 export const archiveArgsConfig = {
@@ -141,52 +191,6 @@ export const dockerExtractArgsConfig = {
     dest: {
       type: 'string',
       description: 'The directory path where the files will be placed.',
-    },
-    help: {
-      type: 'boolean',
-      description: 'Shows the help message.',
-      short: 'h',
-    },
-  },
-  allowPositionals: true,
-} as const;
-
-/**
- * Arg config for the createBlock module
- */
-export const createBlockArgsConfig = {
-  cmd: 'createBlock',
-  options: {
-    dest: {
-      type: 'string',
-      description: 'The directory to place the block files.',
-    },
-    type: {
-      type: 'string',
-      description: 'The type of block. Allowed "static", "dynamic".',
-    },
-    title: {
-      type: 'string',
-      description: 'Proper title of your block. Example "My Awesome Block".',
-    },
-    slug: {
-      type: 'string',
-      description:
-        'Used for block name and block folder. Kebab case. Example "my-awesome-block".',
-    },
-    namespace: {
-      type: 'string',
-      description:
-        'The block namespace. Usually kebab case. Example "my-awesome-project".',
-    },
-    textdomain: {
-      type: 'string',
-      description:
-        'The block namespace. Usually kebab case and can match namespace. Example "my-awesome-project".',
-    },
-    description: {
-      type: 'string',
-      description: 'A brief description of your block.',
     },
     help: {
       type: 'boolean',

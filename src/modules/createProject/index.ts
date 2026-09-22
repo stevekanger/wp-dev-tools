@@ -1,4 +1,5 @@
 import { createProjectArgsConfig, showCmdHelp } from '@/args';
+import { INITIAL_VERSION } from '@/constants';
 import { argOrPrompt } from '@/utils/argOrPrompt';
 import dirEmpty from '@/utils/dirEmpty';
 import getDirectoryFiles from '@/utils/getDirectoryFiles';
@@ -201,7 +202,7 @@ export default async function createProject() {
   );
   const version = await argOrPrompt(
     args.values.version,
-    promptString('Version.', '1.0.0'),
+    promptString('Version.', INITIAL_VERSION),
     isString,
   );
   const phpNamespace = await argOrPrompt(

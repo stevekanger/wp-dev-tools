@@ -4,7 +4,7 @@
   "description": "Development tools for wordpress.",
   "keywords": [
     "wordpress",
-    "developement",
+    "development",
     "wp",
     "dev",
     "tools"
@@ -17,7 +17,8 @@
     "access": "public"
   },
   "scripts": {
-    "prepublishOnly": "npm run build",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run typecheck && npm run build",
     "dev": "node --watch --import tsx src/index.ts",
     "build": "tsup"
   },

@@ -47,6 +47,12 @@ export default async function dockerExtract() {
   if (msg) {
     console.log(msg);
   } else {
-    console.log('Resource extracted!');
+    console.log(`
+===============
+== Finished! ==
+===============
+
+Successfully extracted your files to ${dest}
+`);
   }
 }

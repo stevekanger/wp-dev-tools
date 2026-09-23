@@ -119,7 +119,12 @@ export default async function createBlock() {
     }
   });
 
-  console.log(
-    `\nFinished! Go to block.json and edit your block information. Don't forget to build and register your block before use.`,
-  );
+  console.log(`
+===============
+== Finished! ==
+===============
+
+Go to block.json and edit your block information.
+Remember to register and build your block before use.
+`);
 }

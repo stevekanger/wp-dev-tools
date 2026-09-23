@@ -31,7 +31,13 @@ function createArchiver(destPath: string): ZipArchive {
   // listen for all archive data to be written
   // 'close' event is fired only when a file descriptor is involved
   stream.on('close', function() {
-    console.log(`Archiver finished! Wrote ${archiver.pointer()} bytes.`);
+    console.log(`
+===============
+== Finished! ==
+===============
+
+Archiver wrote ${archiver.pointer()} bytes.
+`);
   });
 
   // This event is fired when the data source is drained no matter what was the data source.

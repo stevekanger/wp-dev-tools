@@ -69,5 +69,11 @@ export default async function copy() {
     fs.cpSync(inputItemPath, outputItemPath, { recursive: true });
   });
 
-  console.log('finished.');
+  console.log(`
+===============
+== Finished! ==
+===============
+
+Successfully copied your files to ${dest}
+`);
 }

@@ -222,7 +222,7 @@ export default async function createProject() {
   );
   const installTests = await argOrPrompt(
     args.values.installTests,
-    promptBoolean('Install tests.', 'n'),
+    promptBoolean('Install tests.', ''),
     isBoolean,
   );
 
@@ -281,7 +281,14 @@ export default async function createProject() {
   const mainFileName = type === 'plugin' ? `${slug}.php` : 'style.css';
 
   console.log(`
-  Finished!
-  Go to readme.txt and ${mainFileName} to fill in any relevant information.
+===============
+== Finished! ==
+===============
+
+Cd into your project. Fill in relevant information in readme.txt and ${mainFileName}. Then run the following commands.
+
+npm install
+composer install
+composer dump-autoload
   `);
 }

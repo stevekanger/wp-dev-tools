@@ -13,6 +13,9 @@
   "author": "stevekanger",
   "type": "commonjs",
   "main": "dist/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "prepublishOnly": "npm run build",
     "dev": "node --watch --import tsx src/index.ts",

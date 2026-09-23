@@ -1,10 +1,10 @@
 # WP Dev Tools
 
-Some simple development tools to use with wordpress development.
+Development tools to use with wordpress development.
 
-## Installation
+## Installation and Usage
 
-Use via npx
+Use without installation via npx
 
 ```bash
 npx @stevekanger/wp-dev-tools [command] [...options]
@@ -32,7 +32,51 @@ and use in package.json
 }
 ```
 
-## Usage
+## Creating a Plugin Or Theme
+
+You can easily scaffold a project with the `createProject` command.
+
+More than likely you would want to run via `npx` since your project would be empty at this point.
+
+```bash
+npx @stevekanger/wp-dev-tools createProject
+
+```
+
+This runs the interactive setup. When finished `cd` into your project and run the following commands to setup the project.
+
+```bash
+npm install
+composer install
+composer dump-autoload
+
+```
+
+Then if you use docker start your container. You will need `docker` and `docker-compose` installed.
+
+```bash
+docker compose up -d
+
+```
+
+Now you can go to `http:localhost:8000` and run though the wordpress installation. If you want to change ports and proxies go to `.env` and choose any ports you like.
+
+After wordpress is set up you can now run the development command for hot reloads.
+
+**Important: Complete the wordpress install before running dev.**
+
+```bash
+npm run dev
+
+```
+
+### Project Structure
+
+All php files reside in `inc`. All `psr-4` classes will be autoloaded via `composer` from the `inc/app` folder. Controllers and Services are registered to the Container in the main php file. Controllers are responsible for registering hooks to wordpress.
+
+All raw js, css, and blocks reside in `src`. These are files that need to be built during the build process.
+
+## Commands
 
 All commands are run with command first then options. You can supply options or if necessary options are required you will be prompted via an interactive command line interface.
 
@@ -43,7 +87,7 @@ wp-dev-tools [command] [...options]
 
 ### createProject
 
-Creates either a theme or plugin project. This command should be run with npx to scaffold a project. It will automatically set up your project's package.json to include `@stevekanger/wp-dev-tools` as a dev dependency.
+Creates either a theme or plugin project
 
 | Option             | Type    | Allowed           | Description                                                                                                 |
 | ------------------ | ------- | ----------------- | ----------------------------------------------------------------------------------------------------------- |

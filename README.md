@@ -75,6 +75,8 @@ All php files reside in `inc`. All `psr-4` classes will be autoloaded via `compo
 
 All raw js, css, and blocks reside in `src`. These are files that need to be built during the build process.
 
+Several development tools will be set up. Docker will serve a controlled development environment. Webpack will be set up with typescript and scss by default. Composer will be use for autoloading. Then @stevekanger/wp-dev-tools will be added for additional tools.
+
 ## Commands
 
 All commands are run with command first then options. You can supply options or if necessary options are required you will be prompted via an interactive command line interface.

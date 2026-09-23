@@ -1,6 +1,6 @@
 # WP Dev Tools
 
-Development tools to use with wordpress development.
+Development tools for wordpress.
 
 ## Installation and Usage
 

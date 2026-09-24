@@ -100,7 +100,7 @@ export const createBlockArgsConfig = {
     textdomain: {
       type: 'string',
       description:
-        'The block namespace. Usually kebab case and can match namespace. Example "my-awesome-project".',
+        'The block textdomain. Usually kebab case and can match namespace. Example "my-awesome-project".',
     },
     description: {
       type: 'string',

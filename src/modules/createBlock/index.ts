@@ -66,7 +66,7 @@ export default async function createBlock() {
     isString,
   );
   const version = await argOrPrompt(
-    args.values.description,
+    args.values.version,
     promptString('Version.', INITIAL_VERSION),
     isString,
   );

@@ -129,7 +129,7 @@ export default async function archive() {
   )();
 
   if (!versionConfirmed) {
-    throw new UserError('Verison not confirmed.');
+    throw new UserError('Version not confirmed.');
   }
 
   const packageName = packageJson.name;

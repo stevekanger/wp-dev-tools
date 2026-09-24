@@ -16,6 +16,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "engines": {
+    "node": ">=20.1.0"
+  },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run typecheck && npm run build",

@@ -15,7 +15,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Initialize the app config information.
 AppConfig::init(
-    get_file_data(__DIR__ . '/style.css', ['Version' => 'Version'])['Version'] ?: '0.1.0',
+    get_file_data(__DIR__ . '/style.css', ['Version' => 'Version'])['Version'] ?: '{{version}}',
     __DIR__,
     __FILE__,
     '{{title}}',

@@ -87,7 +87,7 @@ export default async function createBlock() {
     ['Namespace']: namespace,
     ['Textdomain']: textdomain,
     ['Description']: description,
-    ['version']: version,
+    ['Version']: version,
     ['Destination']: dest,
   });
 

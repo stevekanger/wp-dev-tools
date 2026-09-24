@@ -49,14 +49,16 @@ composer dump-autoload
 
 ```
 
-Then if you use docker start your container. You will need `docker` and `docker-compose` installed. You can specify docker ports and webpack proxies in `.env` along with other options.
+Docker ports and webpack proxies are set in `.env`. You can change those to your liking. Default is set to run on port 8000.
+
+You can now start your docker container.
 
 ```bash
 docker compose up -d
 
 ```
 
-You can now go to `http://localhost:8000` or whatever you set your port to be and run through the wordpress installation.
+If you didn't change anything in `.env` go to `http://localhost:8000` and run through the wordpress installation.
 
 After wordpress is set up you can now run the development command for hot reloads.
 

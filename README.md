@@ -33,9 +33,7 @@ and use in package.json
 
 ## Creating a Plugin Or Theme
 
-You can easily scaffold a project with the `createProject` command.
-
-More than likely you would want to run via `npx` since your project would be empty at this point.
+You can easily scaffold a project with the `createProject` command. Run via `npx` since your project would be empty at this point.
 
 ```bash
 npx @stevekanger/wp-dev-tools createProject
@@ -51,14 +49,14 @@ composer dump-autoload
 
 ```
 
-Then if you use docker start your container. You will need `docker` and `docker-compose` installed.
+Then if you use docker start your container. You will need `docker` and `docker-compose` installed. You can specify docker ports and webpack proxies in `.env` along with other options.
 
 ```bash
 docker compose up -d
 
 ```
 
-Now you can go to `http:localhost:8000` and run though the wordpress installation. If you want to change ports and proxies go to `.env` and choose any ports you like.
+You can now go to `http://localhost:8000` or whatever you set your port to be and run through the wordpress installation.
 
 After wordpress is set up you can now run the development command for hot reloads.
 
@@ -75,7 +73,7 @@ All php files reside in `inc`. All `psr-4` classes will be autoloaded via `compo
 
 All raw js, css, and blocks reside in `src`. These are files that need to be built during the build process.
 
-Several development tools will be set up. Docker will serve a controlled development environment. Webpack will be set up with typescript and scss by default. Composer will be used for autoloading. Then @stevekanger/wp-dev-tools will be added for additional tools.
+Several development tools will be set up. Docker for a controlled development environment, Webpack with typescript and scss by default, Composer for autoloading, and @stevekanger/wp-dev-tools will be added for additional tools.
 
 ## Commands
 

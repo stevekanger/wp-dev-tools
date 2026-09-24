@@ -36,13 +36,13 @@ final class App {
      */
     public function init(): static {
         $this->register();
-{{#isPlugin}}       
+{{#isPlugin}}
 
         // Plugin activation hooks
         $root_file = AppConfig::root_file();
         register_activation_hook($root_file, [$this, 'activate']);
         register_deactivation_hook($root_file, [$this, 'deactivate']);
-{{/isPlugin}}       
+{{/isPlugin}}
 
         return $this;
     }

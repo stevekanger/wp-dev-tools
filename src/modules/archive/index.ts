@@ -125,7 +125,7 @@ export default async function archive() {
   checkVersion(path.join(src, devToolsJson.main), version);
 
   const versionConfirmed = await promptBoolean(
-    `Is the current stated verison "${version}" correct?"`,
+    `Is the current stated version "${version}" correct?"`,
   )();
 
   if (!versionConfirmed) {

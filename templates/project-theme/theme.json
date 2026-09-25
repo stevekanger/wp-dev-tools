@@ -27,10 +27,7 @@
         {
           "name": "Primary to Secondary",
           "slug": "duotone-primary-to-secondary",
-          "colors": [
-            "#432dd7",
-            "#7008e7"
-          ]
+          "colors": ["#432dd7", "#7008e7"]
         }
       ],
       "palette": [
@@ -40,7 +37,7 @@
           "slug": "background-primary"
         },
         {
-          "color": "#030712",
+          "color": "#111111",
           "name": "Background Secondary",
           "slug": "background-secondary"
         },
@@ -108,14 +105,7 @@
     },
     "spacing": {
       "defaultSpacingSizes": false,
-      "units": [
-        "%",
-        "px",
-        "em",
-        "rem",
-        "vh",
-        "vw"
-      ],
+      "units": ["%", "px", "em", "rem", "vh", "vw"],
       "spacingScale": {
         "operator": "*",
         "increment": 0,
@@ -184,49 +174,37 @@
               "fontFamily": "Inter",
               "fontStyle": "normal",
               "fontWeight": "100",
-              "src": [
-                "file:./assets/fonts/Inter/Inter-Thin.woff2"
-              ]
+              "src": ["file:./assets/fonts/Inter/Inter-Thin.woff2"]
             },
             {
               "fontFamily": "Inter",
               "fontStyle": "normal",
               "fontWeight": "300",
-              "src": [
-                "file:./assets/fonts/Inter/Inter-Light.woff2"
-              ]
+              "src": ["file:./assets/fonts/Inter/Inter-Light.woff2"]
             },
             {
               "fontFamily": "Inter",
               "fontStyle": "normal",
               "fontWeight": "400",
-              "src": [
-                "file:./assets/fonts/Inter/Inter-Regular.woff2"
-              ]
+              "src": ["file:./assets/fonts/Inter/Inter-Regular.woff2"]
             },
             {
               "fontFamily": "Inter",
               "fontStyle": "normal",
               "fontWeight": "500",
-              "src": [
-                "file:./assets/fonts/Inter/Inter-Medium.woff2"
-              ]
+              "src": ["file:./assets/fonts/Inter/Inter-Medium.woff2"]
             },
             {
               "fontFamily": "Inter",
               "fontStyle": "normal",
               "fontWeight": "600",
-              "src": [
-                "file:./assets/fonts/Inter/Inter-SemiBold.woff2"
-              ]
+              "src": ["file:./assets/fonts/Inter/Inter-SemiBold.woff2"]
             },
             {
               "fontFamily": "Inter",
               "fontStyle": "normal",
               "fontWeight": "700",
-              "src": [
-                "file:./assets/fonts/Inter/Inter-Bold.woff2"
-              ]
+              "src": ["file:./assets/fonts/Inter/Inter-Bold.woff2"]
             }
           ]
         }
@@ -443,7 +421,7 @@
       },
       "core/site-title": {
         "typography": {
-          "fontSize": "var:preset|font-size|md",
+          "fontSize": "var:preset|font-size|lg",
           "fontWeight": "var:custom|font-weight|semi-bold",
           "lineHeight": "var:custom|line-height|xl",
           "letterSpacing": "0"
@@ -519,7 +497,7 @@
       },
       "core/separator": {
         "color": {
-          "background": "var:preset|color|text-primary"
+          "background": "var:preset|color|background-secondary"
         }
       }
     }

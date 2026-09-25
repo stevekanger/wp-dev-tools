@@ -7,6 +7,12 @@
   "engines": {
     "node": ">=22.22.2"
   },
+  "allowScripts": {
+    "unrs-resolver": true,
+    "@parcel/watcher": true,
+    "core-js": false,
+    "core-js-pure": false
+  },
   "scripts": {
 {{#installTests}}
     "test": "vitest",
@@ -22,20 +28,20 @@
   },
   "devDependencies": {
 {{#installTests}}
-    "vitest": "^4.1.11",
+    "vitest": "^5.0.2",
 {{/installTests}}
     "@stevekanger/wp-dev-tools": "^{{devToolsVersion}}",
     "@types/react": "18.3.27",
     "@types/react-dom": "18.3.7",
     "@types/wordpress__block-editor": "^15.0.6",
-    "@wordpress/block-editor": "^16.2.0",
-    "@wordpress/components": "^39.0.0",
-    "@wordpress/element": "^8.5.0",
-    "@wordpress/i18n": "^6.26.0",
-    "@wordpress/scripts": "^34.1.0",
+    "@wordpress/block-editor": "^18.0.0",
+    "@wordpress/components": "^41.0.0",
+    "@wordpress/element": "^8.8.0",
+    "@wordpress/i18n": "^6.29.0",
+    "@wordpress/scripts": "^36.0.0",
     "browser-sync-webpack-plugin": "^2.4.0",
-    "dotenv": "^17.4.2",
-    "prettier": "^3.9.6",
+    "dotenv": "^18.0.4",
+    "prettier": "^3.9.9",
     "typescript": "^6.0.3"
   },
   "overrides": {

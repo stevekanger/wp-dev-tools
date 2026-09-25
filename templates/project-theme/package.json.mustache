@@ -7,6 +7,12 @@
   "engines": {
     "node": ">=22.22.2"
   },
+  "allowScripts": {
+    "unrs-resolver": true,
+    "@parcel/watcher": true,
+    "core-js": false,
+    "core-js-pure": false
+  },
   "scripts": {
 {{#installTests}}
     "test": "vitest",
@@ -21,12 +27,12 @@
   },
   "devDependencies": {
 {{#installTests}}
-    "vitest": "^4.1.11",
+    "vitest": "^5.0.2",
 {{/installTests}}
     "@stevekanger/wp-dev-tools": "^{{devToolsVersion}}",
-    "@wordpress/scripts": "^34.1.0",
+    "@wordpress/scripts": "^36.0.0",
     "browser-sync-webpack-plugin": "^2.4.0",
-    "dotenv": "^17.4.2",
+    "dotenv": "^18.0.4",
     "typescript": "^6.0.3"
   }
 }

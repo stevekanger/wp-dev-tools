@@ -1,7 +1,8 @@
 {
   "name": "@stevekanger/wp-dev-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Development tools for wordpress.",
+  "repository": "github:stevekanger/wp-dev-tools",
   "keywords": [
     "wordpress",
     "development",

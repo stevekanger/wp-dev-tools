@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace {{phpNamespace}}\Controllers;
 
 use {{phpNamespace}}\Config\AppConfig;
+use {{phpNamespace}}\Core\Container;
 use {{phpNamespace}}\Core\Controller;
 
 defined('ABSPATH') || exit;
@@ -19,6 +20,17 @@ defined('ABSPATH') || exit;
 final class BlockController extends Controller {
     // Add any block slugs you want to register here
     private const REGISTERED_BLOCKS = [];
+
+    /**
+     * Called by the Container to instantiate the class.
+     *
+     * @param Container $container The container
+     *
+     * @since {{version}}
+     */
+    public static function factory(Container $container): static {
+        return new static($container);
+    }
 
     /**
      * Register block hooks.

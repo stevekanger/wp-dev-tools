@@ -45,15 +45,10 @@ AppConfig::init(
 $container = new Container();
 
 // Enqueue's scripts and handles static assets
-// Uncomment the scripts you want to enqueue in AssetController::register
-$container->bind(AssetController::class, function(Container $container) {
-    return new AssetController($container);
-});
+$container->bind(AssetController::class, AssetController::factory(...));
 
 // Handles block registration and any block related functions
-$container->bind(BlockController::class, function(Container $container) {
-    return new BlockController($container);
-});
+$container->bind(BlockController::class, BlockController::factory(...));
 
 // Initialize the App
 $app = (new App($container))->init();

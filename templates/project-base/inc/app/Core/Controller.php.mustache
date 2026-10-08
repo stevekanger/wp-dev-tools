@@ -18,12 +18,23 @@ abstract class Controller {
     /**
      * Construct the controller attributes.
      *
+     * @param Container $container The container
+     *
      * @since {{version}}
      */
     public function __construct(
         protected Container $container,
     ) {
     }
+
+    /**
+     * Called by the Container to instantiate the class.
+     *
+     * @param Container $container The container
+     *
+     * @since {{version}}
+     */
+    abstract public static function factory(Container $container): static;
 
     /**
      * Register your hooks, filters, ect here.

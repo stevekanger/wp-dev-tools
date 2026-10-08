@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
 /**
  * Base controller class.
  *
- * Your connection to wordpress. Hooks and filters ect.
+ * Your connection to wordpress.
  * Extend this class to create your own controller.
  *
  * @since {{version}}
@@ -37,7 +37,7 @@ abstract class Controller {
     abstract public static function factory(Container $container): static;
 
     /**
-     * Register your hooks, filters, ect here.
+     * Register wordpress hooks, ect here.
      *
      * Override this in your extended controller.
      *

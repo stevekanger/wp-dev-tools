@@ -6,7 +6,7 @@ Modern WordPress theme featuring Composer autoloading, Docker support, and Webpa
 
 ## Structure
 
-All php files reside in `inc`. All `psr-4` classes will be autoloaded via `composer` from the `inc/app` folder. Controllers and Services are registered to the Container in the main php file. Controllers are responsible for registering hooks to wordpress.
+All php files reside in `inc`. All `psr-4` classes will be autoloaded via `composer` from the `inc/app` folder. Controllers are your connection to wordpress by registering hooks, etc. Services are your business logic and can be bound and retrieved from the service container. Both Controllers and Services have access to the service container.
 
 All raw js, css, and blocks reside in `src`. These are files that need to be built during the build process.
 

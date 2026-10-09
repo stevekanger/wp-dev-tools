@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace {{phpNamespace}}\Controllers;
 
 use {{phpNamespace}}\Config\AppConfig;
-use {{phpNamespace}}\Core\Container;
-use {{phpNamespace}}\Core\Controller;
+use {{phpNamespace}}\Core\AbstractController;
 
 defined('ABSPATH') || exit;
 
@@ -18,18 +17,7 @@ defined('ABSPATH') || exit;
  *
  * @since {{version}}
  */
-final class AssetController extends Controller {
-    /**
-     * Called by the Container to instantiate the class.
-     *
-     * @param Container $container The container
-     *
-     * @since {{version}}
-     */
-    public static function factory(Container $container): static {
-        return new static($container);
-    }
-
+final class AssetController extends AbstractController {
     /**
      * Register asset hooks.
      *

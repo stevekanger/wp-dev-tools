@@ -7,6 +7,7 @@ namespace {{phpNamespace}};
 {{#isPlugin}}
 use {{phpNamespace}}\Config\AppConfig;
 {{/isPlugin}}
+use {{phpNamespace}}\Core\AbstractController;
 use {{phpNamespace}}\Core\Container;
 
 defined('ABSPATH') || exit;
@@ -35,9 +36,7 @@ final class App {
      * @since {{version}}
      */
     public function init(): static {
-        $this->register();
 {{#isPlugin}}
-
         // Plugin activation hooks
         $root_file = AppConfig::root_file();
         register_activation_hook($root_file, [$this, 'activate']);
@@ -48,18 +47,25 @@ final class App {
     }
  
     /**
-     * Registers all bound controllers and services.
+     * Registers all controllers.
+     *
+     * @param callable ...$factories A function that returns an instance of the controller
      *
      * @since {{version}}
      */
-    public function register(): void {
-        foreach ($this->container->get_ids() as $id) {
-            $instance = $this->container->get($id);
+    public function register_controllers(callable ...$factories): static {
+        foreach ($factories as $factory) {
+            $instance = $factory($this->container);
 
-            if (method_exists($instance, 'register')) {
-                $instance->register();
+            if (!$instance instanceof AbstractController) {
+                $instance_name = get_debug_type($instance);
+                throw new \RuntimeException("Attempt to register invalid controller '{$instance_name}'.");
             }
+
+            $instance->register();
         }
+
+        return $this;
     }
 
     /**

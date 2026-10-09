@@ -23,11 +23,16 @@ AppConfig::init(
     '{{slug}}',
 );
 
-// Create container and bind controllers and services
+// Initialize the service container
 $container = new Container();
 
-// Enqueue's scripts and handles static assets
-$container->bind(AssetController::class, AssetController::factory(...));
+// If you have any services bind them to the container. Example:
+// $container->bind(ExampleService::class, ExampleService::factory(...));
 
-// Initialize the App
+// Initialize the app
 $app = (new App($container))->init();
+
+// Register all controllers
+$app->register_controllers(
+    AssetController::factory(...)
+);

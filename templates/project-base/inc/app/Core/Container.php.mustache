@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace {{phpNamespace}}\Core;
 
 /**
- * Container for all controllers and services.
+ * Container for services, etc.
  *
  * @since {{version}}
  */
@@ -23,10 +23,10 @@ final class Container {
     }
 
     /**
-     * Bind services to the class.
+     * Bind to the container.
      *
-     * @param string $id Any string id to act as the service key
-     * @param callable $factory A function that returns an instance of the Service
+     * @param string $id Any string id to act as the key
+     * @param callable $factory A function that returns an instance
      *
      * @since {{version}}
      */
@@ -35,7 +35,7 @@ final class Container {
     }
 
     /**
-     * Bind services to the class.
+     * Get from the container.
      *
      * @template T
      *

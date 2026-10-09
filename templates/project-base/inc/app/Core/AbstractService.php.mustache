@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{phpNamespace}}\Core;
+
+defined('ABSPATH') || exit;
+
+/**
+ * AbstractService class.
+ *
+ * @since {{version}}
+ */
+abstract class AbstractService {
+    /**
+     * Construct the class attributes.
+     *
+     * @param Container $container The service container
+     *
+     * @since {{version}}
+     */
+    public function __construct(
+        protected Container $container,
+    ) {
+    }
+
+    /**
+     * Creates an instance of the class.
+     *
+     * @param Container $container The service container
+     *
+     * @since {{version}}
+     */
+    public static function factory(Container $container): static {
+        return new static($container);
+    }
+}

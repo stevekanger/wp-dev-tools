@@ -1,0 +1,44 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{phpNamespace}}\Core;
+
+defined('ABSPATH') || exit;
+
+/**
+ * AbstractController class.
+ *
+ * @since {{version}}
+ */
+abstract class AbstractController {
+    /**
+     * Construct the class attributes.
+     *
+     * @param Container $container The service container
+     *
+     * @since {{version}}
+     */
+    public function __construct(
+        protected Container $container,
+    ) {
+    }
+
+    /**
+     * Creates an instance of the class.
+     *
+     * @param Container $container The service container
+     *
+     * @since {{version}}
+     */
+    public static function factory(Container $container): static {
+        return new static($container);
+    }
+
+    /**
+     * Called when the application initalizes to register wordpress hooks, etc.
+     *
+     * @since {{version}}
+     */
+    abstract public function register(): void;
+}

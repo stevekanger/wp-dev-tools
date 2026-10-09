@@ -31,7 +31,7 @@ abstract class AbstractController {
      *
      * @since {{version}}
      */
-    public static function factory(Container $container): static {
+    public static function create(Container $container): static {
         return new static($container);
     }
 

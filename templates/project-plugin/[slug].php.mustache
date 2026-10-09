@@ -45,7 +45,7 @@ AppConfig::init(
 $container = new Container();
 
 // If you have any services bind them to the container. Example:
-// $container->bind(ExampleService::class, ExampleService::factory(...));
+// $container->bind(ExampleService::class, ExampleService::create(...));
 
 // Create the app
 $app = new App($container);
@@ -53,6 +53,6 @@ $app = new App($container);
 // Init the app
 $app->init();
 
-// Add controllers
-$app->add_controller(AssetController::factory(...));
-$app->add_controller(BlockController::factory(...));
+// Register controllers
+$app->register_controller(AssetController::create(...));
+$app->register_controller(BlockController::create(...));

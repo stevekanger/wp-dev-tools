@@ -56,18 +56,19 @@ final class App {
     }
  
     /**
-     * Adds a controller.
+     * Creates a controller from the factory provided and calls register.
      *
      * @param callable $factory A function that returns an instance of the controller
      *
      * @since {{version}}
      */
-    public function add_controller(callable $factory): static {
+    public function register_controller(callable $factory): static {
         $instance = $factory($this->container);
 
         if (!$instance instanceof AbstractController) {
             $instance_name = get_debug_type($instance);
-            throw new \RuntimeException("Attempt to initialize invalid controller '{$instance_name}'.");
+
+            throw new \RuntimeException("Attempt to register invalid controller '{$instance_name}'.");
         }
 
         $instance->register();

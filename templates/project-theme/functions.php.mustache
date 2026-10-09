@@ -23,16 +23,17 @@ AppConfig::init(
     '{{slug}}',
 );
 
-// Initialize the service container
+// Create the service container
 $container = new Container();
 
 // If you have any services bind them to the container. Example:
 // $container->bind(ExampleService::class, ExampleService::factory(...));
 
-// Initialize the app
-$app = (new App($container))->init();
+// Create the app
+$app = new App($container);
 
-// Register all controllers
-$app->register_controllers(
-    AssetController::factory(...)
-);
+// Init the app
+$app->init();
+
+// Add controllers
+$app->add_controller(AssetController::factory(...));

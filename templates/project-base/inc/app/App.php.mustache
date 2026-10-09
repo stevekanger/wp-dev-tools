@@ -45,36 +45,34 @@ final class App {
 
         return $this;
     }
- 
-    /**
-     * Registers all controllers.
-     *
-     * @param callable ...$factories A function that returns an instance of the controller
-     *
-     * @since {{version}}
-     */
-    public function register_controllers(callable ...$factories): static {
-        foreach ($factories as $factory) {
-            $instance = $factory($this->container);
-
-            if (!$instance instanceof AbstractController) {
-                $instance_name = get_debug_type($instance);
-                throw new \RuntimeException("Attempt to register invalid controller '{$instance_name}'.");
-            }
-
-            $instance->register();
-        }
-
-        return $this;
-    }
 
     /**
      * Gets the service container.
      *
      * @since {{version}}
      */
-    public function container(): Container {
+    public function get_container(): Container {
         return $this->container;
+    }
+ 
+    /**
+     * Adds a controller.
+     *
+     * @param callable $factory A function that returns an instance of the controller
+     *
+     * @since {{version}}
+     */
+    public function add_controller(callable $factory): static {
+        $instance = $factory($this->container);
+
+        if (!$instance instanceof AbstractController) {
+            $instance_name = get_debug_type($instance);
+            throw new \RuntimeException("Attempt to initialize invalid controller '{$instance_name}'.");
+        }
+
+        $instance->register();
+
+        return $this;
     }
 {{#isPlugin}}
 

@@ -23,6 +23,17 @@ final class Container {
     }
 
     /**
+     * Check if a binding exists.
+     *
+     * @param string $id The id to check
+     *
+     * @since {{version}}
+     */
+    public function has(string $id): bool {
+        return isset($this->bindings[$id]);
+    }
+
+    /**
      * Bind to the container.
      *
      * @param string $id Any string id to act as the key
@@ -30,8 +41,10 @@ final class Container {
      *
      * @since {{version}}
      */
-    public function bind(string $id, callable $factory): void {
+    public function bind(string $id, callable $factory): static {
         $this->bindings[$id] = $factory;
+
+        return $this;
     }
 
     /**

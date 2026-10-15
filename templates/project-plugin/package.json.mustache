@@ -13,7 +13,7 @@
 {{/installTests}}
     "dev": "wp-scripts start",
     "build": "wp-scripts build",
-    "archive:dist": "composer install --no-dev && wp-scripts build && wp-dev-tools archive --type dist && composer install",
+    "archive:dist": "composer install --no-dev && npm run build && wp-dev-tools archive --type dist && composer install",
     "archive:dev": "wp-dev-tools archive --type dev",
     "docker:shell": "docker exec -it {{slug}}-wordpress /bin/bash",
     "docker:extract": "wp-dev-tools dockerExtract --container {{slug}}-wordpress",

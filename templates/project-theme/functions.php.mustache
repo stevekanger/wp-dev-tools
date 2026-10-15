@@ -35,5 +35,5 @@ $app = new App($container);
 // Init the app
 $app->init();
 
-// Register controllers
-$app->register_controller(AssetController::create(...));
+// Create and register controllers
+AssetController::create($container)->register();

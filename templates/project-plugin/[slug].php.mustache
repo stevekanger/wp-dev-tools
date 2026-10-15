@@ -53,6 +53,6 @@ $app = new App($container);
 // Init the app
 $app->init();
 
-// Register controllers
-$app->register_controller(AssetController::create(...));
-$app->register_controller(BlockController::create(...));
+// Create and register controllers
+AssetController::create($container)->register();
+BlockController::create($container)->register();

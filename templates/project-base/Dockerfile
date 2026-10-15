@@ -12,6 +12,9 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends ghostscript curl; \
     rm -rf /var/lib/apt/lists/*
 
+# Install mysqli for WordPress database connection
+RUN docker-php-ext-install mysqli
+
 # Install GD and Imagick for image processing (required by SEO plugins like Rank Math, Yoast)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpng-dev libjpeg-dev libwebp-dev libmagickwand-dev && \
@@ -20,13 +23,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pecl install imagick && \
     docker-php-ext-enable imagick
 
-# Install mysqli for WordPress database connection
-RUN docker-php-ext-install mysqli
+# Install optional PHP extensions recommended by WordPress Site Health                
+RUN apt-get update && apt-get install -y --no-install-recommends \                    
+    libzip-dev libicu-dev && \                                                        
+    docker-php-ext-install exif zip intl                                              
 
 # Enable Apache modules
 RUN a2enmod rewrite expires
 
-# Install in wordpress
+# Install wordpress
 RUN mkdir -p /usr/src/wordpress && \
     curl -fsL https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz | \
     tar -xz -C /usr/src/wordpress --strip-components=1

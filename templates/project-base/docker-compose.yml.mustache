@@ -3,8 +3,8 @@ services:
   # == Development wordpress container ==
   # =====================================
   wordpress:
-    image: ${SLUG}-wordpress${DOCKER_WP_VERSION}-php${DOCKER_PHP_VERSION}-apache
-    container_name: ${SLUG}-wordpress
+    image: ${DOCKER_NAMESPACE}-wordpress${DOCKER_WP_VERSION}-php${DOCKER_PHP_VERSION}-apache
+    container_name: ${DOCKER_NAMESPACE}-wordpress
     restart: unless-stopped
     build:
       context: .
@@ -41,20 +41,20 @@ services:
         define('WP_AUTO_UPDATE_CORE', false);
 
         /* Set debug.log file to be in the plugin root */
-        define( 'WP_DEBUG_LOG', '/var/www/html/wp-content/{{wpContentLocation}}/${SLUG}/debug.log' );
+        define( 'WP_DEBUG_LOG', '/var/www/html/wp-content/{{wpContentLocation}}/${DOCKER_NAMESPACE}/debug.log' );
 
         /* Set no cache in dev mode */
         define( 'WP_DEVELOPMENT_MODE', '{{type}}' );
     volumes:
       - wp-content:/var/www/html/wp-content
-      - .:/var/www/html/wp-content/{{wpContentLocation}}/${SLUG}
+      - .:/var/www/html/wp-content/{{wpContentLocation}}/${DOCKER_NAMESPACE}
 
   # ================================
   # == Development Msql container ==
   # ================================
   db:
     image: mysql:${DOCKER_MYSQL_VERSION}
-    container_name: ${SLUG}-db
+    container_name: ${DOCKER_NAMESPACE}-db
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DOCKER_WP_DB_NAME}
@@ -86,7 +86,7 @@ services:
   # ==========================
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: ${SLUG}-phpmyadmin
+    container_name: ${DOCKER_NAMESPACE}-phpmyadmin
     restart: unless-stopped
     depends_on:
       - db
@@ -105,8 +105,8 @@ services:
   # == Testing container ==
   # =======================
   wordpress-test:
-    image: ${SLUG}-wordpress${DOCKER_WP_VERSION}-php${DOCKER_PHP_VERSION}-apache
-    container_name: ${SLUG}-wordpress-test
+    image: ${DOCKER_NAMESPACE}-wordpress${DOCKER_WP_VERSION}-php${DOCKER_PHP_VERSION}-apache
+    container_name: ${DOCKER_NAMESPACE}-wordpress-test
     restart: unless-stopped
     build:
       context: .
@@ -140,14 +140,14 @@ services:
       WORDPRESS_TESTS_EMAIL: ${DOCKER_WP_TESTS_EMAIL}
       WORDPRESS_TESTS_TITLE: ${DOCKER_WP_TESTS_TITLE}
     volumes:
-      - .:/var/www/html/wp-content/{{wpContentLocation}}/${SLUG}
+      - .:/var/www/html/wp-content/{{wpContentLocation}}/${DOCKER_NAMESPACE}
 
   # =============================
   # == Testing Mysql Container ==
   # =============================
   db-test:
     image: mysql:${DOCKER_MYSQL_VERSION}
-    container_name: ${SLUG}-db-test
+    container_name: ${DOCKER_NAMESPACE}-db-test
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DOCKER_WP_TESTS_DB_NAME}

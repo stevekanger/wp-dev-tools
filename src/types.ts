@@ -1,4 +1,7 @@
 export interface DevToolsJson {
+  slug: string;
+  prefix: string;
+  phpNamespace: string;
   main: string;
   files: {
     dist: string[];

@@ -1,8 +1,9 @@
 import { createBlockArgsConfig, showCmdHelp } from '@/args';
 import { INITIAL_VERSION } from '@/constants';
+import { DevToolsJson } from '@/types';
 import { argOrPrompt } from '@/utils/argOrPrompt';
 import dirEmpty from '@/utils/dirEmpty';
-import getEnv from '@/utils/getEnv';
+import getJsonFileContents from '@/utils/getJsonFileContents';
 import getRootDir from '@/utils/getRootDir';
 import {
   isMustache,
@@ -30,6 +31,10 @@ import { BlockTemplateVars, BlockType } from './types';
 export default async function createBlock() {
   const args = parseArgs(createBlockArgsConfig);
 
+  const devToolsJson = getJsonFileContents<DevToolsJson>(
+    path.join(process.cwd(), 'dev-tools.json'),
+  );
+
   if (args.values.help) {
     showCmdHelp(createBlockArgsConfig);
     return;
@@ -52,12 +57,12 @@ export default async function createBlock() {
   );
   const namespace = await argOrPrompt(
     args.values.namespace,
-    promptString('Namespace.', getEnv('SLUG', '')),
+    promptString('Namespace.', devToolsJson?.slug || ''),
     isString,
   );
   const textdomain = await argOrPrompt(
     args.values.textdomain,
-    promptString('Textdomain.', getEnv('SLUG', '')),
+    promptString('Textdomain.', devToolsJson?.slug || ''),
     isString,
   );
   const description = await argOrPrompt(

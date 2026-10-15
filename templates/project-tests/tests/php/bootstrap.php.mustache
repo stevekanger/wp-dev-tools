@@ -3,11 +3,8 @@
 declare(strict_types=1);
 
 $root_dir = dirname(__FILE__, 3);
-$env = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../');
-$env->load();
-
 {{#isPlugin}}
-$entry_file_name = $_ENV['SLUG'] . '.php';
+$entry_file_name = '{{slug}}.php';
 {{/isPlugin}}
 {{#isTheme}}
 $entry_file_name = 'functions.php';

@@ -83,6 +83,10 @@ All raw js, css, and blocks reside in `src`. These are files that need to be bui
 
 Several development tools will be set up. Docker for a controlled development environment, Webpack with typescript and scss by default, Composer for autoloading, and @stevekanger/wp-dev-tools will be added for additional tools.
 
+### Project Requirements
+
+Its recommended to use PHP >= 8.3 and Nodejs >= 22.22.2 for all projects.
+
 ## Commands
 
 All commands are run with command first then options. You can supply options or if necessary options are required you will be prompted via an interactive command line interface.

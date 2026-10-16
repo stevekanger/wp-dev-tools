@@ -49,7 +49,11 @@ composer dump-autoload
 
 ```
 
+### Docker
+
 Docker ports and webpack proxies are set in `.env`. You can change those to your liking. Default is set to run on port 8000.
+
+It's recommended but not required to set up a hostname in `/etc/hosts` on your local machine mapped to the docker port. This allows wordpress loopbacks to work (wp_cron etc.). Set this hostname to `DOCKER_EXTRA_HOST` and `BROWSER_SYNC_PROXY` in `.env`.
 
 You can now start your docker container.
 
@@ -58,7 +62,9 @@ docker compose up -d
 
 ```
 
-If you didn't change anything in `.env` go to `http://localhost:8000` and run through the wordpress installation.
+If you setup a hostname navigate there in your browser. If not, and didn't change anything in `.env` go to `http://localhost:8000`. You can then run through the wordpress installation.
+
+### Development
 
 After wordpress is set up you can now run the development command for hot reloads.
 

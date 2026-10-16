@@ -33,12 +33,12 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 // Initialize the app config information.
 AppConfig::init(
-    get_file_data(__FILE__, ['Version' => 'Version'])['Version'] ?: '{{version}}',
-    __DIR__,
-    __FILE__,
-    '{{title}}',
-    '{{prefix}}',
-    '{{slug}}',
+    version: get_file_data(__FILE__, ['Version' => 'Version'])['Version'] ?: '{{version}}',
+    root_dir: __DIR__,
+    root_file: __FILE__,
+    title: '{{title}}',
+    prefix: '{{prefix}}',
+    slug: '{{slug}}',
 );
 
 // Create the service container

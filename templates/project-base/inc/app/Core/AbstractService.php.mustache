@@ -20,6 +20,6 @@ abstract class AbstractService {
      * @since {{version}}
      */
     public static function create(Container $container): static {
-        return new static($container);
+        return new static();
     }
 }

@@ -77,7 +77,7 @@ npm run dev
 
 ### Project Structure
 
-All php files reside in `inc`. All `psr-4` classes will be autoloaded via `composer` from the `inc/app` folder. Controllers are your connection to wordpress by registering hooks, etc. Services are your business logic and can be bound and retrieved from the service container. Both Controllers and Services have access to the service container.
+All php files reside in `inc`. All `psr-4` classes will be autoloaded via `composer` from the `inc/app` folder. Controllers are your connection to wordpress by registering hooks, etc. Services are your business logic and can be bound and retrieved from the service container. Both Controllers and Services have access to the service container via the `create()` method. You can register Controllers and add Services in the `Bootstrap.php` file.
 
 All raw js, css, and blocks reside in `src`. These are files that need to be built during the build process.
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace {{phpNamespace}};
 
 use {{phpNamespace}}\Config\AppConfig;
-use {{phpNamespace}}\Controllers\AssetController;
 use {{phpNamespace}}\Core\Container;
 
 defined('ABSPATH') || exit;
@@ -26,8 +25,11 @@ AppConfig::init(
 // Create the service container
 $container = new Container();
 
-// If you have any services bind them to the container. Example:
-// $container->bind(ExampleService::class, ExampleService::create(...));
+// Create the bootstrapper
+$bootstrap = new Bootstrap($container);
+
+// Populate container with services and shared dependencies
+$bootstrap->populate_container();
 
 // Create the app
 $app = new App($container);
@@ -36,4 +38,4 @@ $app = new App($container);
 $app->init();
 
 // Create and register controllers
-AssetController::create($container)->register();
+$bootstrap->register_controllers();

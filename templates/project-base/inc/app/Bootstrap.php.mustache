@@ -1,0 +1,50 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{phpNamespace}};
+
+use {{phpNamespace}}\Controllers\AssetController;
+{{#isPlugin}}
+use {{phpNamespace}}\Controllers\BlockController;
+{{/isPlugin}}
+use {{phpNamespace}}\Core\Container;
+use {{phpNamespace}}\Services\ExampleService;
+
+defined('ABSPATH') || exit;
+
+final class Bootstrap {
+    /**
+     * Set up bootstrap dependencies.
+     *
+     * @param Container $container The service container
+     *
+     * @since {{version}}
+     */
+    public function __construct(
+        private Container $container,
+    ) {
+    }
+
+    /**
+     * Populates the container with dependencies.
+     *
+     * @since {{version}}
+     */
+    public function populate_container(): void {
+        // Example binding - replace with your own services.
+        $this->container->bind(ExampleService::class, ExampleService::create(...));
+    }
+
+    /**
+     * Registers the controllers.
+     *
+     * @since {{version}}
+     */
+    public function register_controllers(): void {
+        AssetController::create($this->container)->register();
+{{#isPlugin}}
+        BlockController::create($this->container)->register();
+{{/isPlugin}}
+    }
+}

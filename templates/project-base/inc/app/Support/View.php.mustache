@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace {{phpNamespace}}\Core;
+namespace {{phpNamespace}}\Support;
 
 use {{phpNamespace}}\Config\AppConfig;
 
@@ -28,7 +28,7 @@ final class View {
         $this->view = $view;
         $this->data = $data;
 
-        extract($data);
+        extract($data, EXTR_SKIP);
         ob_start();
         include AppConfig::root_dir("/inc/views/{$view}.php");
         $this->rendered = ob_get_clean();

@@ -1,8 +1,8 @@
 <?php
 /**
- * Example view
+ * Example view.
  *
- * You can show views by creating an instance of Core\View
+ * You can show views by creating an instance of Support\View
  *
  * @example
  * // Create an instance and echo.

@@ -52,9 +52,11 @@ final class Container {
      *
      * @template T
      *
-     * @param class-string<T> $id The class id
+     * @param string|class-string<T> $id Any string id
      *
-     * @return T
+     * @return ($id is class-string<T> ? T : mixed)
+     *
+     * @throws \RuntimeException if nothing is registered for $id
      *
      * @since {{version}}
      */

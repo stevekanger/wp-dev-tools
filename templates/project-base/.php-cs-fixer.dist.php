@@ -47,13 +47,17 @@ $rules = [
     'single_line_throw' => false,
     // Replace superfluous else if
     'no_superfluous_elseif' => true,
-    // Align php doc to the left
+    // Set PHPUnit method casing to match project
+    'php_unit_method_casing' => [
+        'case' => 'snake_case',
+    ],
+    // Align PHPDoc to the left
     'phpdoc_align' => [
         'align' => 'left',
     ],
-    // Allow sentences in phpdoc descriptions
+    // Allow sentences in PHPDoc descriptions
     'phpdoc_annotation_without_dot' => false,
-    // Require php doc summary to end with punctuation
+    // Require PHPDoc summary to end with punctuation
     'phpdoc_summary' => true,
     // Set statements that require blank lines before
     'blank_line_before_statement' => [

@@ -12,6 +12,10 @@ $entry_file_name = 'functions.php';
 $entry_file_path = $root_dir . '/' . $entry_file_name;
 $wordpress_tests_phpunit = $root_dir . '/vendor/wordpress/wordpress-tests-phpunit';
 
+// Allow debug logging for tests
+ini_set('log_errors', '1');
+ini_set('error_log', $root_dir . '/debug.log');
+
 // Make sure the entry file exists
 if (!file_exists($entry_file_path)) {
     exit('Entry file ' . $entry_file_name . ' does not exist.');

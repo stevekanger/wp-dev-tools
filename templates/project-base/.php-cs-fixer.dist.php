@@ -72,7 +72,15 @@ $rules = [
     'phpdoc_summary' => true,
     // Set statements that require blank lines before
     'blank_line_before_statement' => [
-        'statements' => ['break', 'continue', 'declare', 'if', 'return', 'throw', 'try'],
+        'statements' => [
+            'break',
+            'continue',
+            'declare',
+            'if',
+            'return',
+            'throw',
+            'try',
+        ],
     ],
     // Custom fixers
     'array_indentation' => false,

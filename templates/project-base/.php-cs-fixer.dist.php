@@ -55,6 +55,8 @@ $rules = [
     'phpdoc_align' => [
         'align' => 'left',
     ],
+    // Allow sentences in PHPDoc descriptions
+    'phpdoc_annotation_without_dot' => false,
     // Set order for PHPDoc params
     'phpdoc_order' => [
         'order' => [
@@ -64,8 +66,8 @@ $rules = [
             'since',
         ],
     ],
-    // Allow sentences in PHPDoc descriptions
-    'phpdoc_annotation_without_dot' => false,
+    // order params in the order they are declared
+    'phpdoc_param_order' => true,
     // Require PHPDoc summary to end with punctuation
     'phpdoc_summary' => true,
     // Set statements that require blank lines before

@@ -55,6 +55,15 @@ $rules = [
     'phpdoc_align' => [
         'align' => 'left',
     ],
+    // Set order for PHPDoc params
+    'phpdoc_order' => [
+        'order' => [
+            'param',
+            'return',
+            'throws',
+            'since',
+        ],
+    ],
     // Allow sentences in PHPDoc descriptions
     'phpdoc_annotation_without_dot' => false,
     // Require PHPDoc summary to end with punctuation

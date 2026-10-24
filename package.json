@@ -21,11 +21,11 @@
     "node": ">=22.22.2"
   },
   "scripts": {
-    "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run typecheck && npm run build",
+    "build": "tsup",
     "dev": "node --watch --import tsx src/index.ts",
     "pack": "npm pack --pack-destination ./local",
-    "build": "tsup"
+    "prepublishOnly": "npm run typecheck && npm run build",
+    "typecheck": "tsc --noEmit"
   },
   "bin": {
     "wp-dev-tools": "dist/index.js"

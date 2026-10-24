@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-namespace {{phpNamespace}}\Core;
+namespace {{phpNamespace}}\Controllers;
+
+use {{phpNamespace}}\App;
+use {{phpNamespace}}\Core\MakeableInterface;
 
 defined('ABSPATH') || exit;
 
@@ -11,15 +14,15 @@ defined('ABSPATH') || exit;
  *
  * @since {{version}}
  */
-abstract class AbstractController {
+abstract class AbstractController implements MakeableInterface {
     /**
      * Creates an instance of the class.
      *
-     * @param Container $container The service container
+     * @param App $app The app instance
      *
      * @since {{version}}
      */
-    public static function create(Container $container): static {
+    public static function make(App $app): static {
         return new static();
     }
 

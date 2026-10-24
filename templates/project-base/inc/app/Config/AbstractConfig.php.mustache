@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{phpNamespace}}\Config;
+
+use {{phpNamespace}}\App;
+use {{phpNamespace}}\Core\MakeableInterface;
+
+defined('ABSPATH') || exit;
+
+/**
+ * AbstractConfig class.
+ *
+ * @since {{version}}
+ */
+abstract class AbstractConfig implements MakeableInterface {
+    /**
+     * Creates an instance of the class.
+     *
+     * @param App $app The service continer
+     *
+     * @since {{version}}
+     */
+    public static function make(App $app): static {
+        return new static();
+    }
+}

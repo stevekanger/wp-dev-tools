@@ -4,29 +4,93 @@ declare(strict_types=1);
 
 namespace {{phpNamespace}};
 
-{{#isPlugin}}
-use {{phpNamespace}}\Config\AppConfig;
-{{/isPlugin}}
 use {{phpNamespace}}\Core\Container;
 
 defined('ABSPATH') || exit;
 
 /**
- * Main application class.
+ * App class.
  *
  * @since {{version}}
  */
-final class App {
+final class App extends Container {
+    private static ?App $instance = null;
+    private bool $initialized = false;
+
     /**
-     * Setup the App attributes.
+     * App class constructor.
      *
-     * @param Container $container The service container
+     * @param string $title The app title
+     * @param string $prefix The app prefix
+     * @param string $slug The app slug
+     * @param string $version The app version
+     * @param string $rest_version The rest api version
+     * @param string $root_dir The app root directory
+     * @param string $root_file The app root file
+     * @param string $build_path The build direcotry relative to root_dir
+     * @param string $view_path The views directory relative to root_dir
      *
      * @since {{version}}
      */
     public function __construct(
-        private Container $container,
+        private readonly string $title,
+        private readonly string $prefix,
+        private readonly string $slug,
+        private readonly string $version,
+        private readonly string $rest_version,
+        private readonly string $root_dir,
+        private readonly string $root_file,
+        private readonly string $build_path,
+        private readonly string $view_path,
     ) {
+    }
+
+    /**
+     * Creates the app instance.
+     *
+     * @since {{version}}
+     */
+    public static function make(): App {
+        $app = new App(
+            title: APP_TITLE,
+            prefix: APP_PREFIX,
+            slug: APP_SLUG,
+            version: get_file_data(APP_ROOT_FILE, ['Version' => 'Version'])['Version'] ?: '{{version}}',
+            rest_version: APP_REST_VERSION,
+            root_dir: APP_ROOT_DIR,
+            root_file: APP_ROOT_FILE,
+            build_path: APP_BUILD_PATH,
+            view_path: APP_VIEW_PATH,
+        );
+
+        return $app;
+    }
+
+    /**
+     * Gets the app instance.
+     *
+     * @since {{version}}
+     */
+    public static function instance(): self {
+        if (null === self::$instance) {
+            self::$instance = self::make();
+            Bootstrap::boot(self::$instance);
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Sets the app instance.
+     *
+     * @param ?App $app The app instance or null
+     *
+     * @internal Used by tests to swap or clear the app instance.
+     *
+     * @since {{version}}
+     */
+    public static function set_instance(?App $app): void {
+        self::$instance = $app;
     }
 
     /**
@@ -35,42 +99,171 @@ final class App {
      * @since {{version}}
      */
     public function init(): static {
-{{#isPlugin}}
-        // Plugin activation hooks
-        $root_file = AppConfig::root_file();
-        register_activation_hook($root_file, [$this, 'activate']);
-        register_deactivation_hook($root_file, [$this, 'deactivate']);
-{{/isPlugin}}
+        if ($this->initialized) {
+            throw new \LogicException('Attempt to call App::init when already initialized.');
+        }
+
+        // Add any app specific initialization here to run after dependencies are populated
+
+        // Set App initialized
+        $this->initialized = true;
 
         return $this;
     }
 
     /**
-     * Gets the service container.
+     * Gets the app initialized status.
      *
      * @since {{version}}
      */
-    public function get_container(): Container {
-        return $this->container;
-    }
-{{#isPlugin}}
-
-    /**
-     * Plugin activation hook.
-     *
-     * @since {{version}}
-     */
-    public function activate(): void {
-        flush_rewrite_rules();
+    public function initialized(): bool {
+        return $this->initialized;
     }
 
     /**
-     * Plugin deactivation hook.
+     * Gets the app version.
+     *
+     * @return string The version
      *
      * @since {{version}}
      */
-    public function deactivate(): void {
-        flush_rewrite_rules();
+    public function version() {
+        return $this->version;
     }
-{{/isPlugin}}
+
+    /**
+     * Gets the rest version.
+     *
+     * @return string The version
+     *
+     * @since {{version}}
+     */
+    public function rest_version() {
+        return $this->rest_version;
+    }
+
+    /**
+     * Gets the title.
+     *
+     * @since {{version}}
+     */
+    public function title(): string {
+        return $this->title;
+    }
+
+    /**
+     * Gets the prefix.
+     *
+     * @param string $suffix Optional. Any string you want to append
+     *
+     * @since {{version}}
+     */
+    public function prefix(string $suffix = ''): string {
+        $prefix = $this->prefix;
+
+        return '' !== $suffix ? "{$prefix}_{$suffix}" : $prefix;
+    }
+
+    /**
+     * Gets the slug.
+     *
+     * @param string $suffix Optional. Any string you want to append
+     *
+     * @since {{version}}
+     */
+    public function slug(string $suffix = ''): string {
+        $slug = $this->slug;
+
+        return '' !== $suffix ? "{$slug}-{$suffix}" : $slug;
+    }
+
+    /**
+     * Gets the root directory.
+     *
+     * @param string $path Optional. Any path you want to append (requires you to add the preceeding /)
+     *
+     * @since {{version}}
+     */
+    public function root_dir(string $path = ''): string {
+        return $this->root_dir . $path;
+    }
+
+    /**
+     * Gets the root file.
+     *
+     * @since {{version}}
+     */
+    public function root_file(): string {
+        return $this->root_file;
+    }
+
+    /**
+     * Gets the blocks directory src is built to.
+     *
+     * @param string $path Optional. Any path you want to append (requires you to add the preceeding /)
+     *
+     * @since {{version}}
+     */
+    public function build_dir(string $path = ''): string {
+        return $this->root_dir . $this->build_path . $path;
+    }
+
+    /**
+     * Gets the view directory.
+     *
+     * @param string $path Optional. Any path you want to append (requires you to add the preceeding /)
+     *
+     * @since {{version}}
+     */
+    public function view_dir(string $path = ''): string {
+        return $this->root_dir . $this->view_path . $path;
+    }
+
+    /**
+     * Gets the root directory url.
+     *
+     * @param string $path Optional. Any path you want to append (requires you to add the preceeding /)
+     *
+     * @since {{version}}
+     */
+    public function root_dir_url(string $path = ''): string {
+        return rtrim(plugin_dir_url($this->root_file()), '/') . $path;
+    }
+
+    /**
+     * Gets the build directory url.
+     *
+     * @param string $path Optional. Any path you want to append (requires you to add the preceeding /)
+     *
+     * @since {{version}}
+     */
+    public function build_dir_url(string $path = ''): string {
+        return $this->root_dir_url($this->build_path) . $path;
+    }
+
+    /**
+     * Gets the rest namespace.
+     *
+     * Note: Calling with no $path argument will return the api namespace
+     *
+     * @param string $path Optional. Any path you want to append (requires you to add the preceeding /)
+     *
+     * @since {{version}}
+     */
+    public function rest_namespace(string $path = ''): string {
+        return $this->slug . '/' . $this->rest_version . $path;
+    }
+
+    /**
+     * Gets the full api url with path appended to the rest namespace.
+     *
+     * Note: Calling with no $path argument will return the api namespace
+     *
+     * @param string $path Optional. Any path you want to append (requires you to add the preceeding /)
+     *
+     * @since {{version}}
+     */
+    public function rest_url(string $path = ''): string {
+        return rest_url($this->rest_namespace($path));
+    }
 }

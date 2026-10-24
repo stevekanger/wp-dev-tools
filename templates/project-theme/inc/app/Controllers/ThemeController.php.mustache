@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{phpNamespace}}\Controllers;
+
+defined('ABSPATH') || exit;
+
+/**
+ * ThemeController class.
+ *
+ * @since {{version}}
+ */
+final class ThemeController extends AbstractController {
+    /**
+     * Register wordpress hooks.
+     *
+     * @since {{version}}
+     */
+    public function register(): void {
+        add_action('after_theme_setup', [$this, 'after_theme_setup']);
+    }
+
+    /**
+     * Setup any theme related functionality.
+     *
+     * @since {{version}}
+     */
+    public function after_theme_setup(): void {
+    }
+}

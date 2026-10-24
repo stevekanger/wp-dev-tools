@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace {{phpNamespace}}\Support;
 
-use {{phpNamespace}}\Config\AppConfig;
+use function {{phpNamespace}}\app;
 
 /**
  * Create a view from template part.
@@ -13,25 +13,58 @@ use {{phpNamespace}}\Config\AppConfig;
  */
 final class View {
     private string $rendered;
-    private string $view;
+    private string $path;
     private mixed $data;
 
     /**
      * Construct the view object attributes.
      *
-     * @param string $view The template file from the views folder without .php extension
-     * @param mixed  $data Any data you want passed to the view (Note: this data will be extracted to variables)
+     * @param string $path The template file path
+     * @param mixed $data Any data you want passed to the view (Note: this data will be extracted to variables)
      *
      * @since {{version}}
      */
-    public function __construct(string $view, array $data = []) {
-        $this->view = $view;
+    public function __construct(string $path, array $data = []) {
+        $this->path = $path;
         $this->data = $data;
 
         extract($data, EXTR_SKIP);
         ob_start();
-        include AppConfig::root_dir("/inc/views/{$view}.php");
+        include $path;
         $this->rendered = ob_get_clean();
+    }
+
+    /**
+     * Gets the app view directory.
+     *
+     * @param string $path Optional. Any path you want to append (requires you to add the preceeding /)
+     *
+     * @since {{version}}
+     */
+    public static function view_dir(string $path = ''): string {
+        return app()->view_dir($path);
+    }
+
+    /**
+     * Creates a view from the view directory.
+     *
+     * @param string $path The template file path relative to the view directory
+     * @param mixed $data Any data you want passed to the view (Note: this data will be extracted to variables)
+     */
+    public static function make(string $path, $data = []): static {
+        return new static(self::view_dir($path), $data);
+    }
+
+    /**
+     * Creates a view from the view directory and echos it.
+     *
+     * @param string $path The template file path relative to the view directory
+     * @param mixed $data Any data you want passed to the view (Note: this data will be extracted to variables)
+     */
+    public static function show(string $path, $data = []): static {
+        $instance = self::make($path, $data);
+
+        return $instance->echo();
     }
 
     /**
@@ -39,8 +72,10 @@ final class View {
      *
      * @since {{version}}
      */
-    public function echo(): void {
+    public function echo(): static {
         echo $this->rendered;
+
+        return $this;
     }
 
     /**
@@ -53,12 +88,12 @@ final class View {
     }
 
     /**
-     * Get the view name.
+     * Get the view path.
      *
      * @since {{version}}
      */
-    public function view(): string {
-        return $this->view;
+    public function path(): string {
+        return $this->path;
     }
 
     /**

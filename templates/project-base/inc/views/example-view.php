@@ -3,11 +3,11 @@
  * Example view.
  *
  * You can show views by creating an instance of Support\View
+ * or calling the show static method
  *
  * @example
- * // Create an instance and echo.
- * (new View('example-view'))->echo()
+ * View::show('/example-view.php')
  */
 ?>
 
-<h1>Example View</h1>
+<p style="text-align:center"><?php echo $message ?? 'Hello World!'; ?></p>

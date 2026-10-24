@@ -1,0 +1,70 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{phpNamespace}}\Controllers;
+
+use {{phpNamespace}}\App;
+
+defined('ABSPATH') || exit;
+
+/**
+ * PluginController class.
+ *
+ * @since {{version}}
+ */
+final class PluginController extends AbstractController {
+    /**
+     * PluginController class constructor.
+     *
+     * @param string $root_file The application main entry file
+     *
+     * @since {{version}}
+     */
+    public function __construct(
+        private readonly string $root_file,
+    ) {
+    }
+
+    /**
+     * Creates an insatnce of the class.
+     *
+     * @param App $app The app instance
+     *
+     * @since {{version}}
+     */
+    public static function make(App $app): static {
+        return new static(
+            root_file: $app->root_file()
+        );
+    }
+
+    /**
+     * Register wordpress hooks.
+     *
+     * @since {{version}}
+     */
+    public function register(): void {
+        $root_file = $this->root_file;
+        register_activation_hook($root_file, [$this, 'activate']);
+        register_deactivation_hook($root_file, [$this, 'deactivate']);
+    }
+
+    /**
+     * Plugin activation hook.
+     *
+     * @since {{version}}
+     */
+    public function activate(): void {
+        flush_rewrite_rules();
+    }
+
+    /**
+     * Plugin deactivation hook.
+     *
+     * @since {{version}}
+     */
+    public function deactivate(): void {
+        flush_rewrite_rules();
+    }
+}

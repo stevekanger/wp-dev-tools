@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace {{phpNamespace}}\Core;
 
+use {{phpNamespace}}\App;
+
 defined('ABSPATH') || exit;
 
 /**
- * AbstractService class.
+ * MakeableInterface interface.
  *
  * @since {{version}}
  */
-abstract class AbstractService {
+interface MakeableInterface {
     /**
      * Creates an instance of the class.
      *
-     * @param Container $container The service container
+     * @param App $app The service continer
      *
      * @since {{version}}
      */
-    public static function create(Container $container): static {
-        return new static();
-    }
+    public static function make(App $app): static;
 }

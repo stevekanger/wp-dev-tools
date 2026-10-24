@@ -24,6 +24,7 @@
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run typecheck && npm run build",
     "dev": "node --watch --import tsx src/index.ts",
+    "pack": "npm pack --pack-destination ./local",
     "build": "tsup"
   },
   "bin": {

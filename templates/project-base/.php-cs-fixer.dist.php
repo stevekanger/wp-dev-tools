@@ -62,7 +62,7 @@ $rules = [
         'align' => 'left',
     ],
     // Allow sentences in PHPDoc descriptions
-    'phpdoc_annotation_without_dot' => false,
+    'phpdoc_annotation_without_dot' => true,
     // Set order for PHPDoc params
     'phpdoc_order' => [
         'order' => [

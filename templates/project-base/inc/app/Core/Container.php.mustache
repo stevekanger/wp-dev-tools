@@ -22,7 +22,7 @@ class Container {
     /**
      * Check if a binding exists.
      *
-     * @param string $id The resource id
+     * @param string $id the resource id
      *
      * @since {{version}}
      */
@@ -33,8 +33,8 @@ class Container {
     /**
      * Bind to the container.
      *
-     * @param string $id The resource id
-     * @param callable $factory A function that returns an instance
+     * @param string $id the resource id
+     * @param callable $factory a function that returns the desired resource
      *
      * @since {{version}}
      */
@@ -51,7 +51,7 @@ class Container {
      *
      * @template T
      *
-     * @param string|class-string<T> $id The resource id
+     * @param string|class-string<T> $id the resource id
      *
      * @return ($id is class-string<T> ? T : mixed)
      *

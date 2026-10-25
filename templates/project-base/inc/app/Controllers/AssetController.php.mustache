@@ -20,14 +20,14 @@ final class AssetController extends AbstractController {
     /**
      * AssetController class constructor.
      *
-     * @param string $prefix The app prefix
+     * @param string $slug The app slug
      * @param string $build_dir_url The url to the build dir
      * @param string $version The app version
      *
      * @since {{version}}
      */
     public function __construct(
-        private readonly string $prefix,
+        private readonly string $slug,
         private readonly string $build_dir_url,
         private readonly string $version,
     ) {
@@ -42,7 +42,7 @@ final class AssetController extends AbstractController {
      */
     public static function make(App $app): static {
         return new static(
-            prefix: $app->prefix(),
+            slug: $app->slug(),
             build_dir_url: $app->build_dir_url(),
             version: $app->version()
         );
@@ -66,20 +66,20 @@ final class AssetController extends AbstractController {
     public function enqueue_client_assets(): void {
         // enqueue js
         wp_enqueue_script(
-            $this->prefix . '_client',
+            $this->slug . '-client',
             $this->build_dir_url . '/client/index.js',
             [],
             $this->version,
-            [],
+            ['in_footer' => true, 'strategy' => 'defer'],
         );
 
         // enqueue css
         wp_enqueue_style(
-            $this->prefix . '_client',
+            $this->slug . '-client',
             $this->build_dir_url . '/client/index.css',
             [],
-            [],
             $this->version,
+            'all',
         );
     }
 
@@ -90,23 +90,23 @@ final class AssetController extends AbstractController {
      *
      * @since {{version}}
      */
-    public function enqueue_admin_assets() {
+    public function enqueue_admin_assets(): void {
         // enqueue js
         wp_enqueue_script(
-            $this->prefix . '_admin',
+            $this->slug . '-admin',
             $this->build_dir_url . '/admin/index.js',
             [],
             $this->version,
-            [],
+            ['in_footer' => true, 'strategy' => 'defer'],
         );
 
         // enqueue css
         wp_enqueue_style(
-            $this->prefix . '_admin',
+            $this->slug . '-admin',
             $this->build_dir_url . '/admin/index.css',
             [],
-            [],
             $this->version,
+            'all',
         );
     }
 }

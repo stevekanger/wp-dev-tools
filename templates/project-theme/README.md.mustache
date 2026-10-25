@@ -56,6 +56,23 @@ To archive the entire development package.
 npm run archive:dev
 
 ```
+
+## Blocks
+
+### Create a block
+
+Use the `create:block` npm script supplied.
+
+```bash
+npm run create:block
+
+```
+
+The script will create your block files. Its recommended to install the files in `src/blocks`. Block files will use typescript by default. Edit the `block.json` file to your liking. The `create:block` script uses basically the same templates wordpress does `https://github.com/WordPress/gutenberg/tree/trunk/packages/create-block/lib/templates/block`. They have been modified slightly for use with typescript.
+
+### Register a block
+
+Once you have successfully created a block all you have to do is add the block slug to the `BLOCKS` array in `inc/app/Config/BlockConfig.php`. This assumes your blocks source files are located in the `src/blocks` folder and built to `build/blocks` folder.
 {{#installTests}}
 
 ## Testing

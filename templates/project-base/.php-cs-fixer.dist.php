@@ -51,6 +51,12 @@ $rules = [
     'php_unit_method_casing' => [
         'case' => 'snake_case',
     ],
+    // Allow params without descriptions
+    'no_superfluous_phpdoc_tags' => false,
+    // Add any missing params to phpdoc
+    'phpdoc_add_missing_param_annotation' => [
+        'only_untyped' => false,
+    ],
     // Align PHPDoc to the left
     'phpdoc_align' => [
         'align' => 'left',

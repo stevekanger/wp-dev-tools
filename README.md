@@ -33,14 +33,14 @@ and use in package.json
 
 ## Creating a Plugin Or Theme
 
-You can easily scaffold a project with the `createProject` command. Run via `npx` since your project would be empty at this point.
+You can easily scaffold a project with the `createProject` command. Run via `npx` since your project would be empty at this point. This runs the interactive setup.
 
 ```bash
 npx @stevekanger/wp-dev-tools createProject
 
 ```
 
-This runs the interactive setup. When finished `cd` into your project and run the following commands to setup the project.
+When finished `cd` into your project and run the following commands to setup the project.
 
 ```bash
 npm install
@@ -77,7 +77,7 @@ npm run dev
 
 ### Project Structure
 
-All php files reside in `inc`. All `psr-4` classes will be autoloaded via `composer` from the `inc/app` folder. Controllers are your connection to wordpress by registering hooks, etc. Services are your business logic and can be bound and retrieved from the service container. Controllers, Services, and Configs have access to the service container via the `make()` method. Check the `Bootstrap.php` file to register all Controllers and dependencies.
+You have the choice to install the php suite and/or tests during setup. See [examples](https://github.com/stevekanger/wp-dev-tools/tree/main/examples).
 
 All raw js, css, and blocks reside in `src`. These are files that need to be built during the build process.
 

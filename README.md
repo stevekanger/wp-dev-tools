@@ -114,6 +114,7 @@ Creates either a theme or plugin project
 | --phpNamespace     | string  | string            | The projects php namespace for all php code.                                                                |
 | --wordpressVersion | string  | string            | The min Wordpress version.                                                                                  |
 | --phpVersion       | string  | string            | The min Php version.                                                                                        |
+| --installPhpSuite  | boolean | NA                | Whether or not to install the full php code suite in 'inc' folder.                                          |
 | --installTests     | boolean | NA                | Whether or not to install tests.                                                                            |
 | --help -h          | boolean | NA                | Shows the help message.                                                                                     |
 

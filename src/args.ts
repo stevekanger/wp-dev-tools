@@ -65,6 +65,11 @@ export const createProjectArgsConfig = {
       type: 'boolean',
       description: 'Whether or not to install tests',
     },
+    confirm: {
+      type: 'boolean',
+      description:
+        'Auto confirm data is correct instead of being prompted at the end',
+    },
     help: {
       type: 'boolean',
       description: 'Shows the help message.',
@@ -114,6 +119,11 @@ export const createBlockArgsConfig = {
     version: {
       type: 'string',
       description: 'Initial version of your block.',
+    },
+    confirm: {
+      type: 'boolean',
+      description:
+        'Auto confirm data is correct instead of being prompted at the end',
     },
     help: {
       type: 'boolean',

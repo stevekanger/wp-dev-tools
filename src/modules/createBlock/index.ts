@@ -18,7 +18,7 @@ import {
   promptValues,
 } from '@/utils/prompts';
 import { kebabCase, uppercaseFirstOnly } from '@/utils/strings';
-import { isOneOf, isString } from '@/utils/typeChecks';
+import { isBoolean, isOneOf, isString } from '@/utils/typeChecks';
 import UserError from '@/utils/UserError';
 import fs from 'fs';
 import path from 'path';
@@ -85,16 +85,20 @@ export default async function createBlock() {
     throw new UserError(`Installation directory must be empty '${dest}'`);
   }
 
-  const confirmed = await promptConfirm({
-    ['Type']: type,
-    ['Title']: title,
-    ['Slug']: slug,
-    ['Namespace']: namespace,
-    ['Textdomain']: textdomain,
-    ['Description']: description,
-    ['Version']: version,
-    ['Destination']: dest,
-  })();
+  const confirmed = await argOrPrompt(
+    args.values.confirm,
+    promptConfirm({
+      ['Type']: type,
+      ['Title']: title,
+      ['Slug']: slug,
+      ['Namespace']: namespace,
+      ['Textdomain']: textdomain,
+      ['Description']: description,
+      ['Version']: version,
+      ['Destination']: dest,
+    }),
+    isBoolean,
+  );
 
   if (!confirmed) {
     throw new UserError('Data not confirmed.');

@@ -236,22 +236,26 @@ export default async function createProject() {
 
   const [major, minor] = wordpressVersion.split('.');
 
-  const confirmed = await promptConfirm({
-    ['Destination']: dest,
-    ['Project Type']: type,
-    ['Title']: title,
-    ['Author']: author,
-    ['Author Handle']: authorHandle,
-    ['Description']: description,
-    ['Slug']: slug,
-    ['Prefix']: prefix,
-    ['version']: version,
-    ['Php Namespace']: phpNamespace,
-    ['Wordpress Version']: wordpressVersion,
-    ['Php Version']: phpVersion,
-    ['Install Php Suite']: installPhpSuite ? 'Yes' : 'No',
-    ['Install Tests']: installTests ? 'Yes' : 'No',
-  })();
+  const confirmed = await argOrPrompt(
+    args.values.confirm,
+    promptConfirm({
+      ['Destination']: dest,
+      ['Project Type']: type,
+      ['Title']: title,
+      ['Author']: author,
+      ['Author Handle']: authorHandle,
+      ['Description']: description,
+      ['Slug']: slug,
+      ['Prefix']: prefix,
+      ['version']: version,
+      ['Php Namespace']: phpNamespace,
+      ['Wordpress Version']: wordpressVersion,
+      ['Php Version']: phpVersion,
+      ['Install Php Suite']: installPhpSuite ? 'Yes' : 'No',
+      ['Install Tests']: installTests ? 'Yes' : 'No',
+    }),
+    isBoolean,
+  );
 
   if (!confirmed) {
     throw new UserError('Data not confirmed.');

@@ -134,7 +134,6 @@ export default async function createBlock() {
 == Finished! ==
 ===============
 
-Go to block.json and edit your block information.
-Remember to register and build your block before use.
+Go to block.json and edit your block information. Remember to register and build your block before use.
 `);
 }

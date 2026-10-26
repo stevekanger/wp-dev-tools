@@ -116,6 +116,7 @@ Creates either a theme or plugin project
 | --phpVersion       | string  | string            | The min Php version.                                                                                        |
 | --installPhpSuite  | boolean | NA                | Whether or not to install the full php code suite in 'inc' folder.                                          |
 | --installTests     | boolean | NA                | Whether or not to install tests.                                                                            |
+| --confirm          | boolean | NA                | Auto confirm data is correct instead of being prompted at the end.                                          |
 | --help -h          | boolean | NA                | Shows the help message.                                                                                     |
 
 ### createBlock
@@ -132,6 +133,7 @@ Creates wordpress block files. It does not install a full block plugin only the 
 | --textdomain  | string  | string              | The project textdomain.                                             |
 | --namespace   | string  | string              | The project namespace (can match textdomain).                       |
 | --version     | string  | string              | The initial project version.                                        |
+| --confirm     | boolean | NA                  | Auto confirm data is correct instead of being prompted at the end.  |
 | --help -h     | boolean | NA                  | Shows the help message.                                             |
 
 ### archive

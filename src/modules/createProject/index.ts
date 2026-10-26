@@ -2,14 +2,9 @@ import { createProjectArgsConfig, showCmdHelp } from '@/args';
 import { INITIAL_VERSION } from '@/constants';
 import { argOrPrompt } from '@/utils/argOrPrompt';
 import dirEmpty from '@/utils/dirEmpty';
-import getDirectoryFiles from '@/utils/getDirectoryFiles';
 import getJsonFileContents from '@/utils/getJsonFileContents';
 import getRootDir from '@/utils/getRootDir';
-import {
-  isMustache,
-  removeMustacheExtension,
-  renderMustache,
-} from '@/utils/mustache';
+import getWpData from '@/utils/getWpData';
 import normalizePath from '@/utils/normalizePath';
 import {
   promptBoolean,
@@ -18,7 +13,7 @@ import {
   promptString,
   promptValues,
 } from '@/utils/prompts';
-import replaceFilenamePlaceholders from '@/utils/replaceFilenamePlaceholder';
+import renderTemplateDirectory from '@/utils/renderTemplateDirectory';
 import {
   camelCase,
   kebabCase,
@@ -29,89 +24,49 @@ import {
 import { isBoolean, isOneOf, isString } from '@/utils/typeChecks';
 import UserError from '@/utils/UserError';
 import fs from 'fs';
-import path from 'path';
 import { parseArgs } from 'util';
 import { ProjectTemplateVars, ProjectType, WpContentLocation } from './types';
 
 /**
- * Gets the latest wordpress version from api
- */
-async function getWordpressData(): Promise<{
-  wordpressVersion: string;
-  phpVersion: string;
-}> {
-  try {
-    const wpVersionRes = await fetch(
-      'https://api.wordpress.org/core/version-check/1.7/',
-    );
-
-    if (wpVersionRes.status !== 200) {
-      throw new UserError(
-        'Failed fetching wordpress version data. Please try again shortly.',
-      );
-    }
-
-    const wpVersionData = await wpVersionRes.json();
-    const wordpressVersion = wpVersionData.offers[0].version;
-    const minPhp = wpVersionData.offers[0].php_version;
-
-    const phpVersionRes = await fetch(
-      `https://api.wordpress.org/core/serve-happy/1.0/?php_version=${minPhp}`,
-    );
-
-    if (phpVersionRes.status !== 200) {
-      throw new UserError(
-        'Failed fetching wordpress version and php data which can happen occasionally. Please try again shortly.',
-      );
-    }
-
-    const { recommended_version: phpVersion } = await phpVersionRes.json();
-
-    return {
-      wordpressVersion,
-      phpVersion,
-    };
-  } catch (err) {
-    throw err;
-  }
-}
-
-/**
- * Render template files from directory
+ * Render the project files
  *
- * @param src The path of the template files
- * @param dest The path to render to
- * @param vars The mustache template variables
+ * @param dest - The destination directory
+ * @param type - The project type
+ * @param templateVars - The template variables
  */
-async function renderFiles(
-  src: string,
+export function renderProjectFiles(
   dest: string,
-  vars: ProjectTemplateVars,
-) {
-  getDirectoryFiles(src).forEach((fileName) => {
-    const srcPath = path.join(src, fileName);
+  type: ProjectType,
+  templateVars: ProjectTemplateVars,
+): void {
+  const templates = [
+    getRootDir('templates', 'project-base'),
+    getRootDir('templates', `project-${type}`),
+  ];
 
-    let destPath = path.join(
-      dest,
-      removeMustacheExtension(
-        replaceFilenamePlaceholders(fileName, {
-          slug: vars.slug,
-        }),
-      ),
-    );
+  if (templateVars.installTests) {
+    templates.push(getRootDir('templates', 'project-tests'));
+  }
 
-    if (isMustache(fileName)) {
-      renderMustache(srcPath, destPath, vars);
-    } else {
-      fs.cpSync(srcPath, destPath);
+  if (templateVars.installPhpSuite) {
+    templates.push(getRootDir('templates', 'project-php-suite'));
+
+    if (templateVars.installTests) {
+      templates.push(getRootDir('templates', 'project-tests-php-suite'));
     }
-  });
+  }
+
+  templates.forEach((src) =>
+    renderTemplateDirectory(src, dest, templateVars, {
+      slug: templateVars.slug,
+    }),
+  );
 }
 
 /**
  * Gets the wp-content location based on the project type
  *
- * @param type The project type
+ * @param type - The project type
  */
 function getWpContentLocation(type: ProjectType): WpContentLocation {
   switch (type) {
@@ -135,7 +90,7 @@ export default async function createProject() {
     return;
   }
 
-  const wpData = await getWordpressData();
+  const { recommendedWpVersion, recommendedPhpVersion } = await getWpData();
 
   const dest = await argOrPrompt(
     normalizePath(args.values.dest),
@@ -213,12 +168,12 @@ export default async function createProject() {
   );
   const wordpressVersion = await argOrPrompt(
     args.values.wordpressVersion,
-    promptString('Wordpress version.', wpData.wordpressVersion),
+    promptString('Wordpress version.', recommendedWpVersion),
     isString,
   );
   const phpVersion = await argOrPrompt(
     args.values.phpVersion,
-    promptString('Php version.', wpData.phpVersion),
+    promptString('Php version.', recommendedPhpVersion),
     isString,
   );
 
@@ -283,30 +238,7 @@ export default async function createProject() {
     devToolsVersion,
   };
 
-  [
-    getRootDir('templates', 'project-base'),
-    getRootDir('templates', `project-${type}`),
-  ].forEach((src) => renderFiles(src, dest, templateVars));
-
-  if (installTests) {
-    renderFiles(getRootDir('templates', 'project-tests'), dest, templateVars);
-  }
-
-  if (installPhpSuite) {
-    renderFiles(
-      getRootDir('templates', 'project-php-suite'),
-      dest,
-      templateVars,
-    );
-
-    if (installTests) {
-      renderFiles(
-        getRootDir('templates', 'project-tests-php-suite'),
-        dest,
-        templateVars,
-      );
-    }
-  }
+  renderProjectFiles(dest, type, templateVars);
 
   const mainFileName = type === 'plugin' ? `${slug}.php` : 'style.css';
 

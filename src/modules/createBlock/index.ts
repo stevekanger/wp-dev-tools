@@ -24,6 +24,7 @@ import fs from 'fs';
 import path from 'path';
 import { parseArgs } from 'util';
 import { BlockTemplateVars, BlockType } from './types';
+import renderTemplateDirectory from '@/utils/renderTemplateDirectory';
 
 /**
  * Creates wordpress block files
@@ -117,16 +118,16 @@ export default async function createBlock() {
     isDynamicVariant: type === 'dynamic',
   };
 
-  const src = getRootDir('templates', 'block');
+  renderTemplateDirectory(getRootDir('templates', 'block'), dest, templateVars);
 
-  fs.readdirSync(src).forEach((item) => {
-    const srcItemPath = path.join(src, item);
-    const destItemPath = path.join(dest, removeMustacheExtension(item));
-
-    if (isMustache(srcItemPath)) {
-      renderMustache(srcItemPath, destItemPath, templateVars);
-    }
-  });
+  // fs.readdirSync(src).forEach((item) => {
+  //   const srcItemPath = path.join(src, item);
+  //   const destItemPath = path.join(dest, removeMustacheExtension(item));
+  //
+  //   if (isMustache(srcItemPath)) {
+  //     renderMustache(srcItemPath, destItemPath, templateVars);
+  //   }
+  // });
 
   console.log(`
 ===============

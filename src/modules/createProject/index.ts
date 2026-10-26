@@ -189,8 +189,6 @@ export default async function createProject() {
     isBoolean,
   );
 
-  const [major, minor] = wordpressVersion.split('.');
-
   const confirmed = await argOrPrompt(
     args.values.confirm,
     promptConfirm({
@@ -230,7 +228,6 @@ export default async function createProject() {
     version,
     phpNamespace,
     wordpressVersion,
-    wordpressVersionMajorMinor: `${major}.${minor}`,
     phpVersion,
     installPhpSuite,
     installTests,

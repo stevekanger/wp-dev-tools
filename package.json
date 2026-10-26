@@ -22,6 +22,7 @@
   },
   "scripts": {
     "build": "tsup",
+    "create:examples": "tsx src/createExamples.ts",
     "dev": "node --watch --import tsx src/index.ts",
     "pack": "npm run build && npm pack --pack-destination ./local",
     "prepublishOnly": "npm run typecheck && npm run build",

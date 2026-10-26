@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+$root_dir = dirname(__FILE__, 3);
+$entry_file_name = 'plugin-with-tests-php.php';
+$entry_file_path = $root_dir . '/' . $entry_file_name;
+$wordpress_tests_phpunit = $root_dir . '/vendor/wordpress/wordpress-tests-phpunit';
+
+// Allow debug logging for tests
+ini_set('log_errors', '1');
+ini_set('error_log', $root_dir . '/debug.log');
+
+// Make sure the entry file exists
+if (!file_exists($entry_file_path)) {
+    exit('Entry file ' . $entry_file_name . ' does not exist.');
+}
+
+// Make sure the wordpress testing lib is loaded
+if (!file_exists($wordpress_tests_phpunit . '/includes/functions.php')) {
+    exit('Wordpress test suite not found. Make sure you have it installed via composer.');
+}
+
+// Autoload and require test functions
+require_once $root_dir . '/vendor/autoload.php';
+require_once $wordpress_tests_phpunit . '/includes/functions.php';
+
+// Load the main plugin file
+tests_add_filter('muplugins_loaded', function() use ($entry_file_path) {
+    require $entry_file_path;
+});
+
+// Tell the library where our bridge config is
+define('WP_TESTS_CONFIG_FILE_PATH', __DIR__ . '/wp-tests-config.php');
+
+// Require wordpress tests bootstrap file
+require $wordpress_tests_phpunit . '/includes/bootstrap.php';

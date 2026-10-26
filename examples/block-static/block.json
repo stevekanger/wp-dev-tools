@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "example-namespace/block-static",
+  "version": "1.0.0",
+  "textdomain": "example-textdomain",
+  "title": "Block Static",
+  "description": "Block static.",
+  "category": "widgets",
+  "icon": "smiley",
+  "supports": {
+    "html": false
+  },
+  "attributes": {},
+  "example": {},
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

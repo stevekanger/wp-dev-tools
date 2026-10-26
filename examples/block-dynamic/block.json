@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "example-namespace/block-dynamic",
+  "version": "1.0.0",
+  "textdomain": "example-textdomain",
+  "title": "Block Dynamic",
+  "description": "Block dynamic.",
+  "category": "widgets",
+  "icon": "smiley",
+  "supports": {
+    "html": false
+  },
+  "attributes": {},
+  "example": {},
+  "render": "file:./render.php",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js"
+}

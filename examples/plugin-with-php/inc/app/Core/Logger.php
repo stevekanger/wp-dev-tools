@@ -1,0 +1,54 @@
+<?php
+
+declare(strict_types=1);
+
+namespace PluginWithPhp\Core;
+
+defined('ABSPATH') || exit;
+
+/**
+ * Logger class.
+ *
+ * Utility class for logging text to files.
+ *
+ * @since 1.0.0
+ */
+final class Logger {
+    /**
+     * Log to the debug.log file.
+     *
+     * @param mixed ...$items any item you want to log to the log file
+     *
+     * @since 1.0.0
+     */
+    public static function debug(mixed ...$items): void {
+        if (true === \WP_DEBUG) {
+            $hr_thick = "\n===============================================================================\n";
+            $hr_thin = "\n-------------------------------------------------------------------------------\n";
+
+            $backtrace = debug_backtrace();
+            $caller = array_shift($backtrace);
+            $filepath = $caller['file'];
+            $filepath_exploded = explode('/', $filepath);
+            $filename = end($filepath_exploded);
+            $line = strval($caller['line']);
+            $header = "Filename: {$filename}\nLine: {$line}";
+            $log = "{$hr_thick}{$header}{$hr_thin}";
+
+            foreach ($items as $item) {
+                if (is_array($item) || is_object($item)) {
+                    $log .= print_r($item, true);
+                } elseif (false === $item) {
+                    $log .= 'false ';
+                } elseif (null === $item) {
+                    $log .= 'null ';
+                } else {
+                    $log .= ($item ?? '') . ' ';
+                }
+            }
+
+            $log .= $hr_thick;
+            error_log($log);
+        }
+    }
+}

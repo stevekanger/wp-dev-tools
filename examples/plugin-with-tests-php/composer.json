@@ -1,0 +1,41 @@
+{
+  "name": "johndoe/plugin-with-tests-php",
+  "description": "Plugin with tests and php.",
+  "license": "GPL-2.0-or-later",
+  "autoload": {
+    "psr-4": {
+      "PluginWithTestsPhp\\": "inc/app/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "PluginWithTestsPhp\\Tests\\": "tests/php/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "package",
+      "package": {
+        "name": "wordpress/wordpress-tests-phpunit",
+        "version": "7.1.3",
+        "source": {
+          "url": "https://develop.svn.wordpress.org/tags/7.1.3/tests/",
+          "type": "svn",
+          "reference": "phpunit/"
+        }
+      }
+    }
+  ],
+  "scripts": {
+    "test": "docker exec -it -w /var/www/html/wp-content/plugins/plugin-with-tests-php plugin-with-tests-php-wordpress-test ./vendor/bin/phpunit"
+  },
+  "require": {
+    "php": ">=8.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.6.34",
+    "yoast/phpunit-polyfills": "^4.0",
+    "wordpress/wordpress-tests-phpunit": "7.1.3",
+    "stevekanger/sk-php-cs-fixers": "^0.1.2"
+  }
+}

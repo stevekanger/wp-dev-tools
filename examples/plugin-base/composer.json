@@ -1,0 +1,11 @@
+{
+  "name": "johndoe/plugin-base",
+  "description": "Plugin base.",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "php": ">=8.3"
+  },
+  "require-dev": {
+    "stevekanger/sk-php-cs-fixers": "^0.1.2"
+  }
+}

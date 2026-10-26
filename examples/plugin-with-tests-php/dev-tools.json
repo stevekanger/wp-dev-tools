@@ -1,0 +1,41 @@
+{
+  "slug": "plugin-with-tests-php",
+  "prefix": "plugin_with_tests_php",
+  "phpNamespace": "PluginWithTestsPhp",
+  "main": "plugin-with-tests-php.php",
+  "files": {
+    "dist": [
+      "plugin-with-tests-php.php",
+      "assets",
+      "build",
+      "inc",
+      "vendor",
+      "license.txt",
+      "readme.txt"
+    ],
+    "dev": [
+      "plugin-with-tests-php.php",
+      "assets",
+      "inc",
+      "src",
+      "tests",
+      ".example.env",
+      ".gitignore",
+      ".php-cs-fixer.dist.php",
+      ".prettierignore",
+      ".prettierrc",
+      "composer.json",
+      "dev-tools.json",
+      "docker-compose.yml",
+      "Dockerfile",
+      "license.txt",
+      "package.json",
+      "phpunit.xml",
+      "README.md",
+      "readme.txt",
+      "tsconfig.json",
+      "vitest.config.mts",
+      "webpack.config.js"
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+<?php
+
+declare(strict_types=1);
+
+namespace ThemeWithPhp\Core;
+
+/**
+ * Container for services, etc.
+ *
+ * @since 1.0.0
+ */
+class Container {
+    /** @var array<string, callable(self): mixed> */
+    private array $bindings = [];
+
+    /** @var array<string, mixed> */
+    private array $instances = [];
+
+    /** @var array<string, bool> */
+    private array $shared = [];
+
+    /**
+     * Check if a binding exists.
+     *
+     * @param string $id the resource id
+     *
+     * @since 1.0.0
+     */
+    public function has(string $id): bool {
+        return isset($this->bindings[$id]);
+    }
+
+    /**
+     * Bind to the container.
+     *
+     * @param string $id the resource id
+     * @param callable $factory a function that returns the desired resource
+     * @param bool $shared share the resolved resource or create new for every call
+     *
+     * @since 1.0.0
+     */
+    public function bind(string $id, callable $factory, bool $shared = true): static {
+        $this->bindings[$id] = $factory;
+        $this->shared[$id] = $shared;
+        unset($this->instances[$id]);
+
+        return $this;
+    }
+
+    /**
+     * Get from the container.
+     *
+     * @template T
+     *
+     * @param string|class-string<T> $id the resource id
+     *
+     * @return ($id is class-string<T> ? T : mixed)
+     *
+     * @throws \RuntimeException if nothing is registered for $id
+     *
+     * @since 1.0.0
+     */
+    public function get(string $id): mixed {
+        if (!array_key_exists($id, $this->bindings)) {
+            throw new \RuntimeException("No container binding found for {$id}");
+        }
+
+        if (!$this->shared[$id]) {
+            return $this->bindings[$id]($this);
+        }
+
+        if (!array_key_exists($id, $this->instances)) {
+            $this->instances[$id] = $this->bindings[$id]($this);
+        }
+
+        return $this->instances[$id];
+    }
+}

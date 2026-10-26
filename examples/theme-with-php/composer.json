@@ -1,0 +1,16 @@
+{
+  "name": "johndoe/theme-with-php",
+  "description": "Theme with php.",
+  "license": "GPL-2.0-or-later",
+  "autoload": {
+    "psr-4": {
+      "ThemeWithPhp\\": "inc/app/"
+    }
+  },
+  "require": {
+    "php": ">=8.3"
+  },
+  "require-dev": {
+    "stevekanger/sk-php-cs-fixers": "^0.1.2"
+  }
+}

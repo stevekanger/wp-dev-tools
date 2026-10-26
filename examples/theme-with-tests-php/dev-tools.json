@@ -1,0 +1,52 @@
+{
+  "slug": "theme-with-tests-php",
+  "prefix": "theme_with_tests_php",
+  "phpNamespace": "ThemeWithTestsPhp",
+  "main": "style.css",
+  "files": {
+    "dist": [
+      "assets",
+      "build",
+      "inc",
+      "parts",
+      "patterns",
+      "templates",
+      "vendor",
+      "license.txt",
+      "functions.php",
+      "readme.txt",
+      "screenshot.png",
+      "style.css",
+      "theme.json"
+    ],
+    "dev": [
+      "assets",
+      "inc",
+      "parts",
+      "patterns",
+      "src",
+      "templates",
+      "tests",
+      ".example.env",
+      ".gitignore",
+      ".php-cs-fixer.dist.php",
+      ".prettierignore",
+      ".prettierrc",
+      "composer.json",
+      "dev-tools.json",
+      "docker-compose.yml",
+      "Dockerfile",
+      "functions.php",
+      "package.json",
+      "phpunit.xml",
+      "README.md",
+      "readme.txt",
+      "screenshot.png",
+      "style.css",
+      "theme.json",
+      "tsconfig.json",
+      "vitest.config.mts",
+      "webpack.config.js"
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "theme-base",
+  "version": "1.0.0",
+  "description": "Theme base.",
+  "license": "GPL-2.0-or-later",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.22.2"
+  },
+  "scripts": {
+    "build": "wp-scripts build",
+    "dev": "wp-scripts start",
+    "archive:dist": "composer install --no-dev && npm run build && wp-dev-tools archive --type dist && composer install",
+    "archive:dev": "wp-dev-tools archive --type dev",
+    "copy": "wp-dev-tools copy",
+    "docker:shell": "docker exec -it theme-base-wordpress /bin/bash",
+    "docker:extract": "wp-dev-tools dockerExtract --container theme-base-wordpress"
+  },
+  "devDependencies": {
+    "@stevekanger/wp-dev-tools": "^0.1.7",
+    "@wordpress/scripts": "^36.0.0",
+    "browser-sync-webpack-plugin": "^2.4.0",
+    "dotenv": "^18.0.4",
+    "prettier": "^3.9.9",
+    "typescript": "^6.0.3"
+  },
+  "allowScripts": {
+    "unrs-resolver": true,
+    "@parcel/watcher": true,
+    "core-js": false,
+    "core-js-pure": false
+  },
+  "overrides": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "@types/react": "18.3.27",
+    "@types/react-dom": "18.3.7"
+  }
+}

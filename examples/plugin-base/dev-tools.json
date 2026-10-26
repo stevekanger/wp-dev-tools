@@ -1,0 +1,41 @@
+{
+  "slug": "plugin-base",
+  "prefix": "plugin_base",
+  "phpNamespace": "PluginBase",
+  "main": "plugin-base.php",
+  "files": {
+    "dist": [
+      "plugin-base.php",
+      "assets",
+      "build",
+      "inc",
+      "vendor",
+      "license.txt",
+      "readme.txt"
+    ],
+    "dev": [
+      "plugin-base.php",
+      "assets",
+      "inc",
+      "src",
+      "tests",
+      ".example.env",
+      ".gitignore",
+      ".php-cs-fixer.dist.php",
+      ".prettierignore",
+      ".prettierrc",
+      "composer.json",
+      "dev-tools.json",
+      "docker-compose.yml",
+      "Dockerfile",
+      "license.txt",
+      "package.json",
+      "phpunit.xml",
+      "README.md",
+      "readme.txt",
+      "tsconfig.json",
+      "vitest.config.mts",
+      "webpack.config.js"
+    ]
+  }
+}

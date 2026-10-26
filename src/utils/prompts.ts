@@ -103,23 +103,25 @@ export function promptValues<T extends readonly unknown[]>(
  *
  * @param data Object of data to confirm
  */
-export async function promptConfirm(
+export function promptConfirm(
   data: Record<string, string>,
-): Promise<boolean> {
-  let msg = `Please confirm your data.
+): () => Promise<boolean> {
+  return async () => {
+    let msg = `Please confirm your data.
 =========================\n`;
 
-  Object.entries(data).forEach(([key, value]) => {
-    msg += `${key}: ${value}\n`;
-  });
+    Object.entries(data).forEach(([key, value]) => {
+      msg += `${key}: ${value}\n`;
+    });
 
-  msg += '\nIs this correct? (y/n): ';
+    msg += '\nIs this correct? (y/n): ';
 
-  const answer = await commandLinePrompt(msg, '', true);
+    const answer = await commandLinePrompt(msg, '', true);
 
-  if (answer.toLowerCase() !== 'y') {
-    return false;
-  }
+    if (answer.toLowerCase() !== 'y') {
+      return false;
+    }
 
-  return true;
+    return true;
+  };
 }

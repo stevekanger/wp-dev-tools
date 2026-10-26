@@ -251,7 +251,7 @@ export default async function createProject() {
     ['Php Version']: phpVersion,
     ['Install Php Suite']: installPhpSuite ? 'Yes' : 'No',
     ['Install Tests']: installTests ? 'Yes' : 'No',
-  });
+  })();
 
   if (!confirmed) {
     throw new UserError('Data not confirmed.');

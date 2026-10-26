@@ -94,7 +94,7 @@ export default async function createBlock() {
     ['Description']: description,
     ['Version']: version,
     ['Destination']: dest,
-  });
+  })();
 
   if (!confirmed) {
     throw new UserError('Data not confirmed.');

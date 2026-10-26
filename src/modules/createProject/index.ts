@@ -90,6 +90,7 @@ async function renderFiles(
 ) {
   getDirectoryFiles(src).forEach((fileName) => {
     const srcPath = path.join(src, fileName);
+
     let destPath = path.join(
       dest,
       removeMustacheExtension(
@@ -220,9 +221,16 @@ export default async function createProject() {
     promptString('Php version.', wpData.phpVersion),
     isString,
   );
+
+  const installPhpSuite = await argOrPrompt(
+    args.values.installPhpSuite,
+    promptBoolean('Install full php suite?'),
+    isBoolean,
+  );
+
   const installTests = await argOrPrompt(
     args.values.installTests,
-    promptBoolean('Install tests.', ''),
+    promptBoolean('Install tests?', ''),
     isBoolean,
   );
 
@@ -241,6 +249,7 @@ export default async function createProject() {
     ['Php Namespace']: phpNamespace,
     ['Wordpress Version']: wordpressVersion,
     ['Php Version']: phpVersion,
+    ['Install Php Suite']: installPhpSuite ? 'Yes' : 'No',
     ['Install Tests']: installTests ? 'Yes' : 'No',
   });
 
@@ -264,6 +273,7 @@ export default async function createProject() {
     wordpressVersion,
     wordpressVersionMajorMinor: `${major}.${minor}`,
     phpVersion,
+    installPhpSuite,
     installTests,
     wpContentLocation: getWpContentLocation(type),
     devToolsVersion,
@@ -276,6 +286,22 @@ export default async function createProject() {
 
   if (installTests) {
     renderFiles(getRootDir('templates', 'project-tests'), dest, templateVars);
+  }
+
+  if (installPhpSuite) {
+    renderFiles(
+      getRootDir('templates', 'project-php-suite'),
+      dest,
+      templateVars,
+    );
+
+    if (installTests) {
+      renderFiles(
+        getRootDir('templates', 'project-tests-php-suite'),
+        dest,
+        templateVars,
+      );
+    }
   }
 
   const mainFileName = type === 'plugin' ? `${slug}.php` : 'style.css';

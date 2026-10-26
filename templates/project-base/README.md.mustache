@@ -2,11 +2,11 @@
 
 {{description}}
 
-Modern WordPress plugin featuring an MVC style structure, dependency injection container, Composer autoloading, Docker support, and Webpack build pipeline.
-
 ## Project Structure
+{{#installPhpSuite}}
 
 All php files reside in `inc`. All `psr-4` classes will be autoloaded via `composer` from the `inc/app` folder. Controllers are your connection to wordpress by registering hooks, etc. Services are your business logic and can be bound and retrieved from the service container. Controllers, Services, and Configs have access to the service container via the `make()` method. Check the `Bootstrap.php` file to register all Controllers and dependencies.
+{{/installPhpSuite}}
 
 All raw js, css, and blocks reside in `src`. These are files that need to be built during the build process.
 
@@ -56,6 +56,7 @@ To archive the entire development package.
 npm run archive:dev
 
 ```
+{{#isPlugin}}
 
 ## Blocks
 
@@ -73,6 +74,7 @@ The script will create your block files. Its recommended to install the files in
 ### Register a block
 
 Once you have successfully created a block all you have to do is add the block slug to the `BLOCKS` array in `inc/app/Config/BlockConfig.php`. This assumes your blocks source files are located in the `src/blocks` folder and built to `build/blocks` folder.
+{{/isPlugin}}
 {{#installTests}}
 
 ## Testing

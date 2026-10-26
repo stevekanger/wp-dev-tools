@@ -56,6 +56,11 @@ export const createProjectArgsConfig = {
       type: 'string',
       description: 'The minimum required Php Version',
     },
+    installPhpSuite: {
+      type: 'boolean',
+      description:
+        'Whether or not to install the full php suite in the "inc" folder',
+    },
     installTests: {
       type: 'boolean',
       description: 'Whether or not to install tests',

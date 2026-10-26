@@ -2,11 +2,13 @@
   "name": "{{authorHandle}}/{{slug}}",
   "description": "{{description}}",
   "license": "GPL-2.0-or-later",
+{{#installPhpSuite}}
   "autoload": {
     "psr-4": {
       "{{phpNamespace}}\\": "inc/app/"
     }
   },
+{{/installPhpSuite}}
 {{#installTests}}
   "autoload-dev": {
     "psr-4": {

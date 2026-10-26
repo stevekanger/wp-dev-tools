@@ -17,6 +17,7 @@ export interface ProjectTemplateVars {
   wordpressVersion: string;
   wordpressVersionMajorMinor: string;
   phpVersion: string;
+  installPhpSuite: boolean;
   installTests: boolean;
   wpContentLocation: WpContentLocation;
   devToolsVersion: string;

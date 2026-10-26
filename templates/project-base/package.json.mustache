@@ -11,22 +11,35 @@
 {{#installTests}}
     "test": "vitest",
 {{/installTests}}
-    "dev": "wp-scripts start",
     "build": "wp-scripts build",
+    "dev": "wp-scripts start",
     "archive:dist": "composer install --no-dev && npm run build && wp-dev-tools archive --type dist && composer install",
     "archive:dev": "wp-dev-tools archive --type dev",
+    "copy": "wp-dev-tools copy",
+{{#isPlugin}}
+    "create:block": "wp-dev-tools createBlock",
+{{/isPlugin}}
     "docker:shell": "docker exec -it {{slug}}-wordpress /bin/bash",
-    "docker:extract": "wp-dev-tools dockerExtract --container {{slug}}-wordpress",
-    "copy": "wp-dev-tools copy"
+    "docker:extract": "wp-dev-tools dockerExtract --container {{slug}}-wordpress"
   },
   "devDependencies": {
 {{#installTests}}
     "vitest": "^5.0.2",
 {{/installTests}}
     "@stevekanger/wp-dev-tools": "^{{devToolsVersion}}",
+{{#isPlugin}}
+    "@types/react": "18.3.27",
+    "@types/react-dom": "18.3.7",
+    "@types/wordpress__block-editor": "^15.0.6",
+    "@wordpress/block-editor": "^18.0.0",
+    "@wordpress/components": "^41.0.0",
+    "@wordpress/element": "^8.8.0",
+    "@wordpress/i18n": "^6.29.0",
+{{/isPlugin}}
     "@wordpress/scripts": "^36.0.0",
     "browser-sync-webpack-plugin": "^2.4.0",
     "dotenv": "^18.0.4",
+    "prettier": "^3.9.9",
     "typescript": "^6.0.3"
   },
   "allowScripts": {
@@ -34,5 +47,11 @@
     "@parcel/watcher": true,
     "core-js": false,
     "core-js-pure": false
+  },
+  "overrides": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "@types/react": "18.3.27",
+    "@types/react-dom": "18.3.7"
   }
 }

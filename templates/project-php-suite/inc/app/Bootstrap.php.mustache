@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace {{phpNamespace}};
 
-use {{phpNamespace}}\Config\BlockConfig;
-use {{phpNamespace}}\Controllers\AssetController;
-use {{phpNamespace}}\Controllers\BlockController;
 {{#isPlugin}}
+use {{phpNamespace}}\Config\BlockConfig;
+{{/isPlugin}}
+use {{phpNamespace}}\Controllers\AssetController;
+{{#isPlugin}}
+use {{phpNamespace}}\Controllers\BlockController;
 use {{phpNamespace}}\Controllers\PluginController;
 {{/isPlugin}}
 use {{phpNamespace}}\Controllers\RestController;
@@ -58,8 +60,10 @@ final class Bootstrap {
      * @since {{version}}
      */
     public function bind_dependencies(): static {
+{{#isPlugin}}
         $this->app->bind(BlockConfig::class, BlockConfig::make(...));
 
+{{/isPlugin}}
         return $this;
     }
 
@@ -70,8 +74,8 @@ final class Bootstrap {
      */
     public function register_controllers(): static {
         AssetController::make($this->app)->register();
-        BlockController::make($this->app)->register();
 {{#isPlugin}}
+        BlockController::make($this->app)->register();
         PluginController::make($this->app)->register();
 {{/isPlugin}}
         RestController::make($this->app)->register();

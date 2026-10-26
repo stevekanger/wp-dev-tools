@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace ThemeWithTestsPhp;
 
-use ThemeWithTestsPhp\Config\BlockConfig;
 use ThemeWithTestsPhp\Controllers\AssetController;
-use ThemeWithTestsPhp\Controllers\BlockController;
 use ThemeWithTestsPhp\Controllers\RestController;
 use ThemeWithTestsPhp\Controllers\ThemeController;
 use ThemeWithTestsPhp\Core\Facade;
@@ -53,8 +51,6 @@ final class Bootstrap {
      * @since 1.0.0
      */
     public function bind_dependencies(): static {
-        $this->app->bind(BlockConfig::class, BlockConfig::make(...));
-
         return $this;
     }
 
@@ -65,7 +61,6 @@ final class Bootstrap {
      */
     public function register_controllers(): static {
         AssetController::make($this->app)->register();
-        BlockController::make($this->app)->register();
         RestController::make($this->app)->register();
         ThemeController::make($this->app)->register();
 

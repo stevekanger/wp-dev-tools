@@ -1,11 +1,11 @@
 import readline from 'readline';
 
 /**
- * Prompts a question in the command line
+ * Prompts a question in the command line.
  *
- * @param question The question you want to ask
- * @param defaultAnswer The fallback if the user doesn't supply an answer
- * @param required Whether the response is required to contain a value
+ * @param question The question you want to ask.
+ * @param defaultAnswer The fallback if the user doesn't supply an answer.
+ * @param required Whether the response is required to contain a value.
  */
 export default async function commandLinePrompt(
   question: string,

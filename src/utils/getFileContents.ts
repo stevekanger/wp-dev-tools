@@ -3,7 +3,7 @@ import fs from 'fs';
 /**
  * Gets a files contents
  *
- * @param filePath The path of the file to get
+ * @param filePath The path of the file to get.
  */
 export default function getFileContents(filePath: string): string | null {
   try {

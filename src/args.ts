@@ -1,7 +1,7 @@
 import { ArgConfig } from './types';
 
 /**
- * Arg config for createProject module
+ * Arg config for createProject module.
  */
 export const createProjectArgsConfig = {
   cmd: 'createProject',
@@ -80,7 +80,7 @@ export const createProjectArgsConfig = {
 } as const;
 
 /**
- * Arg config for the createBlock module
+ * Arg config for the createBlock module.
  */
 export const createBlockArgsConfig = {
   cmd: 'createBlock',
@@ -135,7 +135,7 @@ export const createBlockArgsConfig = {
 } as const;
 
 /**
- * Arg config for the archive module
+ * Arg config for the archive module.
  */
 export const archiveArgsConfig = {
   cmd: 'archive',
@@ -162,7 +162,7 @@ export const archiveArgsConfig = {
 } as const;
 
 /**
- * Arg config for the copy module
+ * Arg config for the copy module.
  */
 export const copyArgsConfig = {
   cmd: 'copy',
@@ -189,7 +189,7 @@ export const copyArgsConfig = {
 } as const;
 
 /**
- * Arg config for the dockerExtract module
+ * Arg config for the dockerExtract module.
  */
 export const dockerExtractArgsConfig = {
   cmd: 'dockerExtract',
@@ -217,7 +217,7 @@ export const dockerExtractArgsConfig = {
 } as const;
 
 /**
- * Arg configs for all modules
+ * Arg configs for all modules.
  */
 export const argConfigs: ArgConfig[] = [
   createProjectArgsConfig,
@@ -228,9 +228,9 @@ export const argConfigs: ArgConfig[] = [
 ];
 
 /**
- * Shows a specific command help message
+ * Shows a specific command help message.
  *
- * @param config The parseArg config
+ * @param config The parseArg config.
  */
 export function showCmdHelp(config: ArgConfig) {
   console.log(`\n[${config.cmd}]`);
@@ -247,9 +247,9 @@ export function showCmdHelp(config: ArgConfig) {
 }
 
 /**
- * Shows multiple commands help
+ * Shows multiple commands help.
  *
- * @param configs An array of parseArg configs
+ * @param configs An array of parseArg configs.
  */
 export function showCmdsHelp(configs: ArgConfig[]) {
   console.log(

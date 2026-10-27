@@ -13,7 +13,7 @@ import { parseArgs } from 'util';
 import { CopyType } from './types';
 
 /**
- * Copy the project files to specified directory
+ * Copy the project files to specified directory.
  */
 export default async function copy() {
   const args = parseArgs(copyArgsConfig);

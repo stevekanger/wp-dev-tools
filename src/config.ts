@@ -1,7 +1,7 @@
 import path from 'path';
 
 /**
- * Application configuration
+ * Application configuration.
  */
 const config = {
   rootDir: path.join(__dirname, '..'),

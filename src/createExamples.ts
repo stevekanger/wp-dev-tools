@@ -19,7 +19,7 @@ interface ExampleProjectVars extends ProjectTemplateVars {
 }
 
 /**
- * Get the plugin examples to render
+ * Get the plugin examples to render.
  */
 function getProjectPluginExamples(
   wordpressVersion: string,
@@ -87,7 +87,7 @@ function getProjectPluginExamples(
 }
 
 /**
- * Get the theme examples to render
+ * Get the theme examples to render.
  */
 function getProjectThemeExamples(
   wordpressVersion: string,
@@ -155,7 +155,7 @@ function getProjectThemeExamples(
 }
 
 /**
- * Get the block examples to render
+ * Get the block examples to render.
  */
 function getBlockExamples(): ExampleBlockVars[] {
   const defaults = {
@@ -189,7 +189,7 @@ function getBlockExamples(): ExampleBlockVars[] {
 }
 
 /**
- * Creates the block examples from template files
+ * Creates the block examples from template files.
  */
 async function createExamples() {
   const { recommendedWpVersion, recommendedPhpVersion } = await getWpData();
@@ -213,4 +213,5 @@ async function createExamples() {
   });
 }
 
+// Run the script.
 createExamples();

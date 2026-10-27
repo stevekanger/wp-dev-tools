@@ -28,11 +28,11 @@ import { parseArgs } from 'util';
 import { ProjectTemplateVars, ProjectType, WpContentLocation } from './types';
 
 /**
- * Render the project files
+ * Render the project files.
  *
- * @param dest - The destination directory
- * @param type - The project type
- * @param templateVars - The template variables
+ * @param dest The destination directory.
+ * @param type The project type.
+ * @param templateVars The template variables.
  */
 export function renderProjectFiles(
   dest: string,
@@ -64,9 +64,9 @@ export function renderProjectFiles(
 }
 
 /**
- * Gets the wp-content location based on the project type
+ * Gets the wp-content location based on the project type.
  *
- * @param type - The project type
+ * @param type The project type.
  */
 function getWpContentLocation(type: ProjectType): WpContentLocation {
   switch (type) {
@@ -80,7 +80,7 @@ function getWpContentLocation(type: ProjectType): WpContentLocation {
 }
 
 /**
- * Creates a wordpress project
+ * Creates a wordpress plugin or theme project.
  */
 export default async function createProject() {
   const args = parseArgs(createProjectArgsConfig);

@@ -5,11 +5,6 @@ import { argOrPrompt } from '@/utils/argOrPrompt';
 import dirEmpty from '@/utils/dirEmpty';
 import getJsonFileContents from '@/utils/getJsonFileContents';
 import getRootDir from '@/utils/getRootDir';
-import {
-  isMustache,
-  removeMustacheExtension,
-  renderMustache,
-} from '@/utils/mustache';
 import normalizePath from '@/utils/normalizePath';
 import {
   promptConfirm,
@@ -17,6 +12,7 @@ import {
   promptString,
   promptValues,
 } from '@/utils/prompts';
+import renderTemplateDirectory from '@/utils/renderTemplateDirectory';
 import { kebabCase, uppercaseFirstOnly } from '@/utils/strings';
 import { isBoolean, isOneOf, isString } from '@/utils/typeChecks';
 import UserError from '@/utils/UserError';
@@ -24,10 +20,9 @@ import fs from 'fs';
 import path from 'path';
 import { parseArgs } from 'util';
 import { BlockTemplateVars, BlockType } from './types';
-import renderTemplateDirectory from '@/utils/renderTemplateDirectory';
 
 /**
- * Creates wordpress block files
+ * Creates wordpress block files.
  */
 export default async function createBlock() {
   const args = parseArgs(createBlockArgsConfig);
@@ -119,15 +114,6 @@ export default async function createBlock() {
   };
 
   renderTemplateDirectory(getRootDir('templates', 'block'), dest, templateVars);
-
-  // fs.readdirSync(src).forEach((item) => {
-  //   const srcItemPath = path.join(src, item);
-  //   const destItemPath = path.join(dest, removeMustacheExtension(item));
-  //
-  //   if (isMustache(srcItemPath)) {
-  //     renderMustache(srcItemPath, destItemPath, templateVars);
-  //   }
-  // });
 
   console.log(`
 ===============

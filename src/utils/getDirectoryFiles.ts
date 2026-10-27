@@ -3,7 +3,7 @@ import fs from 'fs';
 /**
  * Gets the files from a directory.
  *
- * @param directory The directory to search
+ * @param directory The directory to search.
  */
 export default function getDirectoryFiles(directory: string): string[] {
   return fs

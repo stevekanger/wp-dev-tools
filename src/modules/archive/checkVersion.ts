@@ -21,7 +21,7 @@ const headerMatchRegex = /Version:\s*([0-9.]+)/;
 /**
  * Gets the version from header comment.
  *
- * @param mainFilePath The path to the file
+ * @param mainFilePath The path to the file.
  */
 function getHeaderVersion(mainFilePath: string) {
   const content = getFileContents(mainFilePath);
@@ -40,10 +40,11 @@ function getHeaderVersion(mainFilePath: string) {
 }
 
 /**
- * Logs the package versions in command line
+ * Logs the package versions in command line.
  *
- * @param packageVersion
- * @param headerVersion
+ * @param packageVersion The version form package.json.
+ * @param headerVersion The version from the main entry file.
+ * @param mainFilePath The path to the main entry file.
  */
 function showVersions(
   packageVersion: string,
@@ -61,10 +62,10 @@ ${path.basename(mainFilePath)} = ${headerVersion}
 }
 
 /**
- * Checks versions in all relevant files to make sure they are the same
+ * Checks versions in all relevant files to make sure they are the same.
  *
- * @param mainFilePath The path to the entry file
- * @param packageJsonVersion The version stated in package.json
+ * @param mainFilePath The path to the entry file.
+ * @param packageJsonVersion The version stated in package.json.
  */
 export default function checkVersion(
   mainFilePath: string,

@@ -9,12 +9,12 @@ import {
 import replaceFilenamePlaceholders from './replaceFilenamePlaceholder';
 
 /**
- * Render template files from directory
+ * Render template files from directory.
  *
- * @param src - The directory of the template files
- * @param dest - The directory to render to
- * @param templateVars - The mustache template variables
- * @param placeholders - Filename placeholders to replace
+ * @param src The directory of the template files.
+ * @param dest The directory to render to.
+ * @param templateVars The mustache template variables.
+ * @param placeholders Filename placeholders to replace.
  */
 export default function renderTemplateDirectory(
   src: string,

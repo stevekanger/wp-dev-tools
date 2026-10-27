@@ -7,7 +7,7 @@ import UserError from '@/utils/UserError';
 import { argConfigs, showCmdsHelp } from './args';
 
 /**
- * Main function parses the first positional arg to find which command to run
+ * Main function parses the first positional arg to find which command to run.
  */
 async function main() {
   try {
@@ -50,5 +50,5 @@ async function main() {
   }
 }
 
-// Run the main function
+// Run the main function.
 main();

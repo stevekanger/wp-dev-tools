@@ -15,9 +15,9 @@ import checkVersion from './checkVersion';
 import { ArchiveType } from './types';
 
 /**
- * Creates the archiver
+ * Creates the archiver.
  *
- * @param destPath The path the archive files will go in
+ * @param destPath The path the archive files will go in.
  */
 function createArchiver(destPath: string): ZipArchive {
   // create a file to stream archive data to.

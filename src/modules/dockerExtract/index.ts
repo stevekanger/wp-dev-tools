@@ -8,7 +8,7 @@ import { execSync } from 'child_process';
 import { parseArgs } from 'util';
 
 /**
- * Copys from a docker container wp-content to host machine
+ * Copys from a docker container wp-content to host machine.
  */
 export default async function dockerExtract() {
   const args = parseArgs(dockerExtractArgsConfig);

@@ -3,11 +3,11 @@ import commandLinePrompt from './commandLinePrompt';
 import normalizePath from './normalizePath';
 
 /**
- * Prompts the user for a directory
+ * Prompts the user for a directory.
  *
- * @param question The question to ask
- * @param fallback The default if user doesn't provide any input
- * @param required Whether an input is required or not (default: true)
+ * @param question The question to ask.
+ * @param fallback The default if user doesn't provide any input.
+ * @param required Whether an input is required or not (default: true).
  * @returns The resolved path
  */
 export function promptDir(
@@ -23,11 +23,11 @@ export function promptDir(
 }
 
 /**
- * Prompts the user for a string
+ * Prompts the user for a string.
  *
- * @param question The question to ask
- * @param fallback The default if user doesn't provide any input
- * @param required Whether an input is required or not (default: true)
+ * @param question The question to ask.
+ * @param fallback The default if user doesn't provide any input.
+ * @param required Whether an input is required or not (default: true).
  */
 export function promptString(
   question: string,
@@ -42,11 +42,11 @@ export function promptString(
 }
 
 /**
- * Prompts the user for a yes or no
+ * Prompts the user for a yes or no.
  *
- * @param question The question to ask
- * @param fallback The default if user doesn't provide any input
- * @param required Whether an input is required or not (default: true)
+ * @param question The question to ask.
+ * @param fallback The default if user doesn't provide any input.
+ * @param required Whether an input is required or not (default: true).
  */
 export function promptBoolean(
   question: string,
@@ -65,12 +65,12 @@ export function promptBoolean(
 }
 
 /**
- * Prompt the user for a list of values
+ * Prompt the user for a list of values.
  *
- * @param question The question to ask
- * @param values An array of values
- * @param fallback The default if user doesn't provide any input
- * @param required Whether an input is required or not (default: true)
+ * @param question The question to ask.
+ * @param values An array of values.
+ * @param fallback The default if user doesn't provide any input.
+ * @param required Whether an input is required or not (default: true).
  */
 export function promptValues<T extends readonly unknown[]>(
   question: string,
@@ -99,9 +99,9 @@ export function promptValues<T extends readonly unknown[]>(
 }
 
 /**
- * Prompts the user to confirm their data
+ * Prompts the user to confirm their data.
  *
- * @param data Object of data to confirm
+ * @param data Object of data to confirm.
  */
 export function promptConfirm(
   data: Record<string, string>,

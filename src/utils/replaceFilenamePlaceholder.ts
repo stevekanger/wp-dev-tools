@@ -1,8 +1,8 @@
 /**
- * Replaces any placeholders in a filename
+ * Replaces any placeholders in a filename.
  *
- * @param filename The fileame to check against
- * @param placeholders The placeholders to replace
+ * @param filename The fileame to check against.
+ * @param placeholders The placeholders to replace.
  */
 export default function replaceFilenamePlaceholders(
   filename: string,

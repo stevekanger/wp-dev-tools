@@ -3,18 +3,18 @@ import mustache from 'mustache';
 import path from 'path';
 
 /**
- * Checks whether a file path is a mustache file
+ * Checks whether a file path is a mustache file.
  *
- * @param src The source file path
+ * @param src The source file path.
  */
 export function isMustache(src: string) {
   return src.endsWith('.mustache');
 }
 
 /**
- * Remove the mustache extension from the end of a file path string
+ * Remove the mustache extension from the end of a file path string.
  *
- * @param src The source file path
+ * @param src The source file path.
  */
 export function removeMustacheExtension(src: string): string {
   if (isMustache(src)) {
@@ -25,11 +25,11 @@ export function removeMustacheExtension(src: string): string {
 }
 
 /**
- * Renders a mustache file to the destination location
+ * Renders a mustache file to the destination location.
  *
- * @param src The path to the source template file
- * @param dest The destination path for the rendered file
- * @param vars The template variables
+ * @param src The path to the source template file.
+ * @param dest The destination path for the rendered file.
+ * @param vars The template variables.
  */
 export function renderMustache(src: string, dest: string, vars: any) {
   const fileContents = fs.readFileSync(src, 'utf8');

@@ -6,7 +6,7 @@ interface WpData {
 }
 
 /**
- * Gets the latest wordpress version from api
+ * Gets the latest wordpress version from api.
  */
 export default async function getWpData(): Promise<WpData> {
   try {

@@ -1,11 +1,11 @@
 import { ArgValidator } from '@/types';
 
 /**
- * If a command line argument exists validate it or prompt the user
+ * If a command line argument exists validate it or prompt the user.
  *
- * @param arg The arg to check
- * @param prompt The prompt to run if a user
- * @param validator Validates the arg is the correct type
+ * @param arg The arg to check.
+ * @param prompt The prompt to run if a user.
+ * @param validator Validates the arg is the correct type.
  */
 export async function argOrPrompt<T>(
   arg: unknown,

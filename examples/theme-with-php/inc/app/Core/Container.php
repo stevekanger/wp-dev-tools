@@ -22,7 +22,7 @@ class Container {
     /**
      * Check if a binding exists.
      *
-     * @param string $id the resource id
+     * @param string $id The resource id.
      *
      * @since 1.0.0
      */
@@ -33,9 +33,9 @@ class Container {
     /**
      * Bind to the container.
      *
-     * @param string $id the resource id
-     * @param callable $factory a function that returns the desired resource
-     * @param bool $shared share the resolved resource or create new for every call
+     * @param string $id The resource id.
+     * @param callable $factory A function that returns the desired resource.
+     * @param bool $shared Whether to share the resolved resource or create new for every call.
      *
      * @since 1.0.0
      */
@@ -52,7 +52,7 @@ class Container {
      *
      * @template T
      *
-     * @param string|class-string<T> $id the resource id
+     * @param string|class-string<T> $id The resource id.
      *
      * @return ($id is class-string<T> ? T : mixed)
      *

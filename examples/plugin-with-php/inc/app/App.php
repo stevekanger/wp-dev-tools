@@ -20,15 +20,15 @@ final class App extends Container {
     /**
      * App class constructor.
      *
-     * @param string $title the app title
-     * @param string $prefix the app prefix
-     * @param string $slug the app slug
-     * @param string $version the app version
-     * @param string $rest_version the rest api version
-     * @param string $root_dir the app root directory
-     * @param string $root_file the app root file
-     * @param string $build_path the build direcotry relative to root_dir
-     * @param string $view_path the views directory relative to root_dir
+     * @param string $title The app title.
+     * @param string $prefix The app prefix.
+     * @param string $slug The app slug.
+     * @param string $version the app version.
+     * @param string $rest_version the rest api version.
+     * @param string $root_dir the app root directory.
+     * @param string $root_file the app root file.
+     * @param string $build_path the build direcotry relative to root_dir.
+     * @param string $view_path the views directory relative to root_dir.
      *
      * @since 1.0.0
      */
@@ -83,7 +83,7 @@ final class App extends Container {
     /**
      * Sets the app instance.
      *
-     * @param ?App $app the app instance or null
+     * @param ?App $app The app instance (or possibly null in testing).
      *
      * @internal Used by tests to swap or clear the app instance.
      *
@@ -150,7 +150,7 @@ final class App extends Container {
     /**
      * Gets the prefix.
      *
-     * @param string $suffix any string you want to append
+     * @param string $suffix Any string you want to append.
      *
      * @since 1.0.0
      */
@@ -163,7 +163,7 @@ final class App extends Container {
     /**
      * Gets the slug.
      *
-     * @param string $suffix any string you want to append
+     * @param string $suffix Any string you want to append.
      *
      * @since 1.0.0
      */
@@ -176,7 +176,7 @@ final class App extends Container {
     /**
      * Gets the root directory.
      *
-     * @param string $path any path you want to append (requires you to add the preceeding /)
+     * @param string $path Any path you want to append (requires you to add the preceeding /).
      *
      * @since 1.0.0
      */
@@ -196,7 +196,7 @@ final class App extends Container {
     /**
      * Gets the blocks directory src is built to.
      *
-     * @param string $path any path you want to append (requires you to add the preceeding /)
+     * @param string $path Any path you want to append (requires you to add the preceeding /).
      *
      * @since 1.0.0
      */
@@ -207,7 +207,7 @@ final class App extends Container {
     /**
      * Gets the view directory.
      *
-     * @param string $path any path you want to append (requires you to add the preceeding /)
+     * @param string $path Any path you want to append (requires you to add the preceeding /).
      *
      * @since 1.0.0
      */
@@ -218,7 +218,7 @@ final class App extends Container {
     /**
      * Gets the root directory url.
      *
-     * @param string $path any path you want to append (requires you to add the preceeding /)
+     * @param string $path Any path you want to append (requires you to add the preceeding /).
      *
      * @since 1.0.0
      */
@@ -229,7 +229,7 @@ final class App extends Container {
     /**
      * Gets the build directory url.
      *
-     * @param string $path any path you want to append (requires you to add the preceeding /)
+     * @param string $path Any path you want to append (requires you to add the preceeding /).
      *
      * @since 1.0.0
      */
@@ -242,7 +242,7 @@ final class App extends Container {
      *
      * Note: Calling with no $path argument will return the api namespace
      *
-     * @param string $path any path you want to append (requires you to add the preceeding /)
+     * @param string $path Any path you want to append (requires you to add the preceeding /).
      *
      * @since 1.0.0
      */
@@ -255,7 +255,7 @@ final class App extends Container {
      *
      * Note: Calling with no $path argument will return the api namespace
      *
-     * @param string $path any path you want to append (requires you to add the preceeding /)
+     * @param string $path Any path you want to append (requires you to add the preceeding /).
      *
      * @since 1.0.0
      */

@@ -22,7 +22,7 @@ final class Bootstrap {
     /**
      * Bootstrap class constructor.
      *
-     * @param App $app the app instance
+     * @param App $app The app instance.
      *
      * @since 1.0.0
      */
@@ -34,7 +34,7 @@ final class Bootstrap {
     /**
      * Called after creating the app instance to setup the app.
      *
-     * @param App $app the app instance
+     * @param App $app The app instance.
      *
      * @since 1.0.0
      */

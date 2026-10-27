@@ -18,7 +18,7 @@ abstract class AbstractController implements MakeableInterface {
     /**
      * Creates an instance of the class.
      *
-     * @param App $app the app instance
+     * @param App $app The app instance.
      *
      * @since 1.0.0
      */

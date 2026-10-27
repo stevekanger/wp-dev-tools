@@ -19,8 +19,8 @@ final class View {
     /**
      * Construct the view object attributes.
      *
-     * @param string $path the template file path
-     * @param mixed $data any data you want passed to the view (Note: this data will be extracted to variables)
+     * @param string $path The full path to the template file.
+     * @param mixed $data Any data you want passed to the view (Note: this data will be extracted to variables).
      *
      * @since 1.0.0
      */
@@ -37,7 +37,7 @@ final class View {
     /**
      * Gets the app view directory.
      *
-     * @param string $path any path you want to append (requires you to add the preceeding /)
+     * @param string $path Any path you want to append (requires you to add the preceeding /).
      *
      * @since 1.0.0
      */
@@ -48,8 +48,8 @@ final class View {
     /**
      * Creates a view from the view directory.
      *
-     * @param string $path the template file path relative to the view directory
-     * @param mixed $data any data you want passed to the view (Note: this data will be extracted to variables)
+     * @param string $path Any path you want to append (requires you to add the preceeding /).
+     * @param mixed $data Any data you want passed to the view (Note: this data will be extracted to variables).
      */
     public static function make(string $path, $data = []): static {
         return new static(self::view_dir($path), $data);
@@ -58,8 +58,8 @@ final class View {
     /**
      * Creates a view from the view directory and echos it.
      *
-     * @param string $path the template file path relative to the view directory
-     * @param mixed $data any data you want passed to the view (Note: this data will be extracted to variables)
+     * @param string $path The template file path relative to the view directory.
+     * @param mixed $data Any data you want passed to the view (Note: this data will be extracted to variables).
      */
     public static function show(string $path, $data = []): static {
         $instance = self::make($path, $data);

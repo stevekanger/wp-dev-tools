@@ -17,7 +17,7 @@ final class PluginController extends AbstractController {
     /**
      * PluginController class constructor.
      *
-     * @param string $root_file the application main entry file
+     * @param string $root_file The application main entry file.
      *
      * @since 1.0.0
      */
@@ -29,7 +29,7 @@ final class PluginController extends AbstractController {
     /**
      * Creates an instance of the class.
      *
-     * @param App $app the app instance
+     * @param App $app The app instance.
      *
      * @since 1.0.0
      */

@@ -18,8 +18,8 @@ final class BlockController extends AbstractController {
     /**
      * BlockController class constructor.
      *
-     * @param string $block_dir the directory the blocks are built to
-     * @param array $blocks a list of registerable blocks
+     * @param string $block_dir The directory the blocks are built to.
+     * @param array $blocks A list of registerable blocks.
      *
      * @since 1.0.0
      */
@@ -32,7 +32,7 @@ final class BlockController extends AbstractController {
     /**
      * Creates an instance of the class.
      *
-     * @param App $app the app instance
+     * @param App $app The app instance.
      *
      * @since 1.0.0
      */

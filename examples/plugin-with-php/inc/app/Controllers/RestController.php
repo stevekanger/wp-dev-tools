@@ -19,7 +19,7 @@ final class RestController extends AbstractController {
     /**
      * RestController class constructor.
      *
-     * @param string $rest_namespace the app rest namespace
+     * @param string $rest_namespace The app rest namespace.
      *
      * @since 1.0.0
      */
@@ -31,7 +31,7 @@ final class RestController extends AbstractController {
     /**
      * Creates an instance of the class.
      *
-     * @param App $app the app instance
+     * @param App $app The app instance.
      *
      * @since 1.0.0
      */

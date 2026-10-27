@@ -22,8 +22,8 @@ abstract class Facade {
     /**
      * Php magic method called when static method is called on a class.
      *
-     * @param string $method the method called
-     * @param array<int, mixed> $args the args the method's called with
+     * @param string $method The method called.
+     * @param array<int, mixed> $args The args the method's called with.
      *
      * @since 1.0.0
      */
@@ -34,9 +34,9 @@ abstract class Facade {
     /**
      * Sets the contianer instance.
      *
-     * @param ?Container $container the service container
+     * @param ?Container $container The service container.
      *
-     * @internal null container should only be set for testing
+     * @internal null container should only be set for testing.
      *
      * @since 1.0.0
      */

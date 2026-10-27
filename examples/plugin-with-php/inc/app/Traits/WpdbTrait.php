@@ -7,7 +7,7 @@ namespace PluginWithPhp\Traits;
 defined('ABSPATH') || exit;
 
 /**
- * Allows access to the $wpdb instance.
+ * WpdbTrait trait.
  *
  * @since 1.0.0
  */

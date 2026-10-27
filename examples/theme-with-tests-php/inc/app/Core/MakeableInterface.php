@@ -17,7 +17,7 @@ interface MakeableInterface {
     /**
      * Creates an instance of the class.
      *
-     * @param App $app the service continer
+     * @param App $app The app instance.
      *
      * @since 1.0.0
      */

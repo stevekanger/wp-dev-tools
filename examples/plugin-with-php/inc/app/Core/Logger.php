@@ -26,7 +26,7 @@ final class Logger {
             $hr_thick = "\n===============================================================================\n";
             $hr_thin = "\n-------------------------------------------------------------------------------\n";
 
-            $backtrace = debug_backtrace();
+            $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
             $caller = array_shift($backtrace);
             $filepath = $caller['file'];
             $filepath_exploded = explode('/', $filepath);

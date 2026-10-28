@@ -33,7 +33,7 @@ ExampleController::make($this->app)->register();
 
 ## Controllers
 
-Controllers are you connection to wordpress. This is where you will register your wordrpess hooks. The `AbstractController` class defines `make()` and `register()`.
+Controllers are your connection to wordpress. This is where you will register your wordrpess hooks. The `AbstractController` class defines `make()` and `register()`.
 
 ### Controller::make()
 

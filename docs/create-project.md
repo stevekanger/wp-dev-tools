@@ -44,7 +44,7 @@ npm run dev
 
 ## Project Structure
 
-You have the choice to install the php suite and/or tests during setup. See [examples](https://github.com/stevekanger/wp-dev-tools/tree/main/examples).
+You have the choice to install the php suite and/or tests during setup. See [PHP Suite](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-php-suite.md) or [Tests](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-tests.md).
 
 All raw js, css, and blocks reside in `src`. These are files that need to be built during the build process.
 

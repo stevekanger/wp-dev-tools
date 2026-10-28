@@ -9,8 +9,8 @@ declare(strict_types=1);
  * Author URI:
  * Description: Plugin with tests and php.
  * Version: 1.0.0
- * Requires at least: 7.1.3
- * Tested up to: 7.1.3
+ * Requires at least: 7.1.4
+ * Tested up to: 7.1.4
  * Requires PHP: 8.3
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html

@@ -9,8 +9,8 @@ declare(strict_types=1);
  * Author URI:
  * Description: Plugin with tests.
  * Version: 1.0.0
- * Requires at least: 7.1.3
- * Tested up to: 7.1.3
+ * Requires at least: 7.1.4
+ * Tested up to: 7.1.4
  * Requires PHP: 8.3
  * License: GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -31,6 +31,22 @@ defined('ABSPATH') || exit;
 function get_version(): string {
     return get_file_data(__FILE__, ['Version' => 'Version'])['Version'] ?: '0.1.0';
 }
+
+/**
+ * Registers blocks from the build/blocks folder.
+ *
+ * @since 1.0.0
+ */
+function register_blocks(): void {
+    // Add block slugs here you want to register
+    $blocks = [];
+
+    foreach ($blocks as $slug) {
+        $block_path = __DIR__ . '/build/blocks/' . $slug;
+        register_block_type($block_path);
+    }
+}
+add_action('init', __NAMESPACE__ . '\register_blocks');
 
 /**
  * Enqueue the client scripts.
@@ -61,7 +77,7 @@ function enqueue_client_assets(): void {
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_client_assets');
 
 /**
- * Enqueue the admin cripts.
+ * Enqueue the admin scripts.
  *
  * @since 1.0.0
  */
@@ -86,4 +102,4 @@ function enqueue_admin_assets(): void {
         'all'
     );
 }
-add_action('wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_admin_assets');
+add_action('admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_admin_assets');

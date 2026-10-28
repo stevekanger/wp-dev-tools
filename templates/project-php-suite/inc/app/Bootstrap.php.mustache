@@ -16,7 +16,6 @@ use {{phpNamespace}}\Controllers\RestController;
 {{#isTheme}}
 use {{phpNamespace}}\Controllers\ThemeController;
 {{/isTheme}}
-use {{phpNamespace}}\Core\Facade;
 
 defined('ABSPATH') || exit;
 
@@ -46,8 +45,6 @@ final class Bootstrap {
      * @since {{version}}
      */
     public static function boot(App $app): void {
-        Facade::set_container($app);
-
         $bootstrap = new self($app);
         $bootstrap->bind_dependencies();
         $app->init();

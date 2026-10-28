@@ -1,4 +1,10 @@
-# Create a plugin or theme
+# Wp Dev Tools Create a Plugin or Theme
+
+- [Home](https://github.com/stevekanger/wp-dev-tools)
+- [Cli Commands](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/cli-commands.md)
+- [Creating a plugin or theme](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/create-project.md)
+- [Project php suite](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-php-suite.md)
+- [Project tests](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-tests.md)
 
 You can easily scaffold a project with the `createProject` command. Run via `npx` since your project would be empty at this point. This runs the interactive setup.
 

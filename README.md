@@ -1,12 +1,12 @@
 # WP Dev Tools
 
-Development tools for wordpress.
-
-## Docs
-
+- [Home](https://github.com/stevekanger/wp-dev-tools)
+- [Cli Commands](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/cli-commands.md)
 - [Creating a plugin or theme](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/create-project.md)
 - [Project php suite](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-php-suite.md)
 - [Project tests](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-tests.md)
+
+Development tools for wordpress. Easily create project boilerplates, create block files, archive projects and more.
 
 ## Installation and Usage
 
@@ -37,87 +37,9 @@ and use in package.json
 }
 ```
 
-## Commands
+## Create a new plugin or theme with all development tools configured
 
-All commands are run with command first then options. You can supply options or if necessary options are required you will be prompted via an interactive command line interface.
-
-```bash
-wp-dev-tools [command] [...options]
-
-```
-
-### createProject
-
-Creates either a theme or plugin project
-
-| Option             | Type    | Allowed           | Description                                                                                                 |
-| ------------------ | ------- | ----------------- | ----------------------------------------------------------------------------------------------------------- |
-| --dest             | string  | string            | The destination installation directory. (Directory must be empty).                                          |
-| --type             | string  | 'theme', 'plugin' | The type of project to create.                                                                              |
-| --title            | string  | string            | The proper title of the project.                                                                            |
-| --author           | string  | string            | The proper author name.                                                                                     |
-| --authorHandle     | string  | string            | This is the author name with no spaces. (Either no spaces, kebab or snake case).                            |
-| --description      | string  | string            | A brief description of the project.                                                                         |
-| --slug             | string  | string            | The kebab case separated project slug (Used for things like textdomain, namespaces, and docker containers). |
-| --prefix           | string  | string            | The snake case separated project prefix (Used for things like php prefixing).                               |
-| --version          | string  | string            | The initial project version.                                                                                |
-| --phpNamespace     | string  | string            | The projects php namespace for all php code.                                                                |
-| --wordpressVersion | string  | string            | The min Wordpress version.                                                                                  |
-| --phpVersion       | string  | string            | The min Php version.                                                                                        |
-| --installPhpSuite  | boolean | NA                | Whether or not to install the full php code suite in 'inc' folder.                                          |
-| --installTests     | boolean | NA                | Whether or not to install tests.                                                                            |
-| --confirm          | boolean | NA                | Auto confirm data is correct instead of being prompted at the end.                                          |
-| --help -h          | boolean | NA                | Shows the help message.                                                                                     |
-
-### createBlock
-
-Creates wordpress block files. It does not install a full block plugin only the block files project similar to running `npx @wordpress/create-block --no-plugin`. The templates have been modified slightly to use typescript.
-
-| Option        | Type    | Allowed             | Description                                                         |
-| ------------- | ------- | ------------------- | ------------------------------------------------------------------- |
-| --dest        | string  | string              | The destination installation directory. (Directory must be empty).  |
-| --type        | string  | 'static', 'dynamic' | The type of block to create.                                        |
-| --title       | string  | string              | The proper title of the project.                                    |
-| --description | string  | string              | A brief description of the block.                                   |
-| --slug        | string  | string              | The kebab case separated block slug (Used when registering blocks). |
-| --textdomain  | string  | string              | The project textdomain.                                             |
-| --namespace   | string  | string              | The project namespace (can match textdomain).                       |
-| --version     | string  | string              | The initial project version.                                        |
-| --confirm     | boolean | NA                  | Auto confirm data is correct instead of being prompted at the end.  |
-| --help -h     | boolean | NA                  | Shows the help message.                                             |
-
-### archive
-
-Archives the project files to single a `.zip` file.
-
-| Option    | Type    | Allowed       | Description                                                                                       |
-| --------- | ------- | ------------- | ------------------------------------------------------------------------------------------------- |
-| --type    | string  | 'dist', 'dev' | The files that you want to include. `dist` only distribution files. `dev` all developement files. |
-| --src     | string  | string        | The source directory.                                                                             |
-| --dest    | string  | string        | The destination directory.                                                                        |
-| --help -h | boolean | NA            | Shows the help message.                                                                           |
-
-### copy
-
-Copies the project files to a destination folder.
-
-| Option    | Type    | Allowed       | Description                                                                                       |
-| --------- | ------- | ------------- | ------------------------------------------------------------------------------------------------- |
-| --type    | string  | 'dist', 'dev' | The files that you want to include. `dist` only distribution files. `dev` all developement files. |
-| --src     | string  | string        | The source directory.                                                                             |
-| --dest    | string  | string        | The destination directory.                                                                        |
-| --help -h | boolean | NA            | Shows the help message.                                                                           |
-
-### dockerExtract
-
-Copies a resource from the docker container to a local location.
-
-| Option    | Type    | Allowed       | Description                                                                                         |
-| --------- | ------- | ------------- | --------------------------------------------------------------------------------------------------- |
-| --type    | string  | 'dist', 'dev' | The files that you want to include. `dist` only distribution files. `dev` all developement files.   |
-| --src     | string  | string        | The source files relative to wp-content in the docker container. Example "themes/my-awesome-theme". |
-| --dest    | string  | string        | The destination directory.                                                                          |
-| --help -h | boolean | NA            | Shows the help message.                                                                             |
+You can easily create a new theme or plugin with docker, webpack, and many developer tools preinstalled an configured. See [Creating a theme or plugin](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/create-project.md)
 
 ## License
 

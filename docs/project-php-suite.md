@@ -1,4 +1,10 @@
-# Php Suite
+# Wp Dev Tools Php Suite
+
+- [Home](https://github.com/stevekanger/wp-dev-tools)
+- [Cli Commands](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/cli-commands.md)
+- [Creating a plugin or theme](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/create-project.md)
+- [Project php suite](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-php-suite.md)
+- [Project tests](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-tests.md)
 
 You have the choice to install the full php suite. This sets up a MVC style structure with a DI container. For full example projects see [examples](https://github.com/stevekanger/wp-dev-tools/tree/main/examples).
 

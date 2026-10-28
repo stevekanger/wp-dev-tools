@@ -38,9 +38,9 @@ and use in package.json
 }
 ```
 
-## Create a new plugin or theme with all development tools configured
+## Create a preconfigured plugin or theme
 
-You can easily create a new theme or plugin with docker, webpack, and many developer tools preinstalled an configured. See [Creating a theme or plugin](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/create-project.md)
+You can easily create a new theme or plugin with docker, webpack, and many developer tools preinstalled and configured. See [Creating a theme or plugin](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/create-project.md)
 
 ## License
 

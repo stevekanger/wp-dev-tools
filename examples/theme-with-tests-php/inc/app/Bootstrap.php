@@ -7,7 +7,6 @@ namespace ThemeWithTestsPhp;
 use ThemeWithTestsPhp\Controllers\AssetController;
 use ThemeWithTestsPhp\Controllers\RestController;
 use ThemeWithTestsPhp\Controllers\ThemeController;
-use ThemeWithTestsPhp\Core\Facade;
 
 defined('ABSPATH') || exit;
 
@@ -37,8 +36,6 @@ final class Bootstrap {
      * @since 1.0.0
      */
     public static function boot(App $app): void {
-        Facade::set_container($app);
-
         $bootstrap = new self($app);
         $bootstrap->bind_dependencies();
         $app->init();

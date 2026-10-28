@@ -9,7 +9,6 @@ use PluginWithTestsPhp\Controllers\AssetController;
 use PluginWithTestsPhp\Controllers\BlockController;
 use PluginWithTestsPhp\Controllers\PluginController;
 use PluginWithTestsPhp\Controllers\RestController;
-use PluginWithTestsPhp\Core\Facade;
 
 defined('ABSPATH') || exit;
 
@@ -39,8 +38,6 @@ final class Bootstrap {
      * @since 1.0.0
      */
     public static function boot(App $app): void {
-        Facade::set_container($app);
-
         $bootstrap = new self($app);
         $bootstrap->bind_dependencies();
         $app->init();

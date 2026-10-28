@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PluginWithTestsPhp\Tests\Unit;
 
 use PluginWithTestsPhp\App;
-use PluginWithTestsPhp\Core\Facade;
 
 defined('ABSPATH') || exit;
 
@@ -35,7 +34,6 @@ abstract class AbstractUnitTest extends \WP_UnitTestCase {
      */
     public function tear_down(): void {
         App::set_instance($this->app);
-        Facade::set_container($this->app);
 
         parent::tear_down();
     }

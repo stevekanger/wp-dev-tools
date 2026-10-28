@@ -5,6 +5,7 @@
 - [Creating a plugin or theme](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/create-project.md)
 - [Project php suite](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-php-suite.md)
 - [Project tests](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-tests.md)
+- [Project Examples](https://github.com/stevekanger/wp-dev-tools/tree/main/examples)
 
 Development tools for wordpress. Easily create project boilerplates, create block files, archive projects and more.
 

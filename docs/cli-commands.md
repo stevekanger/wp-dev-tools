@@ -5,6 +5,7 @@
 - [Creating a plugin or theme](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/create-project.md)
 - [Project php suite](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-php-suite.md)
 - [Project tests](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-tests.md)
+- [Project Examples](https://github.com/stevekanger/wp-dev-tools/tree/main/examples)
 
 All commands are run with command first then options. You can supply options or if necessary options are required you will be prompted via an interactive command line interface.
 

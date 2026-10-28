@@ -5,6 +5,7 @@
 - [Creating a plugin or theme](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/create-project.md)
 - [Project php suite](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-php-suite.md)
 - [Project tests](https://github.com/stevekanger/wp-dev-tools/blob/main/docs/project-tests.md)
+- [Project Examples](https://github.com/stevekanger/wp-dev-tools/tree/main/examples)
 
 Testing suites can be installed for both php and js. All tests are loaded from the `tests` folder for their respective language. If you setup the php-suite then additional unit tests will be added for the suite classes.
 

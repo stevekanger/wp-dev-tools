@@ -70,7 +70,8 @@ The script will create your block files. Its recommended to install the files in
 
 ### Register a block
 
-Once you have successfully created a block all you have to do is add the block slug to the `BLOCKS` array in `inc/app/Config/BlockConfig.php`. This assumes your blocks source files are located in the `src/blocks` folder and built to `build/blocks` folder.
+
+Before you can use your block run `npm run build`. Then add the block slug to the `BLOCKS` array in `inc/app/Config/BlockConfig.php`. This assumes your blocks are built to the `build/blocks` folder.
 
 ## Updating php and wordpress versions
 

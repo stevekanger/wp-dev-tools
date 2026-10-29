@@ -38,7 +38,7 @@ function get_version(): string {
  * @since 1.0.0
  */
 function register_blocks(): void {
-    // Add block slugs here you want to register
+    // Add block slugs you want to register
     $blocks = [];
 
     foreach ($blocks as $slug) {

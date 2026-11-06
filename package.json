@@ -13,7 +13,7 @@
   "license": "GPL-2.0-or-later",
   "author": "stevekanger",
   "type": "commonjs",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "publishConfig": {
     "access": "public"
   },
@@ -21,7 +21,7 @@
     "node": ">=22.22.2"
   },
   "scripts": {
-    "build": "tsup",
+    "build": "tsdown --config-loader tsx",
     "create:examples": "tsx src/createExamples.ts",
     "dev": "node --watch --import tsx src/index.ts",
     "pack": "npm run build && npm pack --pack-destination ./local",
@@ -29,7 +29,7 @@
     "typecheck": "tsc --noEmit"
   },
   "bin": {
-    "wp-dev-tools": "dist/index.js"
+    "wp-dev-tools": "dist/index.cjs"
   },
   "files": [
     "dist",
@@ -44,7 +44,7 @@
     "@types/archiver": "^8.0.0",
     "@types/mustache": "^4.2.6",
     "@types/node": "^26.6.2",
-    "tsup": "^8.5.1",
+    "tsdown": "^0.23.5",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2"
   }
